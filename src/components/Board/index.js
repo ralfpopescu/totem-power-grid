@@ -10,8 +10,7 @@ grid-template-rows: repeat(${props => props.dimension}, 100px);
 grid-template-columns: repeat(${props => props.dimension}, 100px);
 `
 
-const Board = ({ dimension, totems, tiles }) => {
-  console.log(totems, tiles)
+const Board = ({ dimension, tiles }) => {
   return (
   <BoardContainer dimension={dimension}>
     {Array(dimension * dimension).fill(1).map((_, index) => (
@@ -21,7 +20,7 @@ const Board = ({ dimension, totems, tiles }) => {
 )}
 
 const mapStateToProps = state => {
-  return { totems: state.totems, tiles: state.tiles }
+  return { tiles: state.tiles }
 };
 
 export default connect(mapStateToProps)(Board);
