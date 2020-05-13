@@ -3,11 +3,12 @@ import styled from 'styled-components'
 import totemTypes from '../../../../logic/totemTypes'
 import { connect } from "react-redux";
 import { addTotem } from "../../../../redux/actions";
+import type { TotemType } from '../../../../redux/reducers'
+import { ReactComponent as TotemImage } from './totem.svg'
 
 const { FIRE, WATER, ELECTRIC, LIGHT, WIND, EARTH } = totemTypes
 
-const totemColor = totemType => {
-  console.log("TOTEMTYPE", totemType)
+const totemColor = (totemType: TotemType) => {
   switch(totemType) {
     case FIRE:
       return 'red'
@@ -26,21 +27,21 @@ const totemColor = totemType => {
   }
 }
 
-const TotemContainer = styled.div`
-border-radius: 50%;
-width: 100%;
-height: 100%;
-padding: 20px;
-color: #fff;
-background-color: ${props => totemColor(props.totemType)};
-display: flex;
-flex-direction: column;
+type TotemIconProps = { totemType: TotemType }
+
+const TotemIcon = styled(TotemImage)<TotemIconProps>`
+fill: ${props => totemColor(props.totemType)};
+width: 50px;
+height: 50px;
+
 `
 
-const Totem = ({ totemType }) => {
+type TotemProps = { totemType: TotemType }
+
+const Totem = ({ totemType }: TotemProps) => {
   return (
     <>
-    {totemType && <TotemContainer totemType={totemType} />}
+    {totemType && <TotemIcon totemType={totemType} />}
     </>
 )}
 

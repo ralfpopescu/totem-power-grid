@@ -2,6 +2,7 @@ import actionTypes from './actionTypes'
 import type { TotemType } from '../logic/totemTypes'
 
 export type AddTotemInput = { totemType: TotemType, index: number }
+export type AddTotem = (input: AddTotemInput ) => void
 
 export const addTotem = ({ totemType, index }: AddTotemInput) => ({
   type: actionTypes.ADD_TOTEM,

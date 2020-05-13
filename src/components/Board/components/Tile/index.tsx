@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from "react-redux";
 import { addTotem } from "../../../../redux/actions";
+import type { AddTotem } from "../../../../redux/actions";
+import type { State, TotemType, Tile as TileState } from '../../../../redux/reducers'
 import Totem from '../Totem'
 
 const TileContainer = styled.div`
@@ -16,14 +18,16 @@ display: flex;
 flex-direction: column;
 `
 
-const Tile = ({ index, addTotem, tile, totemSelection }) => {
+type TileProps = { index: number, addTotem: AddTotem, tile: TileState, totemSelection: TotemType }
+
+const Tile = ({ index, addTotem, tile, totemSelection }: TileProps) => {
   return (
 <TileContainer onClick={() => addTotem({ totemType: totemSelection, index })}>
     {tile && tile.totem && <Totem totemType={tile.totem} />}
   </TileContainer>
 )}
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: State) => {
   return { totemSelection: state.totemSelection }
 };
 

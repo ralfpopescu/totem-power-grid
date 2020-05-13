@@ -17,7 +17,7 @@ grid-template-columns: 1fr 1fr;
 function App() {
   return (
     <AppContainer>
-      <Board dimension={8} />
+      <Board />
       <TotemSelector />
     </AppContainer>
   );
