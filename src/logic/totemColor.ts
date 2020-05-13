@@ -1,8 +1,9 @@
 import totemTypes from './totemTypes'
+import type { TotemType } from './totemTypes'
 
 const { FIRE, WATER, ELECTRIC, LIGHT, WIND, EARTH } = totemTypes
 
-const totemColor = totemType => {
+const totemColor = (totemType: TotemType) => {
   switch(totemType) {
     case FIRE:
       return 'red'
@@ -12,9 +13,9 @@ const totemColor = totemType => {
       return 'yellow' 
     case LIGHT:
       return 'white'
-      case WIND:
+    case WIND:
       return 'grey'
-      case EARTH:
+    case EARTH:
       return 'brown'
     default:
       return 'black'

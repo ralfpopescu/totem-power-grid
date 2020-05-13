@@ -6,3 +6,5 @@ export const ELECTRIC_CURRENT = 'ELECTRIC_CURRENT'
 export const BRIGHT = 'BRIGHT'
 export const WINDY = 'WINDY'
 export const EARTH = 'EARTH'
+
+export type TileType = 'BURNING' | 'FLOODED' | 'SMOKEY' | 'STEAMY' | 'ELECTRIC_CURRENT' | 'BRIGHT' | 'WINDY' | 'EARTH'

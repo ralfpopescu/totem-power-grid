@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import totemTypes from '../../../../logic/totemTypes'
 import { connect } from "react-redux";
 import { addTotem } from "../../../../redux/actions";
 import Totem from '../Totem'
@@ -17,13 +16,7 @@ display: flex;
 flex-direction: column;
 `
 
-const calculatePosition = (index, dimension) => {
-const column = index % dimension;
-const row = Math.floor(index / dimension);
-return { row, column }
-}
-
-const Tile = ({ index, dimension, addTotem, tile, totemSelection }) => {
+const Tile = ({ index, addTotem, tile, totemSelection }) => {
   return (
 <TileContainer onClick={() => addTotem({ totemType: totemSelection, index })}>
     {tile && tile.totem && <Totem totemType={tile.totem} />}

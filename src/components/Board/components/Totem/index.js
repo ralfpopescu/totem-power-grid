@@ -37,12 +37,6 @@ display: flex;
 flex-direction: column;
 `
 
-const calculatePosition = (index, dimension) => {
-const column = index % dimension;
-const row = Math.floor(index / dimension);
-return { row, column }
-}
-
 const Totem = ({ totemType }) => {
   return (
     <>
