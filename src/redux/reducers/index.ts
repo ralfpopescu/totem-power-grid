@@ -53,23 +53,28 @@ const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
   tilesIndicesWithEarthAndWater.forEach(index => {
     const adjacentCoordinates = returnAdjacentCoordinates(parseInt(index), dimension)
     const adjacentIndices = adjacentCoordinates.map(coord => calculateIndexFromPosition({ ...coord, dimension }))
+    console.log('adjacentIndices', adjacentIndices)
 
     adjacentIndices.forEach(index => {
       const tile = tiles[index]
       const { fields, totem } = tile;
       if(!fields.includes('FLOODED') && totem == null) {
+        console.log('add to index', index)
         tilesToAddWaterTo.push(index)
       }
     })
-    if(tilesToAddWaterTo.length === 0) {
-      return newTiles
-    } else {
+    if(tilesToAddWaterTo.length !== 0) {
       tilesToAddWaterTo.forEach(index => {
         newTiles[index] = {...newTiles[index], fields: [...newTiles[index].fields, 'FLOODED' ] }
       })
     }
   })
-  return doEarthWaterDispersion(newTiles, dimension)
+  if(tilesToAddWaterTo.length > 0) {
+    return doEarthWaterDispersion(newTiles, dimension)
+  } else {
+    return newTiles;
+  }
+  
 }
 
 const addTotemToBoard = (state: State, totemType: TotemType, index: number): State => {
