@@ -1,6 +1,6 @@
 import type { State , TotemType} from '.'
 import type { FieldType } from '../../logic/fieldTypes'
-import { BURNING, FLOODED } from '../../logic/fieldTypes'
+import { BURNING, FLOODED, EARTH } from '../../logic/fieldTypes'
 import calculatePositionFromIndex from '../../logic/calculatePositionFromIndex'
 import calculateIndexFromPosition from '../../logic/calculateIndexFromPosition'
 
@@ -36,6 +36,13 @@ export const applyTotemEffect = (totemType: TotemType, index: number, dimension:
     const coordinates = returnAdjacentCoordinates(index, dimension)
     const fieldApplications = coordinates.map(coordinate => ({
       index: calculateIndexFromPosition({ ...coordinate, dimension }), fieldType: FLOODED as FieldType
+    }))
+    return fieldApplications;
+  }
+  if(totemType === 'EARTH') {
+    const coordinates = returnAdjacentCoordinates(index, dimension)
+    const fieldApplications = coordinates.map(coordinate => ({
+      index: calculateIndexFromPosition({ ...coordinate, dimension }), fieldType: EARTH as FieldType
     }))
     return fieldApplications;
   }

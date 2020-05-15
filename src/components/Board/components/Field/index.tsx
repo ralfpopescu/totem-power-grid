@@ -6,6 +6,7 @@ import { ReactComponent as Fire } from './fieldIcons/fire.svg'
 import { ReactComponent as Air } from './fieldIcons/air.svg'
 import { ReactComponent as Earth } from './fieldIcons/earth.svg'
 import { ReactComponent as Water } from './fieldIcons/water.svg'
+import { ReactComponent as Smoke } from './fieldIcons/smoke.svg'
 
 type FieldProps = { fields: Array<FieldType> }
 
@@ -18,6 +19,12 @@ const getFieldColorFromFieldType = (fieldType: FieldType) => {
   }
   if(fieldType === 'STEAMY') {
     return 'grey'
+  }
+  if(fieldType === 'EARTH') {
+    return 'brown'
+  }
+  if(fieldType === 'SMOKEY') {
+    return 'brown'
   }
   return 'black';
 }
@@ -33,6 +40,12 @@ const getFieldIconFromFieldType = (fieldType: FieldType) => {
   }
   if(fieldType === 'STEAMY') {
     return <Air style={{  ...iconStyle, fill: getFieldColorFromFieldType(fieldType) }} />
+  }
+  if(fieldType === 'EARTH') {
+    return <Earth style={{  ...iconStyle, fill: getFieldColorFromFieldType(fieldType) }} />
+  }
+  if(fieldType === 'SMOKEY') {
+    return <Smoke style={{  ...iconStyle, fill: getFieldColorFromFieldType(fieldType) }} />
   }
   return 'black';
 }

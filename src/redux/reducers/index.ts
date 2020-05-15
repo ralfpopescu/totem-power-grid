@@ -20,11 +20,17 @@ export type State = {
   dimension: number
 }
 
+const initialDimension = 8
+
+const initialTile = { totem: null, fields: [] }
+const initialIndices = Array(initialDimension * initialDimension).fill(1).map((_, index) => index)
+const initialTiles = initialIndices.reduce((acc, curr) => ({ ...acc, [curr]: { ...initialTile }}), {})
+
 export type Action = 
 { type: 'ADD_TOTEM', payload: { index: number, totemType: TotemType }} |
 { type: 'CHANGE_TOTEM_SELECTION', payload: { totemType: TotemType }}
 
-const initialState: State = { tiles: {}, totemSelection: 'FIRE', dimension: 8 }
+const initialState: State = { tiles: initialTiles, totemSelection: 'FIRE', dimension: initialDimension }
 
 const canTotemBeInField = (totemType: TotemType, fields: Array<FieldType>) => {
   return fields.length === 0 ||
@@ -50,8 +56,8 @@ const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
 
     adjacentIndices.forEach(index => {
       const tile = tiles[index]
-      const { fields } = tile;
-      if(!fields.includes('FLOODED')) {
+      const { fields, totem } = tile;
+      if(!fields.includes('FLOODED') && totem == null) {
         tilesToAddWaterTo.push(index)
       }
     })
@@ -61,9 +67,9 @@ const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
       tilesToAddWaterTo.forEach(index => {
         newTiles[index] = {...newTiles[index], fields: [...newTiles[index].fields, 'FLOODED' ] }
       })
-      return doEarthWaterDispersion(newTiles, dimension)
     }
   })
+  return doEarthWaterDispersion(newTiles, dimension)
 }
 
 const addTotemToBoard = (state: State, totemType: TotemType, index: number): State => {
@@ -88,8 +94,10 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
       }
     })
     newTiles[index] = { ...newTiles[index], totem: totemType }
-    return { ...state, tiles: newTiles }
+    const newTilesAfterWaterDispersion = doEarthWaterDispersion(newTiles, dimension)
+    return { ...state, tiles: newTilesAfterWaterDispersion }
   }
+
   return state;
 }
 
