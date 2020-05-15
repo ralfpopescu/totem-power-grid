@@ -7,4 +7,4 @@ export const BRIGHT = 'BRIGHT'
 export const WINDY = 'WINDY'
 export const EARTH = 'EARTH'
 
-export type TileType = 'BURNING' | 'FLOODED' | 'SMOKEY' | 'STEAMY' | 'ELECTRIC_CURRENT' | 'BRIGHT' | 'WINDY' | 'EARTH'
+export type FieldType = 'BURNING' | 'FLOODED' | 'SMOKEY' | 'STEAMY' | 'ELECTRIC_CURRENT' | 'BRIGHT' | 'WINDY' | 'EARTH'

@@ -5,6 +5,7 @@ import { addTotem } from "../../../../redux/actions";
 import type { AddTotem } from "../../../../redux/actions";
 import type { State, TotemType, Tile as TileState } from '../../../../redux/reducers'
 import Totem from '../Totem'
+import Field from '../Field'
 
 const TileContainer = styled.div`
 border: 2px solid rgb(214,129,137);
@@ -24,6 +25,7 @@ const Tile = ({ index, addTotem, tile, totemSelection }: TileProps) => {
   return (
 <TileContainer onClick={() => addTotem({ totemType: totemSelection, index })}>
     {tile && tile.totem && <Totem totemType={tile.totem} />}
+    {tile && tile.fields && <Field fields={tile.fields} />}
   </TileContainer>
 )}
 
