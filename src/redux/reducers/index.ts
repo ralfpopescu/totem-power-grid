@@ -33,7 +33,8 @@ const initialTiles = initialIndices.reduce((acc, curr) => ({ ...acc, [curr]: { .
 
 export type Action = 
 { type: 'ADD_TOTEM', payload: { index: number, totemType: TotemType }} |
-{ type: 'CHANGE_TOTEM_SELECTION', payload: { totemType: TotemType }}
+{ type: 'CHANGE_TOTEM_SELECTION', payload: { totemType: TotemType }} |
+{ type: 'CHANGE_TOTEM_DIRECTION', payload: { totemIndex: number, direction: Direction }}
 
 const initialState: State = { tiles: initialTiles, totemSelection: 'FIRE', dimension: initialDimension }
 
@@ -116,6 +117,14 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
   return state;
 }
 
+const changeTotemDirection = (state: State, totemIndex: number, direction: Direction): Tiles => {
+  const { tiles } = state
+  const { totem } = tiles[totemIndex]
+  const newTotem = { ...totem, direction }
+  const newTiles = { ...tiles, [totemIndex]: { ...tiles[totemIndex], totem: newTotem }}
+  return newTiles
+}
+
 const reducer = (state: State = initialState, action: Action): State => {
   switch(action.type) {
     case 'ADD_TOTEM':
@@ -124,6 +133,11 @@ const reducer = (state: State = initialState, action: Action): State => {
       return {
         ...state,
         totemSelection: action.payload.totemType
+      };
+    case 'CHANGE_TOTEM_DIRECTION':
+      return {
+        ...state,
+        tiles: changeTotemDirection(state, action.payload.totemIndex, action.payload.direction)
       };
     default:
       return state;
