@@ -7,7 +7,10 @@ import type { State, TotemType, Tile as TileState } from '../../../../redux/redu
 import Totem from '../Totem'
 import Field from '../Field'
 
-const TileContainer = styled.div`
+
+type TileContainerProps = { lit: boolean }
+
+const TileContainer = styled.div<TileContainerProps>`
 border: 2px solid rgb(214,129,137);
 border-radius: 5px;
 margin: 10px;
@@ -17,6 +20,7 @@ padding: 10px;
 background-color: #29353d;
 display: flex;
 flex-direction: column;
+box-shadow: ${props => props.lit && "0px 0px 8px 8px #888888"};
 cursor: pointer;
 
 &:hover {
@@ -28,7 +32,7 @@ type TileProps = { index: number, addTotem: AddTotem, tile: TileState, totemSele
 
 const Tile = ({ index, addTotem, tile, totemSelection }: TileProps) => {
   return (
-<TileContainer onClick={() => addTotem({ totemType: totemSelection, index })}>
+<TileContainer onClick={() => addTotem({ totemType: totemSelection, index })} lit={false} >
     {tile && tile.totem && <Totem totemType={tile.totem} />}
     {tile && tile.fields && <Field fields={tile.fields} />}
   </TileContainer>
