@@ -2,13 +2,18 @@
 import { applyTotemEffect } from './calculateFields'
 import { calculateIndexFromPosition, calculatePositionFromIndex } from '../../logic/calculatePositions'
 import { returnAdjacentCoordinates } from './calculateFields'
+import { v4 as uuidv4 } from 'uuid'
 
 export type TotemType = 'FIRE' | 'ELECTRIC' | 'LIGHT' | 'WATER' | 'WIND' | 'EARTH'
 
+export type Direction = 'NORTH' | 'SOUTH' | 'EAST' | 'WEST' | 'NORTHEAST' | 'SOUTHEAST' | 'NORTHWEST' | 'SOUTHWEST' | 'NONE' | null
+
 export type FieldType = 'BURNING' | 'FLOODED' | 'SMOKEY' | 'STEAMY' | 'ELECTRIC_CURRENT' | 'BRIGHT' | 'WINDY' | 'EARTH'
 
+export type Totem = { type: TotemType, direction: Direction, id: string }
+
 export type Tile = {
-  totem: TotemType
+  totem: Totem
   fields: Array<FieldType>
 }
 
@@ -38,6 +43,13 @@ const canTotemBeInField = (totemType: TotemType, fields: Array<FieldType>) => {
 
 }
 
+const getInitialDirectionFromTotemType = (totemType: TotemType): Direction => {
+  if(totemType === 'LIGHT' || totemType === 'ELECTRIC') {
+    return 'SOUTH'
+  }
+  return null;
+}
+
 const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
   const indicesWithTiles = Object.keys(tiles)
   const tilesIndicesWithEarthAndWater = indicesWithTiles
@@ -53,13 +65,11 @@ const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
   tilesIndicesWithEarthAndWater.forEach(index => {
     const adjacentCoordinates = returnAdjacentCoordinates(parseInt(index), dimension)
     const adjacentIndices = adjacentCoordinates.map(coord => calculateIndexFromPosition({ ...coord, dimension }))
-    console.log('adjacentIndices', adjacentIndices)
 
     adjacentIndices.forEach(index => {
       const tile = tiles[index]
       const { fields, totem } = tile;
       if(!fields.includes('FLOODED') && totem == null) {
-        console.log('add to index', index)
         tilesToAddWaterTo.push(index)
       }
     })
@@ -98,7 +108,7 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
         newTiles[`${effectIndex}`] = { ...tileStateAtIndex, fields: [...fields, fieldType ]}
       }
     })
-    newTiles[index] = { ...newTiles[index], totem: totemType }
+    newTiles[index] = { ...newTiles[index], totem: { type: totemType, direction: getInitialDirectionFromTotemType(totemType), id: uuidv4() } }
     const newTilesAfterWaterDispersion = doEarthWaterDispersion(newTiles, dimension)
     return { ...state, tiles: newTilesAfterWaterDispersion }
   }
