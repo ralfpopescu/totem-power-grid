@@ -25,6 +25,8 @@ grid-template-rows: 1fr 5fr 1fr;
 const MainItemContainer = styled.div`
 display: flex;
 position: relative;
+justify-content: center;
+  align-items: center;
   grid-column-start: 2;
   grid-column-end: 2;
   grid-row-start: 2;
@@ -116,6 +118,9 @@ type TileProps = { index: number, addTotem: AddTotem, tile: TileState, totemSele
 
 const arrowStyle = { width: '20px', height: '20px '}
 
+const activeStyle = (totemDirection: Direction, arrowDirection: Direction) => 
+totemDirection === arrowDirection ? { fill: 'white' } : {}
+
 const Tile = ({ index, addTotem, tile, totemSelection }: TileProps) => {
   return (
 <TileContainer lit={false} >
@@ -125,16 +130,16 @@ const Tile = ({ index, addTotem, tile, totemSelection }: TileProps) => {
       {tile && tile.fields.length > 0 && <Field fields={tile.fields} />}
     </MainItemContainer>
     <RightZone>
-      {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(180deg)'}}/>}
+      {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(180deg)', ...activeStyle(tile.totem?.direction, 'EAST')}}/>}
     </RightZone >
     <LeftZone>
-    {tile.totem?.direction && <Arrow style={{ ...arrowStyle }}/>}
+    {tile.totem?.direction && <Arrow style={{ ...arrowStyle, ...activeStyle(tile.totem?.direction, 'WEST')}}/>}
       </LeftZone>
     <TopZone>
-    {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(90deg)'}}/>}
+    {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(90deg)', ...activeStyle(tile.totem?.direction, 'NORTH')}}/>}
     </TopZone>
     <BottomZone>
-    {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(270deg)'}}/>}
+    {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(270deg)', ...activeStyle(tile.totem?.direction, 'SOUTH')}}/>}
     </BottomZone>
   </TileContainer>
 )}
