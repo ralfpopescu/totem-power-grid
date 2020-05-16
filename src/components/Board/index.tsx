@@ -10,8 +10,8 @@ type BoardContainerProps = { dimension: number }
 
 const BoardContainer = styled.div<BoardContainerProps>`
 display: grid;
-grid-template-rows: repeat(${props => props.dimension}, 100px);
-grid-template-columns: repeat(${props => props.dimension}, 100px);
+grid-template-rows: repeat(${props => props.dimension}, 120px);
+grid-template-columns: repeat(${props => props.dimension}, 120px);
 `
 
 type BoardProps = { dimension: number, tiles: Tiles }
