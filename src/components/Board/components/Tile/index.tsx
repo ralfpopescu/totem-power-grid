@@ -6,7 +6,7 @@ import type { AddTotem } from "../../../../redux/actions";
 import type { State, TotemType, Direction, Tile as TileState } from '../../../../redux/reducers'
 import Totem from '../Totem'
 import Field from '../Field'
-import { ReactComponent as Arrow } from './icons/arrow.svg'
+import Arrow from './icons/arrow'
 
 
 type TileContainerProps = { lit: boolean }
@@ -41,25 +41,27 @@ max-width: 50px;
 
 `
 
-type ArrowProps = { direction: Direction }
-
-const RightArrow = styled.div<ArrowProps>`
+const RightZone = styled.div`
   grid-column-start: 3;
   grid-row-start: 2;
   align-self: center;
   width: 100%;
   height: 100%;
+  justify-content: center;
+  align-items: center;
 `
 
-const LeftArrow = styled.div<ArrowProps>`
+const LeftZone = styled.div`
   grid-column-start: 1;
   grid-row-start: 2;
   align-self: center;
   width: 100%;
   height: 100%;
+  justify-content: center;
+  align-items: center;
 `
 
-const TopArrow = styled.div<ArrowProps>`
+const TopZone = styled.div`
   grid-column-start: 2;
   grid-row-start: 1;
   align-self: center;
@@ -67,15 +69,19 @@ const TopArrow = styled.div<ArrowProps>`
   height: 100%;
 `
 
-const BottomArrow = styled.div<ArrowProps>`
+const BottomZone = styled.div`
   grid-column-start: 2;
   grid-row-start: 3;
   align-self: center;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
 `
 
 type TileProps = { index: number, addTotem: AddTotem, tile: TileState, totemSelection: TotemType }
+
+const arrowStyle = { width: '10px', height: '10px '}
 
 const Tile = ({ index, addTotem, tile, totemSelection }: TileProps) => {
   return (
@@ -84,10 +90,18 @@ const Tile = ({ index, addTotem, tile, totemSelection }: TileProps) => {
       {tile && tile.totem && <Totem totemType={tile.totem.type} />}
       {tile && tile.fields && <Field fields={tile.fields} />}
     </MainItemContainer>
-    <RightArrow direction={tile.totem?.direction || 'NONE'}/>
-    <LeftArrow direction={tile.totem?.direction || 'NONE'}/>
-    <TopArrow direction={tile.totem?.direction || 'NONE' }/>
-    <BottomArrow direction={tile.totem?.direction || 'NONE'}/>
+    <RightZone>
+      {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(180deg)'}}/>}
+    </RightZone >
+    <LeftZone>
+    {tile.totem?.direction && <Arrow style={{ ...arrowStyle }}/>}
+      </LeftZone>
+    <TopZone>
+    {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(90deg)'}}/>}
+    </TopZone>
+    <BottomZone>
+    {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(270deg)'}}/>}
+    </BottomZone>
   </TileContainer>
 )}
 
