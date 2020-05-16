@@ -72,7 +72,7 @@ const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
   if(tilesToAddWaterTo.length > 0) {
     return doEarthWaterDispersion(newTiles, dimension)
   } else {
-    return newTiles;
+    return newTiles
   }
   
 }

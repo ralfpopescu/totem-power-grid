@@ -31,9 +31,20 @@ const getFieldColorFromFieldType = (fieldType: FieldType) => {
 
 const iconStyle = { height: '40px', width: '40px' }
 
+const FireIcon = styled(Fire)`
+height: 40px;
+width: 40px;
+position: relative;
+animation: pop 0.2s ease-in-out 1;
+
+@keyframes pop{
+  50%  {transform: scale(1.3);}
+}
+`
+
 const getFieldIconFromFieldType = (fieldType: FieldType) => {
   if(fieldType === 'BURNING') {
-    return <Fire style={{ ...iconStyle, fill: getFieldColorFromFieldType(fieldType) }} />
+    return <FireIcon style={{ ...iconStyle, fill: getFieldColorFromFieldType(fieldType) }} />
   }
   if(fieldType === 'FLOODED') {
     return <Water style={{ ...iconStyle, fill: getFieldColorFromFieldType(fieldType) }} />
@@ -47,13 +58,14 @@ const getFieldIconFromFieldType = (fieldType: FieldType) => {
   if(fieldType === 'SMOKEY') {
     return <Smoke style={{  ...iconStyle, fill: getFieldColorFromFieldType(fieldType) }} />
   }
-  return 'black';
+  return (<div />);
 }
 
 const IconContainer = styled.div`
 height: 40px;
 width: 40px;
 position: relative;
+
 `
 
 const Field = ({ fields }: FieldProps) => {

@@ -33,6 +33,16 @@ const TotemIcon = styled(TotemImage)<TotemIconProps>`
 fill: ${props => totemColor(props.totemType)};
 width: 50px;
 height: 50px;
+animation: fall-in 0.2s ease-in-out 1;
+
+@keyframes fall-in {
+  0% {
+    {transform: scale(1.5);}
+  }
+  100% {
+    {transform: scale(1);}
+  }
+}
 
 `
 

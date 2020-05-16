@@ -14,9 +14,14 @@ margin: 10px;
 color: #fff;
 font-size: 8px;
 padding: 10px;
-background-color: black;
+background-color: #29353d;
 display: flex;
 flex-direction: column;
+cursor: pointer;
+
+&:hover {
+  opacity: 0.7;
+}
 `
 
 type TileProps = { index: number, addTotem: AddTotem, tile: TileState, totemSelection: TotemType }
