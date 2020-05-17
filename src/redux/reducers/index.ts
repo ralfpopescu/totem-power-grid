@@ -90,6 +90,33 @@ const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
   }
 }
 
+type Position = { row: number, column: number }
+
+const isAtLimitPosition = (position: Position, direction: Direction, dimension: number) => {
+  switch(direction) {
+    case 'EAST':
+      return position.column === dimension - 1;
+    case 'WEST':
+      return position.column === 0;
+    case 'NORTH':
+      return position.row === 0;
+    case 'SOUTH':
+      return position.row === dimension - 1;
+    case 'NORTHEAST':
+      return position.column === dimension - 1 || position.row === 0;
+    case 'NORTHWEST':
+      return position.column === dimension - 1;
+    case 'NORTHEAST':
+      return position.column === dimension - 1;
+    case 'NORTHWEST':
+      return position.column === dimension - 1;
+  }
+}
+
+const getNextLightBeam = (startIndex: number, direction: Direction, dimension: number) => {
+
+}
+
 const calculateBeamsFromStartingPoint = (
   tiles: Tiles, 
   newLightBeams: Array<LightBeam>, 
@@ -104,7 +131,6 @@ if (direction === 'EAST') {
   const nextPosition = { row: startingPosition.row, column: startingPosition.column + 1}
   const nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
   const nextTile = tiles[nextIndex]
-  console.log('nextTile', nextTile)
   const newLightBeamsWithNext = [...newLightBeams, { index: nextIndex, direction }]
 
   if(nextTile.fields.includes('FLOODED') && nextTile.fields.includes('BURNING')) {
@@ -117,7 +143,23 @@ if (direction === 'EAST') {
   return calculateBeamsFromStartingPoint(tiles, newLightBeamsWithNext, nextIndex, 'EAST', dimension)
 
 } else if (direction === 'WEST') {
-  return newLightBeams;
+  const startingPosition = calculatePositionFromIndex(startIndex, dimension)
+  if(startingPosition.column === 0) {
+    return newLightBeams;
+  }
+  const nextPosition = { row: startingPosition.row, column: startingPosition.column - 1}
+  const nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+  const nextTile = tiles[nextIndex]
+  const newLightBeamsWithNext = [...newLightBeams, { index: nextIndex, direction }]
+
+  if(nextTile.fields.includes('FLOODED') && nextTile.fields.includes('BURNING')) {
+    return [...newLightBeamsWithNext, 
+      ...calculateBeamsFromStartingPoint(tiles, newLightBeamsWithNext, nextIndex, 'NORTHWEST', dimension),
+      ...calculateBeamsFromStartingPoint(tiles, newLightBeamsWithNext, nextIndex, 'SOUTHWEST', dimension)]
+  } else if(nextTile.fields.includes('EARTH') && nextTile.fields.includes('BURNING')) {
+    return newLightBeams
+  }
+  return calculateBeamsFromStartingPoint(tiles, newLightBeamsWithNext, nextIndex, 'WEST', dimension)
 
 } else if (direction === 'NORTH') {
   return newLightBeams;

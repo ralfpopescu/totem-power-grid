@@ -33,6 +33,7 @@ justify-content: center;
 border-radius: 5px;
 color: #fff;
 box-shadow: ${props => props.lit && "0px 0px 8px 8px #888888"};
+transition: all 0.1s ease;
 
 cursor: pointer;
 
