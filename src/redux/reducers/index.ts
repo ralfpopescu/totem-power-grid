@@ -337,16 +337,7 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
     newTiles[index] = { ...newTiles[index], totem: { type: totemType, direction: getInitialDirectionFromTotemType(totemType), id: uuidv4() } }
     const newTilesAfterWaterDispersion = doEarthWaterDispersion(newTiles, dimension)
 
-    const lightTotems = Object.keys(newTiles)
-    .map(index => ({ totem: tiles[index].totem, index }))
-    .filter(item => item.totem?.type === 'LIGHT')
-
-    const beamsPerLightTotem = lightTotems.map(lightTotem => 
-      calculateLightBeams(newTiles, [], parseInt(lightTotem.index), lightTotem.totem.direction, dimension)
-    )
-
-    const newLightBeams = beamsPerLightTotem.reduce((acc, curr) => ([ ...acc, ...curr ]), [])
-    console.log('newLightBeams', newLightBeams)
+    const newLightBeams = caclulateNewLightBeams(newTiles, dimension)
     return { ...state, tiles: newTilesAfterWaterDispersion, lightBeams: newLightBeams }
   }
 
