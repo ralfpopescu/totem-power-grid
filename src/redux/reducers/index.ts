@@ -92,29 +92,147 @@ const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
 
 type Position = { row: number, column: number }
 
-const isAtLimitPosition = (position: Position, direction: Direction, dimension: number) => {
+const isAtLimitPosition = (index: number, direction: Direction, dimension: number) => {
+  const position = calculatePositionFromIndex(index, dimension)
+  console.log('limitposition', position)
+  console.log('direction', direction)
+  let result;
   switch(direction) {
     case 'EAST':
-      return position.column === dimension - 1;
+      result = position.column === dimension - 1;
+      break;
     case 'WEST':
-      return position.column === 0;
+      result = position.column === 0;
+      break;
     case 'NORTH':
-      return position.row === 0;
+      result = position.row === 0;
+      break;
     case 'SOUTH':
-      return position.row === dimension - 1;
+      result = position.row === dimension - 1;
+      break;
     case 'NORTHEAST':
-      return position.column === dimension - 1 || position.row === 0;
+      result = position.column >= dimension - 1 || position.row <= 0;
+      break;
     case 'NORTHWEST':
-      return position.column === dimension - 1;
-    case 'NORTHEAST':
-      return position.column === dimension - 1;
-    case 'NORTHWEST':
-      return position.column === dimension - 1;
+      result = position.column <= 0 || position.row <= 0;
+      break;
+    case 'SOUTHEAST':
+      result = position.column >= dimension - 1 || position.row >= dimension - 1;
+      break;
+    case 'SOUTHWEST':
+      result = position.column <= 0 || position.row >= dimension - 1;
+      break;
   }
+  return result;
 }
 
-const getNextLightBeam = (startIndex: number, direction: Direction, dimension: number) => {
+const getNextIndex = (startingIndex: number, direction: Direction, dimension: number): number => {
+  let nextIndex;
+  let nextPosition;
+  const startingPosition = calculatePositionFromIndex(startingIndex, dimension)
+  switch(direction) {
+    case 'EAST':
+      nextPosition = { row: startingPosition.row, column: startingPosition.column + 1 }
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      break;
+    case 'WEST':
+      nextPosition = { row: startingPosition.row, column: startingPosition.column - 1}
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      break;
+    case 'NORTH':
+      nextPosition = { row: startingPosition.row - 1, column: startingPosition.column}
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      break;
+    case 'SOUTH':
+      nextPosition = { row: startingPosition.row + 1, column: startingPosition.column}
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      break;
+    case 'NORTHEAST':
+      nextPosition = { row: startingPosition.row - 1, column: startingPosition.column + 1}
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      break;
+    case 'NORTHWEST':
+      nextPosition = { row: startingPosition.row - 1, column: startingPosition.column - 1}
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      break;
+    case 'SOUTHEAST':
+      nextPosition = { row: startingPosition.row + 1, column: startingPosition.column + 1}
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      break;
+    case 'SOUTHWEST':
+      nextPosition = { row: startingPosition.row + 1, column: startingPosition.column - 1}
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      break;
+    default:
+      console.log('no direction: ', direction)
+  }
+  return nextIndex || 1000;
+}
 
+const getRefractionDirections = (direction: Direction): Array<Direction> => {
+  let refractionDirections: Array<Direction> = []
+  switch(direction) {
+    case 'EAST':
+      refractionDirections = ['NORTHEAST', 'SOUTHEAST']
+      break;
+    case 'WEST':
+      refractionDirections = ['NORTHWEST', 'SOUTHWEST']
+      break;
+    case 'NORTH':
+      refractionDirections = ['NORTHEAST', 'NORTHWEST']
+      break;
+    case 'SOUTH':
+      refractionDirections = ['SOUTHWEST', 'SOUTHEAST']
+      break;
+    case 'NORTHEAST':
+      refractionDirections = ['NORTH', 'EAST']
+      break;
+    case 'NORTHWEST':
+      refractionDirections = ['NORTH', 'WEST']
+      break;
+    case 'SOUTHEAST':
+      refractionDirections = ['SOUTH', 'EAST']
+      break;
+    case 'SOUTHWEST':
+      refractionDirections = ['SOUTH', 'WEST']
+      break;
+    default:
+      console.log('no direction')
+  }
+  return refractionDirections
+}
+
+const doesTileRefract = (tile: Tile) => tile.fields.includes('FLOODED') && tile.fields.includes('BURNING')
+const doesTileBlock = (tile: Tile) => tile.fields.includes('EARTH') && tile.fields.includes('BURNING')
+
+const calculateLightBeams = (
+  tiles: Tiles, 
+  newLightBeams: Array<LightBeam>, 
+  startIndex: number, 
+  direction: Direction, 
+  dimension: number): Array<LightBeam> => {
+    if(isAtLimitPosition(startIndex, direction, dimension)) {
+      return newLightBeams;
+    }
+    console.log(startIndex, direction, dimension)
+    const nextIndex = getNextIndex(startIndex, direction, dimension)
+    console.log('nextIndex here', nextIndex)
+    const nextTile = tiles[nextIndex]
+
+    if(doesTileBlock(nextTile)) {
+      return newLightBeams;
+    }
+
+    const newLightBeamsWithNext = [...newLightBeams, { index: nextIndex, direction }]
+
+    if(doesTileRefract(nextTile)) {
+      console.log('TILE REFRACTS')
+      return [...newLightBeamsWithNext, ...getRefractionDirections(direction)
+        .map(refractionDirection => calculateLightBeams(tiles, newLightBeamsWithNext, nextIndex, refractionDirection, dimension))
+        .reduce((acc, curr) => [...acc, ...curr])]
+    }
+
+    return calculateLightBeams(tiles, newLightBeamsWithNext, nextIndex, direction, dimension)
 }
 
 const calculateBeamsFromStartingPoint = (
@@ -190,7 +308,7 @@ const caclulateNewLightBeams = (tiles: Tiles, dimension: number) => {
     .filter(item => item.totem?.type === 'LIGHT')
 
   const beamsPerLightTotem = lightTotems.map(lightTotem => 
-    calculateBeamsFromStartingPoint(tiles, [], parseInt(lightTotem.index), lightTotem.totem.direction, dimension)
+    calculateLightBeams(tiles, [], parseInt(lightTotem.index), lightTotem.totem.direction, dimension)
     )
   return beamsPerLightTotem.reduce((acc, curr) => ([ ...acc, ...curr ]), [])
 }
@@ -224,7 +342,7 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
     .filter(item => item.totem?.type === 'LIGHT')
 
     const beamsPerLightTotem = lightTotems.map(lightTotem => 
-      calculateBeamsFromStartingPoint(newTiles, [], parseInt(lightTotem.index), lightTotem.totem.direction, dimension)
+      calculateLightBeams(newTiles, [], parseInt(lightTotem.index), lightTotem.totem.direction, dimension)
     )
 
     const newLightBeams = beamsPerLightTotem.reduce((acc, curr) => ([ ...acc, ...curr ]), [])
