@@ -19,7 +19,7 @@ export type Tile = {
 
 export type Tiles = { [key: string]: Tile }
 
-type LightBeam = { indices: Array<number>, direction: Direction }
+export type LightBeam = { index: number, direction: Direction }
 
 export type State = {
   tiles: Tiles,
@@ -90,58 +90,67 @@ const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
   }
 }
 
-const calculateBeamsFromStartingPoint = (tiles: Tiles, startIndex: number, direction: Direction, dimension: number): Array<LightBeam>=> {
-const initialPosition = calculatePositionFromIndex(startIndex, dimension)
-const possibleIndices = []
-
+const calculateBeamsFromStartingPoint = (
+  tiles: Tiles, 
+  newLightBeams: Array<LightBeam>, 
+  startIndex: number, 
+  direction: Direction, 
+  dimension: number): Array<LightBeam>=> {
 if (direction === 'EAST') {
-  let eastCounter = initialPosition.column
-  while(eastCounter != dimension) {
-    const possiblePosition = { row: initialPosition.row, column: eastCounter }
-    possibleIndices.push(calculateIndexFromPosition({ ...possiblePosition, dimension }))
-    eastCounter += 1;
+  const startingPosition = calculatePositionFromIndex(startIndex, dimension)
+  if(startingPosition.column === dimension - 1) {
+    return newLightBeams;
   }
-  if(possibleIndices.length > 0) {
-    const steamyTileIndices = possibleIndices.filter(index => tiles[index].fields.includes('FLOODED') && tiles[index].fields.includes('BURNING'))
-    const smokeyTileIndices = possibleIndices.filter(index => tiles[index].fields.includes('EARTH') && tiles[index].fields.includes('BURNING'))
-    const firstSteamyTileIndex = steamyTileIndices[0]
-    const firstSmokeyTileIndex = smokeyTileIndices[0]
+  const nextPosition = { row: startingPosition.row, column: startingPosition.column + 1}
+  const nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+  const nextTile = tiles[nextIndex]
+  console.log('nextTile', nextTile)
+  const newLightBeamsWithNext = [...newLightBeams, { index: nextIndex, direction }]
 
-    if((steamyTileIndices.length > 0 && smokeyTileIndices.length === 0) || 
-    (steamyTileIndices.length > 0 && smokeyTileIndices.length > 0 && firstSteamyTileIndex < firstSmokeyTileIndex)) {
-      const indexInArrayOfFirstSteamyTile = possibleIndices.findIndex(index => index === firstSteamyTileIndex)
-      const cutOffLightBeam = possibleIndices.slice(0, indexInArrayOfFirstSteamyTile)
-      return [{ indices: cutOffLightBeam, direction }, 
-        ...calculateBeamsFromStartingPoint(tiles, firstSteamyTileIndex, 'NORTHEAST', dimension),
-        ...calculateBeamsFromStartingPoint(tiles, firstSteamyTileIndex, 'SOUTHEAST', dimension)]
-    }
+  if(nextTile.fields.includes('FLOODED') && nextTile.fields.includes('BURNING')) {
+    return [...newLightBeamsWithNext, 
+      ...calculateBeamsFromStartingPoint(tiles, newLightBeamsWithNext, nextIndex, 'NORTHEAST', dimension),
+      ...calculateBeamsFromStartingPoint(tiles, newLightBeamsWithNext, nextIndex, 'SOUTHEAST', dimension)]
+  } else if(nextTile.fields.includes('EARTH') && nextTile.fields.includes('BURNING')) {
+    return newLightBeams
   }
-  return [{ indices: [], direction  }]
+  return calculateBeamsFromStartingPoint(tiles, newLightBeamsWithNext, nextIndex, 'EAST', dimension)
 
 } else if (direction === 'WEST') {
+  return newLightBeams;
 
 } else if (direction === 'NORTH') {
+  return newLightBeams;
 
 } else if (direction === 'SOUTH') {
+  return newLightBeams;
 
 } else if (direction === 'NORTHEAST') {
+  return newLightBeams;
 
 } else if (direction === 'NORTHWEST') {
+  return newLightBeams;
 
 } else if (direction === 'SOUTHEAST') {
+  return newLightBeams;
 
 } else if (direction === 'SOUTHWEST') {
+  return newLightBeams;
 
 } else {
-  return { indices: [], direction }
+  return newLightBeams;
 }
 }
 
-const calculateLightBeams = (tiles: Tiles) => {
+const caclulateNewLightBeams = (tiles: Tiles, dimension: number) => {
   const lightTotems = Object.keys(tiles)
-  .map(index => ({ totem: tiles[index].totem, index }))
-  .filter(item => item.totem?.type === 'LIGHT')
-  console.log('lighttotems:', lightTotems)
+    .map(index => ({ totem: tiles[index].totem, index }))
+    .filter(item => item.totem?.type === 'LIGHT')
+
+  const beamsPerLightTotem = lightTotems.map(lightTotem => 
+    calculateBeamsFromStartingPoint(tiles, [], parseInt(lightTotem.index), lightTotem.totem.direction, dimension)
+    )
+  return beamsPerLightTotem.reduce((acc, curr) => ([ ...acc, ...curr ]), [])
 }
 
 const addTotemToBoard = (state: State, totemType: TotemType, index: number): State => {
@@ -167,21 +176,32 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
     })
     newTiles[index] = { ...newTiles[index], totem: { type: totemType, direction: getInitialDirectionFromTotemType(totemType), id: uuidv4() } }
     const newTilesAfterWaterDispersion = doEarthWaterDispersion(newTiles, dimension)
-    calculateLightBeams(newTiles)
-    return { ...state, tiles: newTilesAfterWaterDispersion }
+
+    const lightTotems = Object.keys(newTiles)
+    .map(index => ({ totem: tiles[index].totem, index }))
+    .filter(item => item.totem?.type === 'LIGHT')
+
+    const beamsPerLightTotem = lightTotems.map(lightTotem => 
+      calculateBeamsFromStartingPoint(newTiles, [], parseInt(lightTotem.index), lightTotem.totem.direction, dimension)
+    )
+
+    const newLightBeams = beamsPerLightTotem.reduce((acc, curr) => ([ ...acc, ...curr ]), [])
+    console.log('newLightBeams', newLightBeams)
+    return { ...state, tiles: newTilesAfterWaterDispersion, lightBeams: newLightBeams }
   }
 
   return state;
 }
 
 
-const changeTotemDirection = (state: State, totemIndex: number, direction: Direction): Tiles => {
+const changeTotemDirection = (state: State, totemIndex: number, direction: Direction): State => {
   const { tiles } = state
   const { totem } = tiles[totemIndex]
   const newTotem = { ...totem, direction }
   const newTiles = { ...tiles, [totemIndex]: { ...tiles[totemIndex], totem: newTotem }}
-  calculateLightBeams(newTiles)
-  return newTiles
+  const newLightBeams = caclulateNewLightBeams(newTiles, state.dimension)
+  console.log('newLightBeams', newLightBeams)
+  return { ...state, tiles: newTiles, lightBeams: newLightBeams }
 }
 
 const reducer = (state: State = initialState, action: Action): State => {
@@ -194,10 +214,7 @@ const reducer = (state: State = initialState, action: Action): State => {
         totemSelection: action.payload.totemType
       };
     case 'CHANGE_TOTEM_DIRECTION':
-      return {
-        ...state,
-        tiles: changeTotemDirection(state, action.payload.totemIndex, action.payload.direction)
-      };
+      return changeTotemDirection(state, action.payload.totemIndex, action.payload.direction)
     default:
       return state;
   }

@@ -3,26 +3,22 @@ import styled from 'styled-components'
 import { connect } from "react-redux";
 import { addTotem, changeTotemDirection } from "../../../../redux/actions";
 import type { AddTotem, ChangeTotemDirection } from "../../../../redux/actions";
-import type { State, TotemType, Direction, Tile as TileState } from '../../../../redux/reducers'
+import type { State, TotemType, Direction, LightBeam, Tile as TileState } from '../../../../redux/reducers'
 import Totem from '../Totem'
 import Field from '../Field'
 import Arrow from './icons/arrow'
 
 
-type TileContainerProps = { lit: boolean }
-
-const TileContainer = styled.div<TileContainerProps>`
+const TileContainer = styled.div`
 font-size: 8px;
 display: inline-grid;
-box-shadow: ${props => props.lit && "0px 0px 8px 8px #888888"};
-
 grid-template-columns: 1fr 5fr 1fr;
 grid-template-rows: 1fr 5fr 1fr;
-
-
 `
 
-const MainItemContainer = styled.div`
+type MainContainerProps = { lit: boolean }
+
+const MainItemContainer = styled.div<MainContainerProps>`
 display: flex;
 position: relative;
 justify-content: center;
@@ -36,6 +32,7 @@ justify-content: center;
    border: 2px solid rgb(214,129,137);
 border-radius: 5px;
 color: #fff;
+box-shadow: ${props => props.lit && "0px 0px 8px 8px #888888"};
 
 cursor: pointer;
 
@@ -119,6 +116,7 @@ type TileProps = {
   addTotem: AddTotem, 
   changeTotemDirection : ChangeTotemDirection, 
   tile: TileState, 
+  lightBeam: LightBeam | undefined | null,
   totemSelection: TotemType }
 
 const arrowStyle = { width: '20px', height: '20px '}
@@ -126,11 +124,10 @@ const arrowStyle = { width: '20px', height: '20px '}
 const activeStyle = (totemDirection: Direction, arrowDirection: Direction) => 
 totemDirection === arrowDirection ? { fill: 'white' } : {}
 
-const Tile = ({ index, addTotem, changeTotemDirection, tile, totemSelection }: TileProps) => {
+const Tile = ({ index, addTotem, lightBeam, changeTotemDirection, tile, totemSelection }: TileProps) => {
   return (
-<TileContainer lit={false} >
-   <MainItemContainer onClick={() => addTotem({ totemType: totemSelection, index })} >
-     {console.log(tile)}
+<TileContainer>
+   <MainItemContainer onClick={() => addTotem({ totemType: totemSelection, index })} lit={!!lightBeam}>
       {tile && tile.totem && <Totem totemType={tile.totem.type} />}
       {tile && tile.fields.length > 0 && <Field fields={tile.fields} />}
     </MainItemContainer>
