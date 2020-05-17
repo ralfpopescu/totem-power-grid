@@ -19,8 +19,11 @@ export type Tile = {
 
 export type Tiles = { [key: string]: Tile }
 
+type LightBeam = { indices: Array<number>, direction: Direction }
+
 export type State = {
   tiles: Tiles,
+  lightBeams: Array<LightBeam>,
   totemSelection: TotemType,
   dimension: number
 }
@@ -36,7 +39,7 @@ export type Action =
 { type: 'CHANGE_TOTEM_SELECTION', payload: { totemType: TotemType }} |
 { type: 'CHANGE_TOTEM_DIRECTION', payload: { totemIndex: number, direction: Direction }}
 
-const initialState: State = { tiles: initialTiles, totemSelection: 'FIRE', dimension: initialDimension }
+const initialState: State = { tiles: initialTiles, lightBeams: [], totemSelection: 'FIRE', dimension: initialDimension }
 
 const canTotemBeInField = (totemType: TotemType, fields: Array<FieldType>) => {
   return fields.length === 0 ||
@@ -85,7 +88,60 @@ const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
   } else {
     return newTiles
   }
-  
+}
+
+const calculateBeamsFromStartingPoint = (tiles: Tiles, startIndex: number, direction: Direction, dimension: number): Array<LightBeam>=> {
+const initialPosition = calculatePositionFromIndex(startIndex, dimension)
+const possibleIndices = []
+
+if (direction === 'EAST') {
+  let eastCounter = initialPosition.column
+  while(eastCounter != dimension) {
+    const possiblePosition = { row: initialPosition.row, column: eastCounter }
+    possibleIndices.push(calculateIndexFromPosition({ ...possiblePosition, dimension }))
+    eastCounter += 1;
+  }
+  if(possibleIndices.length > 0) {
+    const steamyTileIndices = possibleIndices.filter(index => tiles[index].fields.includes('FLOODED') && tiles[index].fields.includes('BURNING'))
+    const smokeyTileIndices = possibleIndices.filter(index => tiles[index].fields.includes('EARTH') && tiles[index].fields.includes('BURNING'))
+    const firstSteamyTileIndex = steamyTileIndices[0]
+    const firstSmokeyTileIndex = smokeyTileIndices[0]
+
+    if((steamyTileIndices.length > 0 && smokeyTileIndices.length === 0) || 
+    (steamyTileIndices.length > 0 && smokeyTileIndices.length > 0 && firstSteamyTileIndex < firstSmokeyTileIndex)) {
+      const indexInArrayOfFirstSteamyTile = possibleIndices.findIndex(index => index === firstSteamyTileIndex)
+      const cutOffLightBeam = possibleIndices.slice(0, indexInArrayOfFirstSteamyTile)
+      return [{ indices: cutOffLightBeam, direction }, 
+        ...calculateBeamsFromStartingPoint(tiles, firstSteamyTileIndex, 'NORTHEAST', dimension),
+        ...calculateBeamsFromStartingPoint(tiles, firstSteamyTileIndex, 'SOUTHEAST', dimension)]
+    }
+  }
+  return [{ indices: [], direction  }]
+
+} else if (direction === 'WEST') {
+
+} else if (direction === 'NORTH') {
+
+} else if (direction === 'SOUTH') {
+
+} else if (direction === 'NORTHEAST') {
+
+} else if (direction === 'NORTHWEST') {
+
+} else if (direction === 'SOUTHEAST') {
+
+} else if (direction === 'SOUTHWEST') {
+
+} else {
+  return { indices: [], direction }
+}
+}
+
+const calculateLightBeams = (tiles: Tiles) => {
+  const lightTotems = Object.keys(tiles)
+  .map(index => ({ totem: tiles[index].totem, index }))
+  .filter(item => item.totem?.type === 'LIGHT')
+  console.log('lighttotems:', lightTotems)
 }
 
 const addTotemToBoard = (state: State, totemType: TotemType, index: number): State => {
@@ -111,17 +167,20 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
     })
     newTiles[index] = { ...newTiles[index], totem: { type: totemType, direction: getInitialDirectionFromTotemType(totemType), id: uuidv4() } }
     const newTilesAfterWaterDispersion = doEarthWaterDispersion(newTiles, dimension)
+    calculateLightBeams(newTiles)
     return { ...state, tiles: newTilesAfterWaterDispersion }
   }
 
   return state;
 }
 
+
 const changeTotemDirection = (state: State, totemIndex: number, direction: Direction): Tiles => {
   const { tiles } = state
   const { totem } = tiles[totemIndex]
   const newTotem = { ...totem, direction }
   const newTiles = { ...tiles, [totemIndex]: { ...tiles[totemIndex], totem: newTotem }}
+  calculateLightBeams(newTiles)
   return newTiles
 }
 
