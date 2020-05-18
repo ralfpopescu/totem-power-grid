@@ -7,6 +7,7 @@ import type { State, TotemType, Direction, LightBeam, Tile as TileState } from '
 import Totem from '../Totem'
 import Field from '../Field'
 import Arrow from './icons/arrow'
+import { getThemeFromFields } from '../../../../logic/totemColor'
 
 
 const TileContainer = styled.div`
@@ -16,9 +17,12 @@ grid-template-columns: 1fr 5fr 1fr;
 grid-template-rows: 1fr 5fr 1fr;
 `
 
-type MainContainerProps = { lit: boolean }
+type MainContainerProps = { lit: boolean, tile: TileState }
 
 const MainItemContainer = styled.div<MainContainerProps>`
+background-color: ${props => {
+  if(!props.tile.totem) return getThemeFromFields(props.theme, props.tile.fields).primary
+}};
 display: flex;
 position: relative;
 justify-content: center;
@@ -27,12 +31,10 @@ justify-content: center;
   grid-column-end: 2;
   grid-row-start: 2;
   grid-row-end: 2;
-   background-color: #29353d;
    padding: 10px;
-   border: 2px solid rgb(214,129,137);
+   border: ${props => props.tile.totem ? '': `2px solid ${props.lit ? "white" : "black"}`};
 border-radius: 5px;
-color: #fff;
-box-shadow: ${props => props.lit && "0px 0px 8px 8px #888888"};
+box-shadow: ${props => props.lit && "0px 0px 20px 20px #888888"};
 transition: all 0.1s ease;
 
 cursor: pointer;
@@ -128,7 +130,7 @@ totemDirection === arrowDirection ? { fill: 'white' } : {}
 const Tile = ({ index, addTotem, lightBeam, changeTotemDirection, tile, totemSelection }: TileProps) => {
   return (
 <TileContainer>
-   <MainItemContainer onClick={() => addTotem({ totemType: totemSelection, index })} lit={!!lightBeam}>
+   <MainItemContainer onClick={() => addTotem({ totemType: totemSelection, index })} lit={!!lightBeam} tile={tile}>
       {tile && tile.totem && <Totem totemType={tile.totem.type} />}
       {tile && tile.fields.length > 0 && <Field fields={tile.fields} />}
     </MainItemContainer>
