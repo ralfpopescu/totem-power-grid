@@ -10,11 +10,32 @@ const LightPost = () => (
 )
 
 const Container = styled.div`
+position: relative;
 display: flex;
 flex-direction: row;
-border: 1px solid black;
+border: 1px solid rgba(255,255,255,.4);
 align-items: center;
 justify-content: center;
+background-image: linear-gradient(to right, #2D86F0 , #3F94F8);
+
+`
+
+const BluePrintTexture = styled.div`
+display: grid;
+position: absolute;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+`
+
+const BluePrintTextureSquare = styled.div`
+border: 1px solid rgba(255,255,255,.1);
+width: 100%;
+height: 100%;
 `
 
 const SolutionTile = ({ tileSolution, hasLightBeam }: SolutionTileProps) => {
@@ -27,6 +48,9 @@ const SolutionTile = ({ tileSolution, hasLightBeam }: SolutionTileProps) => {
   }
   return (
     <Container>
+      <BluePrintTexture>
+        {Array(25).fill(<BluePrintTextureSquare />)}
+      </BluePrintTexture>
       {fill && <Hut style={{fill, height: '30px', width: '30px' }}/>}
       {hasLightBeam && <LightPost />}
     </Container>
