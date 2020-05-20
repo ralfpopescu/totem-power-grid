@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import calculateLightBeams from './calculateLightBeams'
 import doEarthWaterDispersion from './doEarthWaterDispersion'
 import electrify from './calculateElectrification'
+import getSolutionFromState from '../../logic/getSolutionFromState'
 
 export type TotemType = 'FIRE' | 'ELECTRIC' | 'LIGHT' | 'WATER' | 'WIND' | 'EARTH'
 
@@ -105,6 +106,7 @@ const reducer = (state: State = initialState, action: Action): State => {
     case 'ADD_TOTEM':
       return addTotemToBoard(state, action.payload.totemType, action.payload.index)
     case 'CHANGE_TOTEM_SELECTION':
+      console.log('solution:', JSON.stringify(getSolutionFromState(state)))
       return {
         ...state,
         totemSelection: action.payload.totemType

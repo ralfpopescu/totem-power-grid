@@ -2,7 +2,10 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components'
 import Board from './components/Board'
 import TotemSelector from './components/TotemSelector'
+import Solution from './components/Solution'
 import { ReactComponent as Shaman } from './top-level-assets/shaman1.svg'
+import exampleSolution from './components/Solution/example-solution.json';
+import type { Solution as SolutionType } from './logic/getSolutionFromState';
 
 const AppContainer = styled.div`
 position: absolute;
@@ -12,9 +15,9 @@ bottom: 0;
 right: 0;
 left: 0;
 overflow: scroll;
-border: 1px solid blue;
 display: grid;
-grid-template-columns: 1fr 1fr 1fr;
+grid-template-columns: 1fr 4fr 1fr;
+grid-template-columns: 1fr 4fr 1fr;
 `
 
 type color = { primary: string, secondary: string }
@@ -70,15 +73,43 @@ const theme: Theme = {
   },
 }
 
+const BoardGridItem = styled.div`
+grid-column-start: 2;
+grid-row-start: 1;
+`
+
+const TotemPowerGridTitle = styled.div`
+`
+
+const SideBar = styled.div`
+grid-column-start: 1;
+grid-row-start: 1;
+
+display: flex;
+flex-direction: column;
+padding: 10px;
+justify-self: center;
+align-self: center;
+align-items: center;
+justify-content: center;
+`
+
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <AppContainer>
-        <div style={{ width: '200px'}}>
-        <Shaman style={{ width: '200px'}} fill="red"/>
-        </div>
-        <Board />
-        <TotemSelector />
+        <Solution solution={exampleSolution as SolutionType}/>
+        <BoardGridItem>
+          <Board />
+        </BoardGridItem>
+        <SideBar>
+        <TotemPowerGridTitle>Totem Power Grid</TotemPowerGridTitle>
+          <div style={{ width: '200px'}}>
+          <Shaman style={{ width: '200px'}} fill="red"/>
+          </div>
+          <TotemSelector />
+        </SideBar>
       </AppContainer>
     </ThemeProvider>
   );

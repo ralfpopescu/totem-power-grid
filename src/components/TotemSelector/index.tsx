@@ -11,8 +11,7 @@ const typesArray: Array<TotemType> = ['FIRE', 'ELECTRIC', 'LIGHT', 'WATER', 'WIN
 
 const SelectorContainer = styled.div`
 display: grid;
-grid-template-columns: repeat(6, 100px);
-height: 300px;
+grid-template-columns: repeat(6, 50px);
 padding: 20px;
 `
 
