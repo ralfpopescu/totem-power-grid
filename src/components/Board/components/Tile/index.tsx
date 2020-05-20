@@ -21,7 +21,7 @@ type MainContainerProps = { lit: boolean, tile: TileState }
 
 const MainItemContainer = styled.div<MainContainerProps>`
 background-color: ${props => {
-  if(!props.tile.totem) return getThemeFromFields(props.theme, props.tile.fields).primary
+  if(!props.tile.totem) return  getThemeFromFields(props.theme, props.tile.fields).primary
 }};
 display: flex;
 position: relative;

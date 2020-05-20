@@ -4,8 +4,6 @@ import calculateIndexFromPosition from '../../logic/calculateIndexFromPosition'
 
 const isAtLimitPosition = (index: number, direction: Direction, dimension: number) => {
   const position = calculatePositionFromIndex(index, dimension)
-  console.log('limitposition', position)
-  console.log('direction', direction)
   let result;
   switch(direction) {
     case 'EAST':
@@ -124,9 +122,7 @@ const calculateLightBeams = (
     if(isAtLimitPosition(startIndex, direction, dimension)) {
       return newLightBeams;
     }
-    console.log(startIndex, direction, dimension)
     const nextIndex = getNextIndex(startIndex, direction, dimension)
-    console.log('nextIndex here', nextIndex)
     const nextTile = tiles[nextIndex]
 
     if(doesTileBlock(nextTile)) {
@@ -136,7 +132,6 @@ const calculateLightBeams = (
     const newLightBeamsWithNext = [...newLightBeams, { index: nextIndex, direction }]
 
     if(doesTileRefract(nextTile)) {
-      console.log('TILE REFRACTS')
       return [...newLightBeamsWithNext, ...getRefractionDirections(direction)
         .map(refractionDirection => calculateLightBeams(tiles, newLightBeamsWithNext, nextIndex, refractionDirection, dimension))
         .reduce((acc, curr) => [...acc, ...curr])]

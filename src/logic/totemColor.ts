@@ -8,11 +8,9 @@ const { FIRE, WATER, ELECTRIC, LIGHT, WIND, EARTH } = totemTypes
 
 export const getThemeFromFields = (theme: Theme, fields: Array<FieldType>) => {
   if(fields.length === 0) {
-    console.log('no fields')
     return { primary: theme.main.primary, secondary: theme.main.secondary }
   }
   const field = calculateFieldsFromFields(fields)
-  console.log({ primary: theme[field].primary, secondary: theme[field].secondary })
   return { primary: theme[field].primary, secondary: theme[field].secondary }
 }
 

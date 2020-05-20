@@ -1,4 +1,4 @@
-import type { State , TotemType} from '.'
+import type { TotemType} from '.'
 import type { FieldType } from '../../logic/fieldTypes'
 import { BURNING, FLOODED, EARTH } from '../../logic/fieldTypes'
 import calculatePositionFromIndex from '../../logic/calculatePositionFromIndex'
@@ -16,11 +16,6 @@ export const returnAdjacentCoordinates = (index: number, dimension: number) => {
     coordinate.row >= 0 && coordinate.row < dimension && coordinate.column >= 0 && coordinate.column < dimension
   ))
 }
-
-const getAllCoordinatesInDirection = () => {}
-const getAllCoordinatesInDiagonal = () => {}
-
-const recursivelyGetAdjacentWaterTiles = () => {}
 
 type TotemEffect = { index: number, fieldType: FieldType }
 

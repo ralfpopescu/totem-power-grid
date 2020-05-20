@@ -9,6 +9,7 @@ import { ReactComponent as Air } from './fieldIcons/air.svg'
 import { ReactComponent as Earth } from './fieldIcons/earth.svg'
 import { ReactComponent as Water } from './fieldIcons/water.svg'
 import { ReactComponent as Smoke } from './fieldIcons/smoke.svg'
+import { ReactComponent as Electric } from './fieldIcons/electric.svg'
 
 type FieldProps = { fields: Array<FieldType> }
 
@@ -41,6 +42,9 @@ const getFieldIconFromFields = (fields: Array<FieldType>): AnyStyledComponent =>
   }
   if(calculatedFieldType === 'SMOKEY') {
     return Icon(Smoke as AnyStyledComponent, fields)
+  }
+  if(calculatedFieldType === 'ELECTRIC_CURRENT') {
+    return Icon(Electric as AnyStyledComponent, fields)
   }
   return styled.div``;
 }

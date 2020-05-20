@@ -3,6 +3,7 @@ import { applyTotemEffect } from './calculateFields'
 import { v4 as uuidv4 } from 'uuid'
 import calculateLightBeams from './calculateLightBeams'
 import doEarthWaterDispersion from './doEarthWaterDispersion'
+import electrify from './calculateElectrification'
 
 export type TotemType = 'FIRE' | 'ELECTRIC' | 'LIGHT' | 'WATER' | 'WIND' | 'EARTH'
 
@@ -79,11 +80,13 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
     const newTilesAfterWaterDispersion = doEarthWaterDispersion(newTiles, dimension)
 
     const newLightBeams = calculateLightBeams(newTiles, dimension)
-    return { ...state, tiles: newTilesAfterWaterDispersion, lightBeams: newLightBeams }
+    const newElectrifiedFields = calculateElectrification({ ...state, tiles: newTilesAfterWaterDispersion})
+    console.log('newElectrifiedFields state', newElectrifiedFields)
+    return { ...state, tiles: newTilesAfterWaterDispersion, lightBeams: newLightBeams, electrifiedFields: newElectrifiedFields }
   }
-
   return state;
 }
+
 
 
 const changeTotemDirection = (state: State, totemIndex: number, direction: Direction): State => {
@@ -92,8 +95,9 @@ const changeTotemDirection = (state: State, totemIndex: number, direction: Direc
   const newTotem = { ...totem, direction }
   const newTiles = { ...tiles, [totemIndex]: { ...tiles[totemIndex], totem: newTotem }}
   const newLightBeams = calculateLightBeams(newTiles, state.dimension)
-  console.log('newLightBeams', newLightBeams)
-  return { ...state, tiles: newTiles, lightBeams: newLightBeams }
+  const tilesAfterElectrification = electrify({ ...state, tiles: newTiles })
+  console.log('newElectrifiedFields change', tilesAfterElectrification)
+  return { ...state, tiles: tilesAfterElectrification, lightBeams: newLightBeams }
 }
 
 const reducer = (state: State = initialState, action: Action): State => {
