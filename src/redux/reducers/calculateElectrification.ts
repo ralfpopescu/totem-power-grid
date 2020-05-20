@@ -76,7 +76,7 @@ export const electrifyTiles = (tiles: Tiles, electrifiedFields: Array<number>) =
     acc[curr.index] = { ...newTiles[curr.index], fields: curr.fields}
     return acc
   }, {})
-  
+  console.log(removeElectricityFromTiles)
   const returnTiles = { ...removeElectricityFromTiles }
   electrifiedFields.forEach(index => {
     returnTiles[index] = { ...newTiles[index], fields: [...newTiles[index].fields, 'ELECTRIC_CURRENT']}
@@ -101,12 +101,14 @@ const calculateElectrification = (state: State): Array<number> => {
       return []
     }
 
-    if(canElectrifyTile(tiles[startIndex].fields, [], startIndex) || 
+    const initialElectrifiedFields = [startIndex]
+
+    if(!canElectrifyTile(tiles[startIndex].fields, [], startIndex)|| 
     tiles[startIndex].fields.length === 0) {
-      const initialElectrifiedFields = [startIndex]
-      return electrifyNeighbors(startIndex, state, initialElectrifiedFields)
+      return initialElectrifiedFields
     }
-    return []
+
+    return electrifyNeighbors(startIndex, state, initialElectrifiedFields)
   }).reduce((acc, curr) => [...acc, ...curr])
 
 console.log('newElectrifiedIndices', newElectrifiedIndices)
