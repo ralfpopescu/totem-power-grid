@@ -130,6 +130,7 @@ totemDirection === arrowDirection ? { fill: 'white' } : {}
 const Tile = ({ index, addTotem, lightBeam, changeTotemDirection, tile, totemSelection }: TileProps) => {
   return (
 <TileContainer>
+  {index}
    <MainItemContainer onClick={() => addTotem({ totemType: totemSelection, index })} lit={!!lightBeam} tile={tile}>
       {tile && tile.totem && <Totem totemType={tile.totem.type} />}
       {tile && tile.fields.length > 0 && <Field fields={tile.fields} />}

@@ -7,6 +7,9 @@ const calculateFieldFromFields = (fields: Array<FieldType>): FieldType => {
   if(fields.includes('BURNING') && fields.includes('EARTH')) {
     return 'SMOKEY'
   }
+  if(fields.includes('ELECTRIC_CURRENT')) {
+    return 'ELECTRIC_CURRENT'
+  }
   return fields[0]
 }
 

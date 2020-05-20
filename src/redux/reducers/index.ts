@@ -77,12 +77,12 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
       }
     })
     newTiles[index] = { ...newTiles[index], totem: { type: totemType, direction: getInitialDirectionFromTotemType(totemType), id: uuidv4() } }
-    const newTilesAfterWaterDispersion = doEarthWaterDispersion(newTiles, dimension)
+    const tilesAfterWaterDispersion = doEarthWaterDispersion(newTiles, dimension)
 
     const newLightBeams = calculateLightBeams(newTiles, dimension)
-    const newElectrifiedFields = calculateElectrification({ ...state, tiles: newTilesAfterWaterDispersion})
-    console.log('newElectrifiedFields state', newElectrifiedFields)
-    return { ...state, tiles: newTilesAfterWaterDispersion, lightBeams: newLightBeams, electrifiedFields: newElectrifiedFields }
+    const tilesAfterElectrification = electrify({ ...state, tiles: tilesAfterWaterDispersion})
+    console.log('newElectrifiedFields state', tilesAfterElectrification)
+    return { ...state, tiles: tilesAfterElectrification, lightBeams: newLightBeams }
   }
   return state;
 }
