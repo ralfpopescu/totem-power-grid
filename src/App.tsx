@@ -4,12 +4,16 @@ import Board from './components/Board'
 import TotemSelector from './components/TotemSelector'
 import Solution from './components/Solution'
 import { ReactComponent as Shaman } from './top-level-assets/shaman1.svg'
-import exampleSolution from './components/Solution/example-solution.json';
+import exampleSolution from './components/Solution/example-solution-2.json';
 import type { Solution as SolutionType } from './logic/getSolutionFromState';
+import type { State } from './redux/reducers';
+import getSolutionFromState from './logic/getSolutionFromState';
+import { connect } from "react-redux";
+import _ from 'lodash'
 
 const AppContainer = styled.div`
 position: absolute;
-background-color: #36454f;
+background-color: #294363;
 top: 0;
 bottom: 0;
 right: 0;
@@ -36,7 +40,7 @@ export type Theme = {
 
 const theme: Theme = {
   main: {
-    primary: '#274029',
+    primary: '#356096',
     secondary: '#f68e5f'
   },
   BURNING: {
@@ -79,6 +83,8 @@ grid-row-start: 1;
 `
 
 const TotemPowerGridTitle = styled.div`
+font-size: 50px;
+color: white;
 `
 
 const SideBar = styled.div`
@@ -94,17 +100,48 @@ align-items: center;
 justify-content: center;
 `
 
+const SolutionSideBar = styled.div`
+grid-column-start: 3;
+grid-row-start: 1;
+display: flex;
+flex-direction: column;
+padding: 10px;
+justify-self: center;
+align-self: center;
+align-items: center;
+justify-content: center;
+`
 
-function App() {
+const ActivateButton = styled.button`
+font-size: 20px;
+padding: 10px;
+`
+
+const solve = (state: State, solution: SolutionType) => {
+  const playerSolution = getSolutionFromState(state)
+  const isSolved = _.isEqual(playerSolution, solution)
+  if(isSolved) {
+    console.log('solved!')
+  } else {
+    console.log('The village blew up.')
+  }
+}
+
+type AppProps = { state: State }
+
+const App = ({ state }: AppProps) => {
   return (
     <ThemeProvider theme={theme}>
       <AppContainer>
-        <Solution solution={exampleSolution as SolutionType}/>
+        <SolutionSideBar>
+          <Solution solution={exampleSolution as SolutionType}/>
+          <ActivateButton onClick={() => solve(state, exampleSolution as SolutionType)}>ACTIVATE</ActivateButton>
+        </SolutionSideBar>
         <BoardGridItem>
           <Board />
         </BoardGridItem>
         <SideBar>
-        <TotemPowerGridTitle>Totem Power Grid</TotemPowerGridTitle>
+        <TotemPowerGridTitle>TOTEM POWER GRID</TotemPowerGridTitle>
           <div style={{ width: '200px'}}>
           <Shaman style={{ width: '200px'}} fill="red"/>
           </div>
@@ -115,4 +152,9 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state: State) => {
+  return { state }
+};
+
+export default connect(mapStateToProps)(App);
+

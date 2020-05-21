@@ -20,7 +20,7 @@ const Solution = ({ dimension, solution }: SolutionProps) => {
   return (
   <SolutionContainer dimension={dimension}>
     {Array(dimension * dimension).fill(1).map((_, index) => (
-      <SolutionTile hasLightBeam={!!solution.lightBeams.find(lb => lb.index === index)} tileSolution={solution.tileSolution[index]} />
+      <SolutionTile hasLightBeam={!!solution.lightBeams.find(lb => lb.index === index)} tileSolution={solution.tileSolution[index]} index={index}/>
     ))}
   </SolutionContainer>
 )}

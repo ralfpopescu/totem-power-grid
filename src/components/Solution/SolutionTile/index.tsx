@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { ReactComponent as Hut } from './assets/buildings.svg'
 import { ReactComponent as LightPostIcon } from './assets/light.svg'
 
-type SolutionTileProps = { tileSolution: 'BURNING' | 'ELECTRIC_CURRENT' | null, hasLightBeam: boolean }
+type SolutionTileProps = { tileSolution: 'BURNING' | 'ELECTRIC_CURRENT' | null, hasLightBeam: boolean, index: number }
 
 const LightPost = () => (
   <LightPostIcon style={{ height: '30px', width: '30px', fill: 'white' }}/>
@@ -27,6 +27,8 @@ top: 0;
 right: 0;
 bottom: 0;
 left: 0;
+font-size: 6px;
+color: white;
 grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 
@@ -38,7 +40,7 @@ width: 100%;
 height: 100%;
 `
 
-const SolutionTile = ({ tileSolution, hasLightBeam }: SolutionTileProps) => {
+const SolutionTile = ({ tileSolution, hasLightBeam, index }: SolutionTileProps) => {
   let fill = null
   if(tileSolution === 'BURNING') {
     fill = 'red'
@@ -49,7 +51,10 @@ const SolutionTile = ({ tileSolution, hasLightBeam }: SolutionTileProps) => {
   return (
     <Container>
       <BluePrintTexture>
-        {Array(25).fill(<BluePrintTextureSquare />)}
+        <BluePrintTextureSquare>
+          {index}
+        </BluePrintTextureSquare>
+        {Array(24).fill(<BluePrintTextureSquare />)}
       </BluePrintTexture>
       {fill && <Hut style={{fill, height: '30px', width: '30px' }}/>}
       {hasLightBeam && <LightPost />}
