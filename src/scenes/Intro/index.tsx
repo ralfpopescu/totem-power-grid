@@ -5,7 +5,7 @@ import LevelSelect from './Level-Select'
 
 const AppContainer = styled.div`
 position: absolute;
-background-color: #294363;
+background-color: ${props => props.theme.ocean.primary};
 top: 0;
 bottom: 0;
 right: 0;

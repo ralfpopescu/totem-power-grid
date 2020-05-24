@@ -18,12 +18,18 @@ export type Theme = {
   ELECTRIC_CURRENT: color,
   BRIGHT: color,
   WINDY: color
+  ocean: color
 }
+
 
 const theme: Theme = {
   main: {
     primary: '#356096',
     secondary: '#f68e5f'
+  },
+  ocean: {
+    primary: '#33bbff',
+    secondary: '#33bbff',
   },
   BURNING: {
     primary: '#f76c5e',
