@@ -49,7 +49,7 @@ const getCorners = (adjacencies: Array<Adjancency>) => {
 const getBorderRadiusFromAdjacencies = (adjacencies: Array<Adjancency>) => {
   const radiusAmount = 50
  const corners = getCorners(adjacencies)
- const borderRadiusString = `${corners.includes('NORTHWEST') ? `${radiusAmount}` : 0}px ${corners.includes('NORTHEAST') ? `${radiusAmount}` : 0}px ${corners.includes('SOUTHWEST') ? `${radiusAmount}` : 0}px ${corners.includes('SOUTHEAST') ? `${radiusAmount}` : 0}px`
+ const borderRadiusString = `${corners.includes('NORTHWEST') ? `${radiusAmount}` : 0}px ${corners.includes('NORTHEAST') ? `${radiusAmount}` : 0}px ${corners.includes('SOUTHEAST') ? `${radiusAmount}` : 0}px ${corners.includes('SOUTHWEST') ? `${radiusAmount}` : 0}px`
  console.log(borderRadiusString)
  return borderRadiusString
 }

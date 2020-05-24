@@ -20,6 +20,33 @@ const LevelSelect = () => (
     <Tile adjacencies={['WEST']}/>
     <Tile adjacencies={[]} land={true} />
     <Tile adjacencies={['EAST']}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={['NORTH', 'WEST', 'SOUTH', 'EAST']}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={['SOUTH', 'WEST']}/>
+    <Tile adjacencies={[]} land={true} />
+    <Tile adjacencies={[]} land={true} />
+    <Tile adjacencies={['NORTH', 'EAST']}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={['SOUTH', 'WEST']}/>
+    <Tile adjacencies={[]} land={true} />
+    <Tile adjacencies={['SOUTH', 'EAST']}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={['EAST', 'WEST']}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={['NORTH', 'SOUTH', 'WEST']}/>
+    <Tile adjacencies={['SOUTH']}/>
+    <Tile adjacencies={['NORTH', 'SOUTH', 'EAST']}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={[]}/>
   </LevelSelectContainer>
 )
 
