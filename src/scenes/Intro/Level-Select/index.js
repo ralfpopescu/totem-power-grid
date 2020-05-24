@@ -43,10 +43,10 @@ const LevelSelect = () => (
     <Tile adjacencies={[]}/>
     <Tile adjacencies={[]}/>
     <Tile adjacencies={['NORTH', 'SOUTH', 'WEST']}/>
-    <Tile adjacencies={['SOUTH']}/>
+    <Tile adjacencies={['SOUTH', 'EAST']}/>
+    <Tile adjacencies={[]}/>
+    <Tile adjacencies={['NORTH', 'SOUTH', 'WEST']}/>
     <Tile adjacencies={['NORTH', 'SOUTH', 'EAST']}/>
-    <Tile adjacencies={[]}/>
-    <Tile adjacencies={[]}/>
   </LevelSelectContainer>
 )
 

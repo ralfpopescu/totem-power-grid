@@ -63,6 +63,11 @@ const TileContainer = styled.div<TileProps>`
   overflow: visible;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
 `
 
@@ -73,6 +78,10 @@ const Land = styled.div<TileProps>`
   background-color: #8cff66;
   border-radius: ${props => getBorderRadiusFromAdjacencies(props.adjacencies)};
   overflow: hidden;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `
 
 const FullLand = styled.div`
@@ -80,6 +89,7 @@ background-color: #8cff66;
 height: 100%
 width: 100%:
 border: 1px solid black; 
+
 `
 
 const Tile = ({ adjacencies, land }: TileProps) => (
