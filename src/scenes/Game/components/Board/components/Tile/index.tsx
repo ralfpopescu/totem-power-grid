@@ -17,7 +17,7 @@ grid-template-columns: 1fr 5fr 1fr;
 grid-template-rows: 1fr 5fr 1fr;
 `
 
-type MainContainerProps = { lit: boolean, tile: TileState }
+type MainContainerProps = { lit: boolean, tile: TileState, boardScale: number }
 
 const MainItemContainer = styled.div<MainContainerProps>`
 background-color: ${props => {
@@ -31,7 +31,7 @@ justify-content: center;
   grid-column-end: 2;
   grid-row-start: 2;
   grid-row-end: 2;
-   padding: 10px;
+   padding: ${props => props.boardScale / 12}px;
    border: ${props => props.tile.totem ? '': `2px solid ${props.lit ? "white" : "black"}`};
 border-radius: 5px;
 box-shadow: ${props => props.lit && "0px 0px 20px 20px #888888"};
@@ -120,20 +120,22 @@ type TileProps = {
   changeTotemDirection : ChangeTotemDirection, 
   tile: TileState, 
   lightBeam: LightBeam | undefined | null,
-  totemSelection: TotemType }
+  totemSelection: TotemType,
+  boardScale: number 
+}
 
 const arrowStyle = { width: '20px', height: '20px '}
 
 const activeStyle = (totemDirection: Direction, arrowDirection: Direction) => 
 totemDirection === arrowDirection ? { fill: 'white' } : {}
 
-const Tile = ({ index, addTotem, lightBeam, changeTotemDirection, tile, totemSelection }: TileProps) => {
+const Tile = ({ index, addTotem, lightBeam, changeTotemDirection, tile, totemSelection, boardScale }: TileProps) => {
   return (
 <TileContainer>
   {index}
-   <MainItemContainer onClick={() => addTotem({ totemType: totemSelection, index })} lit={!!lightBeam} tile={tile}>
-      {tile && tile.totem && <Totem totemType={tile.totem.type} />}
-      {tile && tile.fields.length > 0 && <Field fields={tile.fields} />}
+   <MainItemContainer onClick={() => addTotem({ totemType: totemSelection, index })} lit={!!lightBeam} tile={tile} boardScale={boardScale}>
+      {tile && tile.totem && <Totem totemType={tile.totem.type} boardScale={boardScale} />}
+      {tile && tile.fields.length > 0 && <Field fields={tile.fields} boardScale={boardScale} />}
     </MainItemContainer>
     <RightZone>
       {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(180deg)', ...activeStyle(tile.totem?.direction, 'EAST')}} 

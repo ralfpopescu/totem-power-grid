@@ -27,12 +27,12 @@ const totemColor = (totemType: TotemType) => {
   }
 }
 
-type TotemIconProps = { totemType: TotemType }
+type TotemIconProps = { totemType: TotemType, boardScale: number }
 
 const TotemIcon = styled(TotemImage)<TotemIconProps>`
 fill: ${props => totemColor(props.totemType)};
-width: 50px;
-height: 50px;
+width: ${props => props.boardScale / 3}px;
+height: ${props => props.boardScale / 3}px;
 animation: fall-in 0.2s ease-in-out 1;
 
 @keyframes fall-in {
@@ -46,12 +46,12 @@ animation: fall-in 0.2s ease-in-out 1;
 
 `
 
-type TotemProps = { totemType: TotemType }
+type TotemProps = { totemType: TotemType, boardScale: number }
 
-const Totem = ({ totemType }: TotemProps) => {
+const Totem = ({ totemType, boardScale }: TotemProps) => {
   return (
     <>
-    {totemType && <TotemIcon totemType={totemType} />}
+    {totemType && <TotemIcon totemType={totemType} boardScale={boardScale} />}
     </>
 )}
 

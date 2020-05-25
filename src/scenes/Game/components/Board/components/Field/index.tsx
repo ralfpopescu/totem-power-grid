@@ -11,11 +11,11 @@ import { ReactComponent as Water } from './fieldIcons/water.svg'
 import { ReactComponent as Smoke } from './fieldIcons/smoke.svg'
 import { ReactComponent as Electric } from './fieldIcons/electric.svg'
 
-type FieldProps = { fields: Array<FieldType> }
+type FieldProps = { fields: Array<FieldType>, boardScale: number }
 
-const Icon = (IconComponent: AnyStyledComponent, fields: Array<FieldType>) => styled(IconComponent)`
-height: 40px;
-width: 40px;
+const Icon = (IconComponent: AnyStyledComponent, fields: Array<FieldType>, boardScale: number) => styled(IconComponent)`
+height: ${boardScale / 3}px;
+width: ${boardScale / 3}px;
 position: relative;
 animation: pop 0.2s ease-in-out 1;
 fill: ${props => getThemeFromFields(props.theme, fields).secondary};
@@ -26,41 +26,43 @@ fill: ${props => getThemeFromFields(props.theme, fields).secondary};
 `
 
 
-const getFieldIconFromFields = (fields: Array<FieldType>): AnyStyledComponent => {
+const getFieldIconFromFields = (fields: Array<FieldType>, boardScale: number): AnyStyledComponent => {
   const calculatedFieldType = calculateFieldFromFields(fields)
   if(calculatedFieldType === 'BURNING') {
-    return Icon(Fire as AnyStyledComponent, fields)
+    return Icon(Fire as AnyStyledComponent, fields, boardScale)
   }
   if(calculatedFieldType === 'FLOODED') {
-    return Icon(Water as AnyStyledComponent, fields)
+    return Icon(Water as AnyStyledComponent, fields, boardScale)
   }
   if(calculatedFieldType === 'STEAMY') {
-    return Icon(Air as AnyStyledComponent, fields)
+    return Icon(Air as AnyStyledComponent, fields, boardScale)
   }
   if(calculatedFieldType === 'EARTH') {
-    return Icon(Earth as AnyStyledComponent, fields)
+    return Icon(Earth as AnyStyledComponent, fields, boardScale)
   }
   if(calculatedFieldType === 'SMOKEY') {
-    return Icon(Smoke as AnyStyledComponent, fields)
+    return Icon(Smoke as AnyStyledComponent, fields, boardScale)
   }
   if(calculatedFieldType === 'ELECTRIC_CURRENT') {
-    return Icon(Electric as AnyStyledComponent, fields)
+    return Icon(Electric as AnyStyledComponent, fields, boardScale)
   }
   return styled.div``;
 }
 
-const IconContainer = styled.div`
-height: 40px;
-width: 40px;
+type IconContainerProps = { boardScale: number }
+
+const IconContainer = styled.div<IconContainerProps>`
+height: ${props => props.boardScale / 3}px;
+width: ${props => props.boardScale / 3}px;
 position: relative;
 
 `
 
-const Field = ({ fields }: FieldProps) => {
-  const IconComponent = getFieldIconFromFields(fields)
+const Field = ({ fields, boardScale }: FieldProps) => {
+  const IconComponent = getFieldIconFromFields(fields, boardScale)
   return (
-  <IconContainer>
-   <IconComponent />
+  <IconContainer boardScale={boardScale}>
+     <IconComponent />
   </IconContainer>
   )
 }
