@@ -11,7 +11,7 @@ overflow: visible;
 
 const LevelSelect = () => (
   <LevelSelectContainer>
-    <Tile adjacencies={['NORTH', 'WEST']}/>
+    <Tile adjacencies={['NORTH', 'WEST']} level={0} />
     <Tile adjacencies={['NORTH']}/>
     <Tile adjacencies={['NORTH', 'EAST']}/>
     <Tile adjacencies={[]}/>

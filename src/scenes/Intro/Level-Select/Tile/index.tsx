@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components'
+import { Link, useHistory } from 'react-router-dom'
+import { ReactComponent as Village } from './assets/tipi.svg'
 
 type Adjancency = 'NORTH' | 'SOUTH' | 'EAST' | 'WEST'
 
-type TileProps = { adjacencies: Array<Adjancency>, land: boolean | undefined }
+type TileProps = { adjacencies: Array<Adjancency>, land: boolean | undefined, level: number | undefined }
 
 type BeachGradientProps = { adjacency: Adjancency }
 
@@ -54,7 +56,9 @@ const getBorderRadiusFromAdjacencies = (adjacencies: Array<Adjancency>) => {
  return borderRadiusString
 }
 
-const TileContainer = styled.div<TileProps>`
+type TileContainerProps = { land: boolean | undefined }
+
+const TileContainer = styled.div<TileContainerProps>`
   height: 120px;
   width: 120px;
   display: flex;
@@ -71,7 +75,9 @@ const TileContainer = styled.div<TileProps>`
 
 `
 
-const Land = styled.div<TileProps>`
+type LandProps = { adjacencies: Array<Adjancency> }
+
+const Land = styled.div<LandProps>`
   position: relative;
   height: 120px;
   width: 120px;
@@ -92,15 +98,21 @@ border: 1px solid black;
 
 `
 
-const Tile = ({ adjacencies, land }: TileProps) => (
-<TileContainer adjacencies={adjacencies} land={land} >
+const Tile = ({ adjacencies, land, level }: TileProps) => {
+  const history = useHistory()
+  return (
+<TileContainer land={land} onClick={() => {
+  if(level != null) {
+    history.push(`/game/${level}`)
+  }
+}}>
   {adjacencies.length > 0 && (
-  <Land adjacencies={adjacencies} land={land}>
+  <Land adjacencies={adjacencies} >
     {adjacencies.map(adj => <BeachGradient adjacency={adj} />)}
     </Land>
     )}
   {adjacencies.length === 0 && land && <FullLand />}
 </TileContainer>
-)
+)}
 
 export default Tile

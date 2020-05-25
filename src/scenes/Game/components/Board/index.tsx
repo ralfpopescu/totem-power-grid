@@ -5,6 +5,8 @@ import type { State, Tiles, LightBeam } from '../../../../redux/reducers'
 
 import Tile from './components/Tile'
 
+const boardScale = 120
+
 
 type BoardContainerProps = { dimension: number }
 
