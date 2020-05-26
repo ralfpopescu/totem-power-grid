@@ -39,7 +39,8 @@ const initialTiles = initialIndices.reduce((acc, curr) => ({ ...acc, [curr]: { .
 export type Action = 
 { type: 'ADD_TOTEM', payload: { index: number, totemType: TotemType }} |
 { type: 'CHANGE_TOTEM_SELECTION', payload: { totemType: TotemType }} |
-{ type: 'CHANGE_TOTEM_DIRECTION', payload: { totemIndex: number, direction: Direction }}
+{ type: 'CHANGE_TOTEM_DIRECTION', payload: { totemIndex: number, direction: Direction }
+}
 
 const initialState: State = { tiles: initialTiles, lightBeams: [], totemSelection: 'FIRE', dimension: initialDimension }
 
@@ -111,6 +112,8 @@ const reducer = (state: State = initialState, action: Action): State => {
         ...state,
         totemSelection: action.payload.totemType
       };
+    case 'CHANGE_TOTEM_DIRECTION':
+      return changeTotemDirection(state, action.payload.totemIndex, action.payload.direction)
     case 'CHANGE_TOTEM_DIRECTION':
       return changeTotemDirection(state, action.payload.totemIndex, action.payload.direction)
     default:

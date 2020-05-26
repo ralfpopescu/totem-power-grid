@@ -37,7 +37,6 @@ color: white;
 const SideBar = styled.div`
 grid-column-start: 1;
 grid-row-start: 1;
-background-color: #8cff66;
 
 display: flex;
 flex-direction: column;
@@ -49,7 +48,6 @@ justify-content: center;
 `
 
 const SolutionSideBar = styled.div`
-background-color: #8cff66;
 grid-column-start: 3;
 grid-row-start: 1;
 display: flex;

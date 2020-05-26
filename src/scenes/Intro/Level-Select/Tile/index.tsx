@@ -5,7 +5,9 @@ import { ReactComponent as Village } from './assets/tipi.svg'
 
 type Adjancency = 'NORTH' | 'SOUTH' | 'EAST' | 'WEST'
 
-type TileProps = { adjacencies: Array<Adjancency>, land: boolean | undefined, level: number | undefined }
+type Level = { name: string, number: number, difficulty: string }
+
+type TileProps = { adjacencies: Array<Adjancency>, land?: boolean | undefined, level?: Level | undefined, setLevel: (level: Level | undefined | null) => void }
 
 type BeachGradientProps = { adjacency: Adjancency }
 
@@ -98,12 +100,16 @@ border: 1px solid black;
 
 `
 
-const Tile = ({ adjacencies, land, level }: TileProps) => {
+const Tile = ({ adjacencies, land, level, setLevel }: TileProps) => {
   const history = useHistory()
   return (
-<TileContainer land={land} onClick={() => {
+<TileContainer 
+land={land}
+onMouseEnter={() => setLevel(level)} 
+onMouseLeave={() => setLevel(null)} 
+onClick={() => {
   if(level != null) {
-    history.push(`/game/${level}`)
+    history.push(`/game/${level.number}`)
   }
 }}>
   {adjacencies.length > 0 && (

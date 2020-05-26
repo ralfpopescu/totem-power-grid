@@ -42,8 +42,6 @@ align-items: center;
 justify-content: center;
 `
 
-
-
 const Intro = () => {
   return (
     <AppContainer>

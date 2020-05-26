@@ -24,7 +24,7 @@ export type Theme = {
 
 const theme: Theme = {
   main: {
-    primary: '#8cff66;',
+    primary: 'white;',
     secondary: '#f68e5f'
   },
   ocean: {
