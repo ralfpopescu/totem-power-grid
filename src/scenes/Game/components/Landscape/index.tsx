@@ -49,9 +49,19 @@ flex-direction: row;
 align-self: flex-end;
 `
 
+const Ocean = styled.div`
+height: 150px;
+width: 100%;
+align-self: flex-end;
+background-color: ${props => props.theme.ocean.primary};
+`
+
 
 const Landscape = () => (
 <LandscapeContainer>
+  <Layer>
+    <Ocean />
+  </Layer>
   <Layer>
     <MountainRow2>
       <Triangle height={100} leftWidth={80} rightWidth={200} layer={2}/>

@@ -14,7 +14,7 @@ import _ from 'lodash'
 
 const AppContainer = styled.div`
 position: absolute;
-background-color: ${props => props.theme.ocean.primary};
+background-color: #7FD4FF;
 top: 0;
 bottom: 0;
 right: 0;
