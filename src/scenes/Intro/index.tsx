@@ -23,10 +23,14 @@ margin-bottom: 20px;
 `
 
 const TotemPowerGridDescription = styled.div`
-font-size: 30px;
+font-size: 20px;
 color: white;
 display: flex;
 flex-direction: column;
+`
+
+const DescriptionItem = styled.div`
+margin-bottom: 12px;
 `
 
 const SideBar = styled.div`
@@ -48,10 +52,10 @@ const Intro = () => {
       <SideBar>
         <TotemPowerGridTitle>TOTEM POWER GRID</TotemPowerGridTitle>
         <TotemPowerGridDescription>
-          <div>You are the power shaman of your village.</div>
-          <div>Villagers need fire, electricity, and light to do their daily activities.</div>
-          <div>You are assigned parts of the village to bring power to using your totems.</div>
-          <div>Make sure not to provide power to areas of the grid without the correct unit to absorb the power: disaster will occur!</div>
+          <DescriptionItem>You are Toto, the power shaman of your island, Fa'Owei-ah.</DescriptionItem>
+          <DescriptionItem>Villagers need fire, electricity, and light to do their daily activities.</DescriptionItem>
+          <DescriptionItem>You are assigned parts of the island to bring power to using your totems.</DescriptionItem>
+          <DescriptionItem>Make sure not to provide power to areas of the grid without the correct unit to absorb the power: disaster will occur!</DescriptionItem>
         </TotemPowerGridDescription>
         <Shaman />
       </SideBar>

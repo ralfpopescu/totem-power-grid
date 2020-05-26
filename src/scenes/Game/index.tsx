@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Board from './components/Board'
 import TotemSelector from './components/TotemSelector'
 import Solution from './components/Solution'
+import Landscape from './components/Landscape'
 import { ReactComponent as Shaman } from '../../top-level-assets/shaman1.svg'
 import exampleSolution from './components/Solution/example-solution-2.json';
 import type { Solution as SolutionType } from '../../logic/getSolutionFromState';
@@ -45,6 +46,7 @@ justify-self: center;
 align-self: center;
 align-items: center;
 justify-content: center;
+z-index: 1;
 `
 
 const SolutionSideBar = styled.div`
@@ -79,6 +81,7 @@ type AppProps = { state: State }
 const App = ({ state }: AppProps) => {
   return (
     <AppContainer>
+      <Landscape />
       <SolutionSideBar>
         <Solution solution={exampleSolution as SolutionType}/>
         <ActivateButton onClick={() => solve(state, exampleSolution as SolutionType)}>ACTIVATE</ActivateButton>

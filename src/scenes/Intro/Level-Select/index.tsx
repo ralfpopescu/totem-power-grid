@@ -11,7 +11,7 @@ overflow: visible;
 
 const Container = styled.div`
 display: grid;
-grid-template-rows: 100px 100px 100px 1fr;
+grid-template-rows: 80px 40px 40px 1fr;
 grid-row-start: 4;
 height: 100%;
 width: 100%:
@@ -29,10 +29,32 @@ font-size: 20px;
 place-self: center;
 `
 
-const LevelDifficulty = styled.div`
+const getDifficultyColor = (difficulty: string | undefined) => {
+  if(!difficulty) {
+    return 'black'
+  }
+  if(difficulty.toLowerCase() === 'very hard') {
+    return 'red'
+  }
+  if(difficulty.toLowerCase() === 'hard') {
+    return 'orange'
+  }
+  if(difficulty.toLowerCase() === 'medium') {
+    return 'yellow'
+  }
+  if(difficulty.toLowerCase() === 'easy') {
+    return 'green'
+  }
+  return 'black'
+}
+
+type LevelDifficultyProps = { difficulty: string | undefined }
+
+const LevelDifficulty = styled.div<LevelDifficultyProps>`
 grid-row-start: 3;
 font-size: 20px;
 place-self: center;
+color: ${props => getDifficultyColor(props.difficulty)}
 `
 
 
@@ -44,19 +66,19 @@ const LevelSelect = () => {
   <Container>
     <FaOweiah>Fa'Owei-ah</FaOweiah>
     <LevelTitle>{level ? level.name : null}</LevelTitle>
-    <LevelDifficulty>{level ? level.difficulty : null}</LevelDifficulty>
+    <LevelDifficulty difficulty={level?.difficulty}>{level?.difficulty}</LevelDifficulty>
     <LevelSelectContainer>
-      <Tile setLevel={setLevel} adjacencies={['NORTH', 'WEST']} level={{ name: 'f', difficulty: 'hard', number: 0 }} />
-      <Tile setLevel={setLevel} adjacencies={['NORTH']}/>
-      <Tile setLevel={setLevel} adjacencies={['NORTH', 'EAST']}/>
+      <Tile setLevel={setLevel} adjacencies={['NORTH', 'WEST']} level={{ name: 'Fisherman’s Dream', difficulty: 'hard', number: 0 }} />
+      <Tile setLevel={setLevel} adjacencies={['NORTH']} level={{ name: 'Jami\'s Coconut Farm', difficulty: 'easy', number: 1 }}/>
+      <Tile setLevel={setLevel} adjacencies={['NORTH', 'EAST']} level={{ name: 'Kaka Wawa', difficulty: 'easy', number: 2 }}/>
       <Tile setLevel={setLevel} adjacencies={[]}/>
       <Tile setLevel={setLevel} adjacencies={[]}/>
       <Tile setLevel={setLevel} adjacencies={[]}/>
-      <Tile setLevel={setLevel} adjacencies={['WEST']}/>
-      <Tile setLevel={setLevel} adjacencies={[]} land={true} />
-      <Tile setLevel={setLevel} adjacencies={['EAST']}/>
+      <Tile setLevel={setLevel} adjacencies={['WEST']} level={{ name: 'Capitol Village', difficulty: 'very hard', number: 3 }}/>
+      <Tile setLevel={setLevel} adjacencies={[]} land={true} level={{ name: 'N\'eva Eva', difficulty: 'easy', number: 4 }}/>
+      <Tile setLevel={setLevel} adjacencies={['EAST']} level={{ name: 'Here Be Surfers', difficulty: 'medium', number: 5 }}/>
       <Tile setLevel={setLevel} adjacencies={[]}/>
-      <Tile setLevel={setLevel} adjacencies={['NORTH', 'WEST', 'SOUTH', 'EAST']}/>
+      <Tile setLevel={setLevel} adjacencies={['NORTH', 'WEST', 'SOUTH', 'EAST']} level={{ name: 'Penthouse Island', difficulty: 'very hard', number: 5 }}/>
       <Tile setLevel={setLevel} adjacencies={[]}/>
       <Tile setLevel={setLevel} adjacencies={['SOUTH', 'WEST']}/>
       <Tile setLevel={setLevel} adjacencies={[]} land={true} />

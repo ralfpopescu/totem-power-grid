@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { Route } from "react-router-dom";
 import Game from './scenes/Game'
 import Intro from './scenes/Intro'
@@ -65,18 +65,27 @@ const theme: Theme = {
   },
 }
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: 'Chelsea Market';
+    color: white;
+  }
+`
+
 type AppProps = { state: State }
 
 const App = ({ state }: AppProps) => {
   return (
-    <ThemeProvider theme={theme}>
-      <Route path="/game/:level">
-        <Game />
-      </Route>
-      <Route exact path="/">
-        <Intro />
-      </Route>
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+      <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet" />
+        <GlobalStyle />
+        <Route path="/game/:level">
+          <Game />
+        </Route>
+        <Route exact path="/">
+          <Intro />
+        </Route>
+      </ThemeProvider>
   );
 }
 
