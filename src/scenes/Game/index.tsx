@@ -98,7 +98,7 @@ z-index: 1;
 const ActiveButtonContainer = styled.div`
 display: flex;
 flex-direction: row;
-grid-column-start: 1;
+grid-column-start: 2;
 font-size: 30px;
 place-items: center;
 z-index: 1;

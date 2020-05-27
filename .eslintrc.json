@@ -1,8 +1,8 @@
 {
-    "extends": "react-app",
     "plugins": [
-        "import"
-    ],
+        "react"
+     ],
+     "extends": ["eslint:recommended", "plugin:react/recommended"],
     "rules": {
         "arrow-parens": 0,
         "no-await-in-loop": 0,
