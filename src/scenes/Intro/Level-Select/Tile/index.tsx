@@ -61,8 +61,8 @@ const getBorderRadiusFromAdjacencies = (adjacencies: Array<Adjancency>) => {
 type TileContainerProps = { land: boolean | undefined }
 
 const TileContainer = styled.div<TileContainerProps>`
-  height: 120px;
-  width: 120px;
+  height: 100px;
+  width: 100px;
   display: flex;
   position: relative;
   background-color: ${props => props.land ? '#8cff66' : ''};
@@ -81,8 +81,8 @@ type LandProps = { adjacencies: Array<Adjancency> }
 
 const Land = styled.div<LandProps>`
   position: relative;
-  height: 120px;
-  width: 120px;
+  height: 100px;
+  width: 100px;
   background-color: #8cff66;
   border-radius: ${props => getBorderRadiusFromAdjacencies(props.adjacencies)};
   overflow: hidden;

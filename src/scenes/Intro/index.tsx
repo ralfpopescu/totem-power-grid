@@ -19,7 +19,7 @@ justify-content: center;
 `
 
 const TotemPowerGridTitle = styled.div`
-font-size: 50px;
+font-size: 60px;
 color: white;
 margin-bottom: 20px;
 `
