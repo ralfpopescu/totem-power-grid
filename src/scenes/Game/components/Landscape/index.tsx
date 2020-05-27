@@ -12,9 +12,25 @@ display: flex;
 flex-direction: row;
 `
 
-type TriangleProps = { height?: number, leftWidth?: number, rightWidth?: number, layer?: number }
+type TriangleProps = { height: number, leftWidth: number, rightWidth: number, layer: number }
 
 const greens = ['#8cff66', '#ABFF90', '#BBFFD9']
+
+const generateKeyFrame = (height: number, leftWidth: number, rightWidth: number, layer: number) => `
+animation:  mountainEntry${height}${leftWidth}${rightWidth}${layer} 0.4s ease-in-out;
+
+@keyframes mountainEntry${height}${leftWidth}${rightWidth}${layer} {
+  0% {
+    border-left: ${leftWidth || 100}px solid transparent;
+    border-right: ${rightWidth || 100}px solid transparent;
+    border-bottom: 0px solid ${greens[layer || 0]};
+  }
+  100% {
+    border-left: ${leftWidth || 100}px solid transparent;
+    border-right: ${rightWidth || 100}px solid transparent;
+    border-bottom: ${height || 100}px solid ${greens[layer || 0]};
+  }
+`
 
 
 const Triangle = styled.div<TriangleProps>`
@@ -24,6 +40,7 @@ border-left: ${props => props.leftWidth || 100}px solid transparent;
 border-right: ${props => props.rightWidth || 100}px solid transparent;
 border-bottom: ${props => props.height || 100}px solid ${props => greens[props.layer || 0]};
 align-self: flex-end;
+${props => generateKeyFrame(props.height, props.leftWidth, props.rightWidth, props.layer)}
 `
 
 const Layer = styled.div`
@@ -54,6 +71,7 @@ height: 150px;
 width: 100%;
 align-self: flex-end;
 background-color: ${props => props.theme.ocean.primary};
+
 `
 
 

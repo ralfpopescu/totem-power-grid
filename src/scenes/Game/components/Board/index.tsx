@@ -11,8 +11,6 @@ type BoardContainerProps = { dimension: number }
 
 const Container = styled.div`
 padding: ${boardScale / 5}px;
-border-radius: ${boardScale / 3}px;
-background-color: white;
 justify-content: center;
 align-items: center;
 display: flex;

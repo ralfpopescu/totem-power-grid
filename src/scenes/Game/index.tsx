@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components'
 import Board from './components/Board'
 import TotemSelector from './components/TotemSelector'
@@ -11,6 +11,8 @@ import type { State } from '../../redux/reducers';
 import getSolutionFromState from '../../logic/getSolutionFromState';
 import { connect } from "react-redux";
 import _ from 'lodash'
+import { ReactComponent as BluePrints } from './assets/history.svg'
+import BluePrintModal from './components/Blueprint-Modal'
 
 const AppContainer = styled.div`
 position: absolute;
@@ -28,6 +30,8 @@ grid-template-columns: 1fr 4fr 1fr;
 const BoardGridItem = styled.div`
 grid-column-start: 2;
 grid-row-start: 1;
+display: flex;
+flex-direction: column;
 `
 
 const TotemPowerGridTitle = styled.div`
@@ -49,21 +53,55 @@ justify-content: center;
 z-index: 1;
 `
 
-const SolutionSideBar = styled.div`
-grid-column-start: 3;
-grid-row-start: 1;
-display: flex;
-flex-direction: column;
-padding: 10px;
-justify-self: center;
-align-self: center;
-align-items: center;
-justify-content: center;
-`
-
 const ActivateButton = styled.button`
 font-size: 20px;
 padding: 10px;
+grid-column-start: 1;
+background-color: red;
+height: 100px;
+min-width: 90px;
+border-radius: 50%;
+box-shadow: 0 20px black;
+margin-right: 20px;
+cursor: pointer;
+transition: 0.1s all ease-out;
+
+&:active {
+  box-shadow: 0 0 black;
+  transform: translate(0px, 20px);
+}
+
+`
+
+const BottomToolBar = styled.div`
+display: grid;
+grid-template-columns: 80px 80px 1fr 80px 80px;
+`
+
+const BluePrintIconContainer = styled.div`
+fill: white;
+cursor: pointer;
+margin-left: 20px;
+`
+
+const BluePrintMenuContainer = styled.div`
+display: flex;
+flex-direction: row;
+font-size: 30px;
+place-items: center;
+align-self: flex-end;
+grid-column-start: 4;
+
+z-index: 1;
+`
+
+const ActiveButtonContainer = styled.div`
+display: flex;
+flex-direction: row;
+grid-column-start: 1;
+font-size: 30px;
+place-items: center;
+z-index: 1;
 `
 
 const solve = (state: State, solution: SolutionType) => {
@@ -79,15 +117,24 @@ const solve = (state: State, solution: SolutionType) => {
 type AppProps = { state: State }
 
 const App = ({ state }: AppProps) => {
+  const [bluePrintModalOpen, setBluePrintModalOpen] = useState<boolean>(false)
   return (
     <AppContainer>
       <Landscape />
-      <SolutionSideBar>
-        <Solution solution={exampleSolution as SolutionType}/>
-        <ActivateButton onClick={() => solve(state, exampleSolution as SolutionType)}>ACTIVATE</ActivateButton>
-      </SolutionSideBar>
       <BoardGridItem>
         <Board />
+        <BottomToolBar>
+          <ActiveButtonContainer>
+            <ActivateButton onClick={() => solve(state, exampleSolution as SolutionType)} />
+            ACTIVATE
+          </ActiveButtonContainer>
+          <BluePrintMenuContainer>
+            BLUEPRINTS
+            <BluePrintIconContainer onClick={() => setBluePrintModalOpen(true)} >
+              <BluePrints style={{ height: '100px', width: '100px' }}/>
+            </BluePrintIconContainer>
+          </BluePrintMenuContainer>
+        </BottomToolBar>
       </BoardGridItem>
       <SideBar>
       <TotemPowerGridTitle>TOTEM POWER GRID</TotemPowerGridTitle>
@@ -96,6 +143,7 @@ const App = ({ state }: AppProps) => {
         </div>
         <TotemSelector />
       </SideBar>
+      <BluePrintModal isOpen={bluePrintModalOpen} close={() => setBluePrintModalOpen(false)}/>
     </AppContainer>
   );
 }
