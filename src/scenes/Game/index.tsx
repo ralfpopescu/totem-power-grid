@@ -54,20 +54,18 @@ z-index: 1;
 `;
 
 const ActivateButton = styled.button`
-font-size: 20px;
-padding: 10px;
 grid-column-start: 1;
-background-color: red;
-height: 100px;
-min-width: 90px;
+background-image: linear-gradient(#f74d4d, #f86569);
+min-height: 90px;
+min-width: 100px;
 border-radius: 50%;
-box-shadow: 0 20px black;
+box-shadow: 0 20px #e24f4f;
 margin-right: 20px;
 cursor: pointer;
 transition: 0.1s all ease-out;
 
 &:active {
-  box-shadow: 0 0 black;
+  box-shadow: 0 0 #e24f4f;
   transform: translate(0px, 20px);
 }
 
