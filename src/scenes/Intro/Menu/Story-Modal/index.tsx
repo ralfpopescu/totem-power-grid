@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
+import { Route, useHistory } from "react-router-dom";
 
 const TotemPowerGridDescription = styled.div`
 font-size: 20px;

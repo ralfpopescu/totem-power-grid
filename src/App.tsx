@@ -82,7 +82,7 @@ const App = ({ state }: AppProps) => {
         <Route path="/game/:level">
           <Game />
         </Route>
-        <Route exact path="/">
+        <Route path="/faoweiah">
           <Intro />
         </Route>
       </ThemeProvider>
