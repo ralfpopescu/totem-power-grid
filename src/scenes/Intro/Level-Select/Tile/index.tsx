@@ -1,13 +1,13 @@
 import React from 'react';
-import styled from 'styled-components'
-import { Link, useHistory } from 'react-router-dom'
-import { ReactComponent as Village } from './assets/tipi.svg'
+import styled from 'styled-components';
+import { Link, useHistory } from 'react-router-dom';
+import { ReactComponent as Village } from './assets/tipi.svg';
 
 type Adjancency = 'NORTH' | 'SOUTH' | 'EAST' | 'WEST'
 
-type Level = { name: string, number: number, difficulty: string }
+type Level = { name: string; number: number; difficulty: string }
 
-type TileProps = { adjacencies: Array<Adjancency>, land?: boolean | undefined, level?: Level | undefined, setLevel: (level: Level | undefined | null) => void }
+type TileProps = { adjacencies: Array<Adjancency>; land?: boolean | undefined; level?: Level | undefined; setLevel: (level: Level | undefined | null) => void }
 
 type BeachGradientProps = { adjacency: Adjancency }
 
@@ -19,44 +19,44 @@ left: 0;
 right: 0;
 background: linear-gradient(${({adjacency}) => {
   if(adjacency === 'EAST') {
-    return '270'
+    return '270';
   }
   if(adjacency === 'WEST') {
-    return '90'
+    return '90';
   }
   if(adjacency === 'NORTH') {
-    return '180'
+    return '180';
   }
   if(adjacency === 'SOUTH') {
-    return '0'
+    return '0';
   }
 }}deg, rgba(255,239,196,1) 0%, rgba(255,254,199,1) 11%, rgba(97,255,90,0) 43%);
-`
+`;
 
 const getCorners = (adjacencies: Array<Adjancency>) => {
-  const corners = []
+  const corners = [];
   if(adjacencies.includes('NORTH') && adjacencies.includes('WEST')) {
-    corners.push('NORTHWEST')
+    corners.push('NORTHWEST');
   }
   if(adjacencies.includes('NORTH') && adjacencies.includes('EAST')) {
-    corners.push('NORTHEAST')
+    corners.push('NORTHEAST');
   }
   if(adjacencies.includes('SOUTH') && adjacencies.includes('WEST')) {
-    corners.push('SOUTHWEST')
+    corners.push('SOUTHWEST');
   }
   if(adjacencies.includes('SOUTH') && adjacencies.includes('EAST')) {
-    corners.push('SOUTHEAST')
+    corners.push('SOUTHEAST');
   }
-  return corners
-}
+  return corners;
+};
 
 const getBorderRadiusFromAdjacencies = (adjacencies: Array<Adjancency>) => {
-  const radiusAmount = 50
- const corners = getCorners(adjacencies)
- const borderRadiusString = `${corners.includes('NORTHWEST') ? `${radiusAmount}` : 0}px ${corners.includes('NORTHEAST') ? `${radiusAmount}` : 0}px ${corners.includes('SOUTHEAST') ? `${radiusAmount}` : 0}px ${corners.includes('SOUTHWEST') ? `${radiusAmount}` : 0}px`
- console.log(borderRadiusString)
- return borderRadiusString
-}
+  const radiusAmount = 50;
+ const corners = getCorners(adjacencies);
+ const borderRadiusString = `${corners.includes('NORTHWEST') ? `${radiusAmount}` : 0}px ${corners.includes('NORTHEAST') ? `${radiusAmount}` : 0}px ${corners.includes('SOUTHEAST') ? `${radiusAmount}` : 0}px ${corners.includes('SOUTHWEST') ? `${radiusAmount}` : 0}px`;
+ console.log(borderRadiusString);
+ return borderRadiusString;
+};
 
 type TileContainerProps = { land: boolean | undefined }
 
@@ -75,7 +75,7 @@ const TileContainer = styled.div<TileContainerProps>`
     opacity: 0.8;
   }
 
-`
+`;
 
 type LandProps = { adjacencies: Array<Adjancency> }
 
@@ -90,18 +90,17 @@ const Land = styled.div<LandProps>`
   &:hover {
     opacity: 0.8;
   }
-`
+`;
 
 const FullLand = styled.div`
 background-color: #8cff66;
 height: 100%
 width: 100%:
 border: 1px solid black; 
-
-`
+`; 
 
 const Tile = ({ adjacencies, land, level, setLevel }: TileProps) => {
-  const history = useHistory()
+  const history = useHistory();
   return (
 <TileContainer 
 land={land}
@@ -109,16 +108,16 @@ onMouseEnter={() => setLevel(level)}
 onMouseLeave={() => setLevel(null)} 
 onClick={() => {
   if(level != null) {
-    history.push(`/game/${level.number}`)
+    history.push(`/game/${level.number}`);
   }
 }}>
   {adjacencies.length > 0 && (
-  <Land adjacencies={adjacencies} >
+  <Land adjacencies={adjacencies} > 
     {adjacencies.map(adj => <BeachGradient adjacency={adj} />)}
     </Land>
     )}
   {adjacencies.length === 0 && land && <FullLand />}
 </TileContainer>
-)}
+);};
 
-export default Tile
+export default Tile;

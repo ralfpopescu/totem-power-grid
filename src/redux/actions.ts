@@ -1,28 +1,28 @@
-import actionTypes from './actionTypes'
-import type { TotemType } from '../logic/totemTypes'
-import type { Direction } from './reducers'
+import actionTypes from './actionTypes';
+import type { TotemType } from '../logic/totemTypes';
+import type { Direction } from './reducers';
 
-export type AddTotemInput = { totemType: TotemType, index: number }
+export type AddTotemInput = { totemType: TotemType; index: number }
 export type AddTotem = (input: AddTotemInput ) => void
 
 export const addTotem = ({ totemType, index }: AddTotemInput) => ({
   type: actionTypes.ADD_TOTEM,
-  payload: { totemType, index }
-})
+  payload: { totemType, index },
+});
 
 export type ChangeTotemSelectionInput = { totemType: TotemType }
 export type ChangeTotemSelection = (input: ChangeTotemSelectionInput) => void
 
 export const changeTotemSelection = ({ totemType }: ChangeTotemSelectionInput) => ({
   type: actionTypes.CHANGE_TOTEM_SELECTION,
-  payload: { totemType }
-})
+  payload: { totemType },
+});
 
 
-export type ChangeTotemDirectionInput = { totemIndex: number, direction: Direction }
+export type ChangeTotemDirectionInput = { totemIndex: number; direction: Direction }
 export type ChangeTotemDirection = (input: ChangeTotemDirectionInput) => void
 
 export const changeTotemDirection = ({ totemIndex, direction }: ChangeTotemDirectionInput) => ({
   type: actionTypes.CHANGE_TOTEM_DIRECTION,
-  payload: { totemIndex, direction }
-})
+  payload: { totemIndex, direction },
+});

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styled from 'styled-components'
-import Tile from './Tile'
+import styled from 'styled-components';
+import Tile from './Tile';
 
 const LevelSelectContainer = styled.div`
 display: grid;
@@ -8,13 +8,13 @@ grid-template-rows: repeat(6, 100px);
 grid-template-columns: repeat(6, 100px);
 overflow: visible;
 place-items: center;
-`
+`;
 
 const LevelSelectGridContainer = styled.div`
 grid-row-start: 4;
 place-items: center;
 
-`
+`;
 
 const Container = styled.div`
 display: grid;
@@ -23,38 +23,38 @@ grid-row-start: 4;
 height: 100%;
 width: 100%:
 place-items: center;
-`
+`;
 
 const FaOweiah = styled.div`
 grid-row-start: 1;
 font-size: 50px;
 place-self: center;
-`
+`;
 
 const LevelTitle = styled.div`
 grid-row-start: 2;
 font-size: 20px;
 place-self: center;
-`
+`;
 
 const getDifficultyColor = (difficulty: string | undefined) => {
   if(!difficulty) {
-    return 'black'
+    return 'black';
   }
   if(difficulty.toLowerCase() === 'very hard') {
-    return 'red'
+    return 'red';
   }
   if(difficulty.toLowerCase() === 'hard') {
-    return 'orange'
+    return 'orange';
   }
   if(difficulty.toLowerCase() === 'medium') {
-    return 'yellow'
+    return 'yellow';
   }
   if(difficulty.toLowerCase() === 'easy') {
-    return 'green'
+    return 'green';
   }
-  return 'black'
-}
+  return 'black';
+};
 
 type LevelDifficultyProps = { difficulty: string | undefined }
 
@@ -63,13 +63,13 @@ grid-row-start: 3;
 font-size: 20px;
 place-self: center;
 color: ${props => getDifficultyColor(props.difficulty)}
-`
+`;
 
 
-type Level = { name: string, number: number, difficulty: string }
+type Level = { name: string; number: number; difficulty: string }
 
 const LevelSelect = () => {
-  const [level, setLevel] = useState<Level | null>()
+  const [level, setLevel] = useState<Level | null>();
   return (
   <Container>
     <FaOweiah>Fa'Owei-ah</FaOweiah>
@@ -84,20 +84,20 @@ const LevelSelect = () => {
         <Tile setLevel={setLevel} adjacencies={[]}/>
         <Tile setLevel={setLevel} adjacencies={[]}/>
         <Tile setLevel={setLevel} adjacencies={['WEST']} level={{ name: 'Capitol Village', difficulty: 'very hard', number: 3 }}/>
-        <Tile setLevel={setLevel} adjacencies={[]} land={true} level={{ name: 'N\'eva Eva', difficulty: 'easy', number: 4 }}/>
+        <Tile setLevel={setLevel} adjacencies={[]} land level={{ name: 'N\'eva Eva', difficulty: 'easy', number: 4 }}/>
         <Tile setLevel={setLevel} adjacencies={['EAST']} level={{ name: 'Here Be Surfers', difficulty: 'medium', number: 5 }}/>
         <Tile setLevel={setLevel} adjacencies={[]}/>
         <Tile setLevel={setLevel} adjacencies={['NORTH', 'WEST', 'SOUTH', 'EAST']} level={{ name: 'Penthouse Island', difficulty: 'very hard', number: 5 }}/>
         <Tile setLevel={setLevel} adjacencies={[]}/>
         <Tile setLevel={setLevel} adjacencies={['SOUTH', 'WEST']}/>
-        <Tile setLevel={setLevel} adjacencies={[]} land={true} />
-        <Tile setLevel={setLevel} adjacencies={[]} land={true} />
+        <Tile setLevel={setLevel} adjacencies={[]} land />
+        <Tile setLevel={setLevel} adjacencies={[]} land />
         <Tile setLevel={setLevel} adjacencies={['NORTH', 'EAST']}/>
         <Tile setLevel={setLevel} adjacencies={[]}/>
         <Tile setLevel={setLevel} adjacencies={[]}/>
         <Tile setLevel={setLevel} adjacencies={[]}/>
         <Tile setLevel={setLevel} adjacencies={['SOUTH', 'WEST']}/>
-        <Tile setLevel={setLevel} adjacencies={[]} land={true} />
+        <Tile setLevel={setLevel} adjacencies={[]} land />
         <Tile setLevel={setLevel} adjacencies={['SOUTH', 'EAST']}/>
         <Tile setLevel={setLevel} adjacencies={[]}/>
         <Tile setLevel={setLevel} adjacencies={[]}/>
@@ -116,6 +116,6 @@ const LevelSelect = () => {
       </LevelSelectContainer>
     </LevelSelectGridContainer>
   </Container>
-)}
+);};
 
-export default LevelSelect
+export default LevelSelect;

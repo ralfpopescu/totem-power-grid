@@ -1,33 +1,33 @@
-import React from 'react'
-import styled from 'styled-components'
-import totemTypes from '../../../../../../logic/totemTypes'
+import React from 'react';
+import styled from 'styled-components';
 import { connect } from "react-redux";
+import totemTypes from '../../../../../../logic/totemTypes';
 import { addTotem } from "../../../../../../redux/actions";
-import type { TotemType } from '../../../../../../redux/reducers'
-import { ReactComponent as TotemImage } from './totem.svg'
+import type { TotemType } from '../../../../../../redux/reducers';
+import { ReactComponent as TotemImage } from './totem.svg';
 
-const { FIRE, WATER, ELECTRIC, LIGHT, WIND, EARTH } = totemTypes
+const { FIRE, WATER, ELECTRIC, LIGHT, WIND, EARTH } = totemTypes;
 
 const totemColor = (totemType: TotemType) => {
   switch(totemType) {
     case FIRE:
-      return 'red'
+      return 'red';
     case WATER:
-      return 'blue'
+      return 'blue';
     case ELECTRIC:
-      return 'yellow' 
+      return 'yellow'; 
     case LIGHT:
-      return 'white'
+      return 'white';
       case WIND:
-      return 'grey'
+      return 'grey';
       case EARTH:
-      return 'brown'
+      return 'brown';
     default:
-      return 'black'
+      return 'black';
   }
-}
+};
 
-type TotemIconProps = { totemType: TotemType, boardScale: number }
+type TotemIconProps = { totemType: TotemType; boardScale: number }
 
 const TotemIcon = styled(TotemImage)<TotemIconProps>`
 fill: ${props => totemColor(props.totemType)};
@@ -44,16 +44,16 @@ animation: fall-in 0.2s ease-in-out 1;
   }
 }
 
-`
+`;
 
-type TotemProps = { totemType: TotemType, boardScale: number }
+type TotemProps = { totemType: TotemType; boardScale: number }
 
 const Totem = ({ totemType, boardScale }: TotemProps) => {
   return (
     <>
     {totemType && <TotemIcon totemType={totemType} boardScale={boardScale} />}
     </>
-)}
+);};
 
 export default connect(
   null,

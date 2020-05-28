@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import styled from 'styled-components'
-import Board from './components/Board'
-import TotemSelector from './components/TotemSelector'
-import Solution from './components/Solution'
-import Landscape from './components/Landscape'
-import { ReactComponent as Shaman } from '../../top-level-assets/shaman1.svg'
+import styled from 'styled-components';
+import { connect } from "react-redux";
+import _ from 'lodash';
+import Board from './components/Board';
+import TotemSelector from './components/TotemSelector';
+import Solution from './components/Solution';
+import Landscape from './components/Landscape';
+import { ReactComponent as Shaman } from '../../top-level-assets/shaman1.svg';
 import exampleSolution from './components/Solution/example-solution-2.json';
 import type { Solution as SolutionType } from '../../logic/getSolutionFromState';
 import type { State } from '../../redux/reducers';
 import getSolutionFromState from '../../logic/getSolutionFromState';
-import { connect } from "react-redux";
-import _ from 'lodash'
-import { ReactComponent as BluePrints } from './assets/history.svg'
-import BluePrintModal from './components/Blueprint-Modal'
+import { ReactComponent as BluePrints } from './assets/history.svg';
+import BluePrintModal from './components/Blueprint-Modal';
 
 const AppContainer = styled.div`
 position: absolute;
@@ -25,19 +25,19 @@ overflow: scroll;
 display: grid;
 grid-template-columns: 1fr 4fr 1fr;
 grid-template-columns: 1fr 4fr 1fr;
-`
+`;
 
 const BoardGridItem = styled.div`
 grid-column-start: 2;
 grid-row-start: 1;
 display: flex;
 flex-direction: column;
-`
+`;
 
 const TotemPowerGridTitle = styled.div`
 font-size: 50px;
 color: white;
-`
+`;
 
 const SideBar = styled.div`
 grid-column-start: 1;
@@ -51,7 +51,7 @@ align-self: center;
 align-items: center;
 justify-content: center;
 z-index: 1;
-`
+`;
 
 const ActivateButton = styled.button`
 font-size: 20px;
@@ -71,18 +71,18 @@ transition: 0.1s all ease-out;
   transform: translate(0px, 20px);
 }
 
-`
+`;
 
 const BottomToolBar = styled.div`
 display: grid;
 grid-template-columns: 80px 80px 1fr 80px 80px;
-`
+`;
 
 const BluePrintIconContainer = styled.div`
 fill: white;
 cursor: pointer;
 margin-left: 20px;
-`
+`;
 
 const BluePrintMenuContainer = styled.div`
 display: flex;
@@ -93,7 +93,7 @@ align-self: flex-end;
 grid-column-start: 4;
 
 z-index: 1;
-`
+`;
 
 const ActiveButtonContainer = styled.div`
 display: flex;
@@ -102,22 +102,22 @@ grid-column-start: 2;
 font-size: 30px;
 place-items: center;
 z-index: 1;
-`
+`;
 
 const solve = (state: State, solution: SolutionType) => {
-  const playerSolution = getSolutionFromState(state)
-  const isSolved = _.isEqual(playerSolution, solution)
+  const playerSolution = getSolutionFromState(state);
+  const isSolved = _.isEqual(playerSolution, solution);
   if(isSolved) {
-    console.log('solved!')
+    console.log('solved!');
   } else {
-    console.log('The village blew up.')
+    console.log('The village blew up.');
   }
-}
+};
 
 type AppProps = { state: State }
 
 const App = ({ state }: AppProps) => {
-  const [bluePrintModalOpen, setBluePrintModalOpen] = useState<boolean>(false)
+  const [bluePrintModalOpen, setBluePrintModalOpen] = useState<boolean>(false);
   return (
     <AppContainer>
       <Landscape />
@@ -146,10 +146,10 @@ const App = ({ state }: AppProps) => {
       <BluePrintModal isOpen={bluePrintModalOpen} close={() => setBluePrintModalOpen(false)}/>
     </AppContainer>
   );
-}
+};
 
 const mapStateToProps = (state: State) => {
-  return { state }
+  return { state };
 };
 
 export default connect(mapStateToProps)(App);

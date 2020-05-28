@@ -1,9 +1,9 @@
-import type { Direction, LightBeam, Tiles, Tile } from '.'
-import calculatePositionFromIndex from '../../logic/calculatePositionFromIndex'
-import calculateIndexFromPosition from '../../logic/calculateIndexFromPosition'
+import type { Direction, LightBeam, Tiles, Tile } from '.';
+import calculatePositionFromIndex from '../../logic/calculatePositionFromIndex';
+import calculateIndexFromPosition from '../../logic/calculateIndexFromPosition';
 
 const isAtLimitPosition = (index: number, direction: Direction, dimension: number) => {
-  const position = calculatePositionFromIndex(index, dimension)
+  const position = calculatePositionFromIndex(index, dimension);
   let result;
   switch(direction) {
     case 'EAST':
@@ -32,86 +32,86 @@ const isAtLimitPosition = (index: number, direction: Direction, dimension: numbe
       break;
   }
   return result;
-}
+};
 
 const getNextIndex = (startingIndex: number, direction: Direction, dimension: number): number => {
   let nextIndex;
   let nextPosition;
-  const startingPosition = calculatePositionFromIndex(startingIndex, dimension)
+  const startingPosition = calculatePositionFromIndex(startingIndex, dimension);
   switch(direction) {
     case 'EAST':
-      nextPosition = { row: startingPosition.row, column: startingPosition.column + 1 }
-      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      nextPosition = { row: startingPosition.row, column: startingPosition.column + 1 };
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension });
       break;
     case 'WEST':
-      nextPosition = { row: startingPosition.row, column: startingPosition.column - 1}
-      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      nextPosition = { row: startingPosition.row, column: startingPosition.column - 1};
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension });
       break;
     case 'NORTH':
-      nextPosition = { row: startingPosition.row - 1, column: startingPosition.column}
-      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      nextPosition = { row: startingPosition.row - 1, column: startingPosition.column};
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension });
       break;
     case 'SOUTH':
-      nextPosition = { row: startingPosition.row + 1, column: startingPosition.column}
-      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      nextPosition = { row: startingPosition.row + 1, column: startingPosition.column};
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension });
       break;
     case 'NORTHEAST':
-      nextPosition = { row: startingPosition.row - 1, column: startingPosition.column + 1}
-      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      nextPosition = { row: startingPosition.row - 1, column: startingPosition.column + 1};
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension });
       break;
     case 'NORTHWEST':
-      nextPosition = { row: startingPosition.row - 1, column: startingPosition.column - 1}
-      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      nextPosition = { row: startingPosition.row - 1, column: startingPosition.column - 1};
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension });
       break;
     case 'SOUTHEAST':
-      nextPosition = { row: startingPosition.row + 1, column: startingPosition.column + 1}
-      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      nextPosition = { row: startingPosition.row + 1, column: startingPosition.column + 1};
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension });
       break;
     case 'SOUTHWEST':
-      nextPosition = { row: startingPosition.row + 1, column: startingPosition.column - 1}
-      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension })
+      nextPosition = { row: startingPosition.row + 1, column: startingPosition.column - 1};
+      nextIndex = calculateIndexFromPosition({ ...nextPosition, dimension });
       break;
     default:
-      console.log('no direction: ', direction)
+      console.log('no direction: ', direction);
   }
   return nextIndex || 1000;
-}
+};
 
 const getRefractionDirections = (direction: Direction): Array<Direction> => {
-  let refractionDirections: Array<Direction> = []
+  let refractionDirections: Array<Direction> = [];
   switch(direction) {
     case 'EAST':
-      refractionDirections = ['NORTHEAST', 'SOUTHEAST']
+      refractionDirections = ['NORTHEAST', 'SOUTHEAST'];
       break;
     case 'WEST':
-      refractionDirections = ['NORTHWEST', 'SOUTHWEST']
+      refractionDirections = ['NORTHWEST', 'SOUTHWEST'];
       break;
     case 'NORTH':
-      refractionDirections = ['NORTHEAST', 'NORTHWEST']
+      refractionDirections = ['NORTHEAST', 'NORTHWEST'];
       break;
     case 'SOUTH':
-      refractionDirections = ['SOUTHWEST', 'SOUTHEAST']
+      refractionDirections = ['SOUTHWEST', 'SOUTHEAST'];
       break;
     case 'NORTHEAST':
-      refractionDirections = ['NORTH', 'EAST']
+      refractionDirections = ['NORTH', 'EAST'];
       break;
     case 'NORTHWEST':
-      refractionDirections = ['NORTH', 'WEST']
+      refractionDirections = ['NORTH', 'WEST'];
       break;
     case 'SOUTHEAST':
-      refractionDirections = ['SOUTH', 'EAST']
+      refractionDirections = ['SOUTH', 'EAST'];
       break;
     case 'SOUTHWEST':
-      refractionDirections = ['SOUTH', 'WEST']
+      refractionDirections = ['SOUTH', 'WEST'];
       break;
     default:
-      console.log('no direction')
+      console.log('no direction');
   }
-  return refractionDirections
-}
+  return refractionDirections;
+};
 
-const doesTileRefract = (tile: Tile) => tile.fields.includes('FLOODED') && tile.fields.includes('BURNING')
-const doesTileBlock = (tile: Tile) => tile.fields.includes('EARTH') && tile.fields.includes('BURNING')
+const doesTileRefract = (tile: Tile) => tile.fields.includes('FLOODED') && tile.fields.includes('BURNING');
+const doesTileBlock = (tile: Tile) => tile.fields.includes('EARTH') && tile.fields.includes('BURNING');
 
 const calculateLightBeams = (
   tiles: Tiles, 
@@ -122,33 +122,33 @@ const calculateLightBeams = (
     if(isAtLimitPosition(startIndex, direction, dimension)) {
       return newLightBeams;
     }
-    const nextIndex = getNextIndex(startIndex, direction, dimension)
-    const nextTile = tiles[nextIndex]
+    const nextIndex = getNextIndex(startIndex, direction, dimension);
+    const nextTile = tiles[nextIndex];
 
     if(doesTileBlock(nextTile)) {
       return newLightBeams;
     }
 
-    const newLightBeamsWithNext = [...newLightBeams, { index: nextIndex, direction }]
+    const newLightBeamsWithNext = [...newLightBeams, { index: nextIndex, direction }];
 
     if(doesTileRefract(nextTile)) {
       return [...newLightBeamsWithNext, ...getRefractionDirections(direction)
         .map(refractionDirection => calculateLightBeams(tiles, newLightBeamsWithNext, nextIndex, refractionDirection, dimension))
-        .reduce((acc, curr) => [...acc, ...curr])]
+        .reduce((acc, curr) => [...acc, ...curr])];
     }
 
-    return calculateLightBeams(tiles, newLightBeamsWithNext, nextIndex, direction, dimension)
-}
+    return calculateLightBeams(tiles, newLightBeamsWithNext, nextIndex, direction, dimension);
+};
 
 const calculateAllBeams = (tiles: Tiles, dimension: number) => {
   const lightTotems = Object.keys(tiles)
     .map(index => ({ totem: tiles[index].totem, index }))
-    .filter(item => item.totem?.type === 'LIGHT')
+    .filter(item => item.totem?.type === 'LIGHT');
 
   const beamsPerLightTotem = lightTotems.map(lightTotem => 
     calculateLightBeams(tiles, [], parseInt(lightTotem.index), lightTotem.totem.direction, dimension)
-    )
-  return beamsPerLightTotem.reduce((acc, curr) => ([ ...acc, ...curr ]), [])
-}
+    );
+  return beamsPerLightTotem.reduce((acc, curr) => ([ ...acc, ...curr ]), []);
+};
 
-export default calculateAllBeams
+export default calculateAllBeams;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-type ArrayProps = { style: object, onClick: () => void }
+type ArrayProps = { style: object; onClick: () => void }
 
 const Arrow = (props: ArrayProps) => (
   <svg

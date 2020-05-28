@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components'
-import Menu from './Menu'
-import LevelSelect from './Level-Select'
-import { ReactComponent as Shaman} from '../../top-level-assets/shaman1.svg'
+import styled from 'styled-components';
+import Menu from './Menu';
+import LevelSelect from './Level-Select';
+import { ReactComponent as Shaman} from '../../top-level-assets/shaman1.svg';
 
 const AppContainer = styled.div`
 position: absolute;
@@ -16,13 +16,13 @@ display: grid;
 grid-template-columns: 1fr 1fr;
 grid-template-columns: 1fr 1fr;
 justify-content: center;
-`
+`;
 
 const TotemPowerGridTitle = styled.div`
 font-size: 60px;
 color: white;
 margin-bottom: 20px;
-`
+`;
 
 
 const SideBar = styled.div`
@@ -36,12 +36,12 @@ justify-self: center;
 align-self: center;
 align-items: center;
 justify-content: center;
-`
+`;
 
 const LevelSelectContainer = styled.div`
 grid-column-start: 2;
 grid-row-start: 1;
-`
+`;
 
 const Intro = () => {
   return (
@@ -56,7 +56,7 @@ const Intro = () => {
       </LevelSelectContainer>
     </AppContainer>
   );
-}
+};
 
-export default Intro
+export default Intro;
 

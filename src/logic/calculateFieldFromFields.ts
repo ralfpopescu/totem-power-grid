@@ -1,16 +1,16 @@
-import type { FieldType } from './fieldTypes'
+import type { FieldType } from './fieldTypes';
 
 const calculateFieldFromFields = (fields: Array<FieldType>): FieldType => {
   if(fields.includes('BURNING') && fields.includes('FLOODED')) {
-    return 'STEAMY'
+    return 'STEAMY';
   }
   if(fields.includes('BURNING') && fields.includes('EARTH')) {
-    return 'SMOKEY'
+    return 'SMOKEY';
   }
   if(fields.includes('ELECTRIC_CURRENT')) {
-    return 'ELECTRIC_CURRENT'
+    return 'ELECTRIC_CURRENT';
   }
-  return fields[0]
-}
+  return fields[0];
+};
 
-export default calculateFieldFromFields
+export default calculateFieldFromFields;

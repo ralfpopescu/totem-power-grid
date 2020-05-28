@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const LandscapeContainer = styled.div`
 position: absolute;
@@ -10,11 +10,11 @@ left: 0;
 align-items: bottom;
 display: flex;
 flex-direction: row;
-`
+`;
 
-type TriangleProps = { height: number, leftWidth: number, rightWidth: number, layer: number }
+type TriangleProps = { height: number; leftWidth: number; rightWidth: number; layer: number }
 
-const greens = ['#8cff66', '#ABFF90', '#BBFFD9']
+const greens = ['#8cff66', '#ABFF90', '#BBFFD9'];
 
 const generateKeyFrame = (height: number, leftWidth: number, rightWidth: number, layer: number) => `
 animation:  mountainEntry${height}${leftWidth}${rightWidth}${layer} 0.4s ease-in-out;
@@ -30,7 +30,7 @@ animation:  mountainEntry${height}${leftWidth}${rightWidth}${layer} 0.4s ease-in
     border-right: ${rightWidth || 100}px solid transparent;
     border-bottom: ${height || 100}px solid ${greens[layer || 0]};
   }
-`
+`;
 
 
 const Triangle = styled.div<TriangleProps>`
@@ -41,7 +41,7 @@ border-right: ${props => props.rightWidth || 100}px solid transparent;
 border-bottom: ${props => props.height || 100}px solid ${props => greens[props.layer || 0]};
 align-self: flex-end;
 ${props => generateKeyFrame(props.height, props.leftWidth, props.rightWidth, props.layer)}
-`
+`;
 
 const Layer = styled.div`
 position: absolute;
@@ -50,21 +50,21 @@ bottom: 0;
 right: 0;
 left: 0;
 align-items: bottom;
-display: flex;`
+display: flex;`;
 
 const MountainRow1 = styled.div`
 display: flex;
 width: 100%;
 flex-direction: row;
 align-self: flex-end;
-`
+`;
 
 const MountainRow2 = styled.div`
 display: flex;
 width: 100%;
 flex-direction: row;
 align-self: flex-end;
-`
+`;
 
 const Ocean = styled.div`
 height: 150px;
@@ -72,7 +72,7 @@ width: 100%;
 align-self: flex-end;
 background-color: ${props => props.theme.ocean.primary};
 
-`
+`;
 
 
 const Landscape = () => (
@@ -104,8 +104,8 @@ const Landscape = () => (
   </Layer>
   
 </LandscapeContainer>
-)
+);
 
-export default Landscape
+export default Landscape;
 
 

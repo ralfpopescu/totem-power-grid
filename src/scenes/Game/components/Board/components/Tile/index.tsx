@@ -1,13 +1,13 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 import { connect } from "react-redux";
 import { addTotem, changeTotemDirection } from "../../../../../../redux/actions";
 import type { AddTotem, ChangeTotemDirection } from "../../../../../../redux/actions";
-import type { State, TotemType, Direction, LightBeam, Tile as TileState } from '../../../../../../redux/reducers'
-import Totem from '../Totem'
-import Field from '../Field'
-import Arrow from './icons/arrow'
-import { getThemeFromFields } from '../../../../../../logic/totemColor'
+import type { State, TotemType, Direction, LightBeam, Tile as TileState } from '../../../../../../redux/reducers';
+import Totem from '../Totem';
+import Field from '../Field';
+import Arrow from './icons/arrow';
+import { getThemeFromFields } from '../../../../../../logic/totemColor';
 
 
 const TileContainer = styled.div`
@@ -15,13 +15,13 @@ font-size: 8px;
 display: inline-grid;
 grid-template-columns: 1fr 5fr 1fr;
 grid-template-rows: 1fr 5fr 1fr;
-`
+`;
 
-type MainContainerProps = { lit: boolean, tile: TileState, boardScale: number }
+type MainContainerProps = { lit: boolean; tile: TileState; boardScale: number }
 
 const MainItemContainer = styled.div<MainContainerProps>`
 background-color: ${props => {
-  if(!props.tile.totem) return  getThemeFromFields(props.theme, props.tile.fields).primary
+  if(!props.tile.totem) return  getThemeFromFields(props.theme, props.tile.fields).primary;
 }};
 display: flex;
 position: relative;
@@ -44,7 +44,7 @@ cursor: pointer;
   opacity: 0.7;
 }
 
-`
+`;
 
 const RightZone = styled.div`
   display: flex;
@@ -61,7 +61,7 @@ cursor: pointer;
   &:hover {
     fill: lightgrey;
   }
-`
+`;
 
 const LeftZone = styled.div`
   display: flex;
@@ -78,7 +78,7 @@ cursor: pointer;
   &:hover {
     fill: lightgrey;
   }
-`
+`;
 
 const TopZone = styled.div`
   display: flex;
@@ -95,7 +95,7 @@ cursor: pointer;
   &:hover {
     fill: lightgrey;
   }
-`
+`;
 
 const BottomZone = styled.div`
   display: flex;
@@ -112,22 +112,22 @@ cursor: pointer;
   &:hover {
     fill: lightgrey;
   }
-`
+`;
 
 type TileProps = { 
-  index: number, 
-  addTotem: AddTotem, 
-  changeTotemDirection : ChangeTotemDirection, 
-  tile: TileState, 
-  lightBeam: LightBeam | undefined | null,
-  totemSelection: TotemType,
-  boardScale: number 
+  index: number; 
+  addTotem: AddTotem; 
+  changeTotemDirection: ChangeTotemDirection; 
+  tile: TileState; 
+  lightBeam: LightBeam | undefined | null;
+  totemSelection: TotemType;
+  boardScale: number; 
 }
 
-const arrowStyle = (boardScale: number) => ({ width: `${boardScale/8}px`, height: `${boardScale/8}px`, zIndex: 1 })
+const arrowStyle = (boardScale: number) => ({ width: `${boardScale/8}px`, height: `${boardScale/8}px`, zIndex: 1 });
 
 const activeStyle = (totemDirection: Direction, arrowDirection: Direction) => 
-totemDirection === arrowDirection ? { fill: 'white' } : {}
+totemDirection === arrowDirection ? { fill: 'white' } : {};
 
 const Tile = ({ index, addTotem, lightBeam, changeTotemDirection, tile, totemSelection, boardScale }: TileProps) => {
   return (
@@ -154,10 +154,10 @@ const Tile = ({ index, addTotem, lightBeam, changeTotemDirection, tile, totemSel
     onClick={() => changeTotemDirection({ totemIndex: index, direction: 'SOUTH' as Direction})}/>}
     </BottomZone>
   </TileContainer>
-)}
+);};
 
 const mapStateToProps = (state: State) => {
-  return { totemSelection: state.totemSelection }
+  return { totemSelection: state.totemSelection };
 };
 
 export default connect(
