@@ -5,13 +5,13 @@ import type { TotemType, FieldType } from '../../../../../../../redux/reducers';
 
 const stateFirst = {
   tiles: {
-    '0': { totem: null, fields: [] },
+    '0': { totem: null, fields: ['FLOODED' as FieldType] },
     '1': { totem: null, fields: [] },
     '2': { totem: null, fields: [] },
-    '3': { totem: null, fields: [] },
-    '4': { totem: null, fields: [] },
+    '3': { totem: { type: 'WATER' as TotemType, id: '1', direction: null }, fields: []},
+    '4': { totem: null, fields: ['FLOODED' as FieldType] },
     '5': { totem: null, fields: [] },
-    '6': { totem: null, fields: [] },
+    '6': { totem: null, fields: ['FLOODED' as FieldType] },
     '7': { totem: null, fields: [] },
     '8': { totem: null, fields: [] },
   },
@@ -19,15 +19,15 @@ const stateFirst = {
 };
 const stateSecond = {
   tiles: {
-    '0': { totem: null, fields: [] },
+    '0': { totem: null, fields: ['FLOODED' as FieldType] },
     '1': { totem: null, fields: ['FLOODED' as FieldType] },
-    '2': { totem: null, fields: [] },
-    '3': { totem: null, fields: ['FLOODED' as FieldType] },
-    '4': { totem: { type: 'WATER' as TotemType, id: '1', direction: null }, fields: []},
-    '5': { totem: null, fields: ['FLOODED' as FieldType] },
-    '6': { totem: null, fields: [] },
-    '7': { totem: null, fields: ['FLOODED' as FieldType] },
-    '8': { totem: null, fields: [] },
+    '2':  { totem: null, fields: ['EARTH' as FieldType] },
+    '3': { totem: { type: 'WATER' as TotemType, id: '1', direction: null }, fields: []},
+    '4': { totem: null, fields: ['EARTH' as FieldType] },
+    '5': { totem: { type: 'EARTH' as TotemType, id: '1', direction: null }, fields: []},
+    '6': { totem: null, fields: ['FLOODED' as FieldType] },
+    '7': { totem: null,fields: ['FLOODED' as FieldType] },
+    '8': { totem: null, fields: ['EARTH' as FieldType] },
   },
   lightBeams: [],
 };
@@ -45,18 +45,15 @@ flex-grow: 1;
 padding: 36px;
 `;
 
-const WaterTotemPage = () => (
+const FireAndWaterPage = () => (
   <Container>
     <Text>
       <span style={{ marginBottom: '16px'}}>
-      Water totems create pools of water in adjacent spaces.
-      </span>
-      <span>
-      These pools of water do not power anything, but instead interact with other tiles to change the configuration of the grid.
+      Earth will displace water to the adjacent tiles.
       </span>
     </Text>
     <ExampleBoard stateFirst={stateFirst} stateSecond={stateSecond} dimension={3} boardScale={70}/>
   </Container>
 );
 
-export default WaterTotemPage;
+export default FireAndWaterPage;

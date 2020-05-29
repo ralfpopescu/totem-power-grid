@@ -5,13 +5,13 @@ import type { TotemType, FieldType, Direction } from '../../../../../../../redux
 
 const stateFirst = {
   tiles: {
-    '0': { totem: null, fields: [] },
+    '0': { totem: null, fields: ['FLOODED' as FieldType] },
     '1': { totem: null, fields: [] },
     '2': { totem: null, fields: [] },
-    '3': { totem: null, fields: [] },
-    '4': { totem: null, fields: [] },
+    '3': { totem: null, fields: ['BURNING' as FieldType, 'FLOODED' as FieldType] },
+    '4': { totem: null, fields: ['FLOODED' as FieldType] },
     '5': { totem: null, fields: [] },
-    '6': { totem: null, fields: [] },
+    '6': { totem: null, fields: ['FLOODED' as FieldType] },
     '7': { totem: null, fields: [] },
     '8': { totem: null, fields: [] },
   },
@@ -19,13 +19,13 @@ const stateFirst = {
 };
 const stateSecond = {
   tiles: {
-    '0': { totem: null, fields: [] },
+    '0': { totem: null, fields: ['FLOODED' as FieldType, 'ELECTRIC_CURRENT' as FieldType] },
     '1': { totem: null, fields: [] },
     '2': { totem: null, fields: [] },
-    '3': { totem: null, fields: ['ELECTRIC_CURRENT' as FieldType] },
-    '4': { totem: { type: 'FIRE' as TotemType, id: '1', direction: 'WEST' as Direction }, fields: []},
-    '5': { totem: null, fields: [] },
-    '6': { totem: null, fields: [] },
+    '3': { totem: null, fields: ['BURNING' as FieldType, 'FLOODED' as FieldType, 'ELECTRIC_CURRENT' as FieldType] },
+    '4': { totem: null, fields: ['FLOODED' as FieldType, 'ELECTRIC_CURRENT' as FieldType] },
+    '5': { totem: { type: 'ELECTRIC' as TotemType, direction: 'WEST' as Direction, id: '1' }, fields: [] },
+    '6': { totem: null, fields: ['FLOODED' as FieldType, 'ELECTRIC_CURRENT' as FieldType] },
     '7': { totem: null, fields: [] },
     '8': { totem: null, fields: [] },
   },
@@ -45,19 +45,18 @@ flex-grow: 1;
 padding: 36px;
 `;
 
-const ElectricTotemPage = () => (
+const FireAndWaterPage = () => (
   <Container>
     <Text>
       <span style={{ marginBottom: '16px'}}>
-      Electric totems are a directional totem. They come with a set of arrows that you can click to change its direction.
-      The totem will apply a single unit of electricity to the tile it is pointing to.
+      Electricity will be conducted by adjacent water tiles.
       </span>
       <span>
-      These electric tiles will power electric units on your blueprints.
+      Steam will conduct water, but it will NOT provide power to the village above.
       </span>
     </Text>
     <ExampleBoard stateFirst={stateFirst} stateSecond={stateSecond} dimension={3} boardScale={70}/>
   </Container>
 );
 
-export default ElectricTotemPage;
+export default FireAndWaterPage;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import totemTypes from '../../../../../../../../../logic/totemTypes';
-import type { TotemType } from '../../../../../../../../../redux/reducers';
+import totemTypes from '../../../../../../../logic/totemTypes';
+import type { TotemType } from '../../../../../../../redux/reducers';
 import { ReactComponent as TotemImage } from './totem.svg';
 
 const { FIRE, WATER, ELECTRIC, LIGHT, WIND, EARTH } = totemTypes;

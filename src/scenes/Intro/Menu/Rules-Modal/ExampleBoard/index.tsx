@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Interval from 'react-interval';
-import type { Direction, FieldType, Totem } from '../../../../../../../redux/reducers'; 
+import type { Direction, FieldType, Totem } from '../../../../../redux/reducers'; 
 import Tile from './components/Tile';
 
 

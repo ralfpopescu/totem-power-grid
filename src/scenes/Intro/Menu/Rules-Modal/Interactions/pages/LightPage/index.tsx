@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ExampleBoard from '../../../ExampleBoard';
-import type { TotemType, Direction } from '../../../../../../../redux/reducers';
+import type { TotemType, Direction, FieldType } from '../../../../../../../redux/reducers';
 
 const stateFirst = {
   tiles: {
@@ -19,7 +19,7 @@ const stateFirst = {
     '11': { totem: null, fields: [] },
     '12': { totem: null, fields: [] },
     '13': { totem: null, fields: [] },
-    '14': { totem: null, fields: [] },
+    '14': { totem: { type: 'LIGHT' as TotemType, direction: 'WEST' as Direction, id: '1'}, fields: [] },
     '15': { totem: null, fields: [] },
     '16': { totem: null, fields: [] },
     '17': { totem: null, fields: [] },
@@ -31,11 +31,15 @@ const stateFirst = {
     '23': { totem: null, fields: [] },
     '24': { totem: null, fields: [] },
   },
-  lightBeams: [],
+  lightBeams: [
+    {index: 10, direction: 'WEST' as Direction}, 
+    {index: 11, direction: 'WEST' as Direction}, 
+    {index: 12, direction: 'WEST' as Direction}, 
+    {index: 13, direction: 'WEST' as Direction}],
 };
 const stateSecond = {
   tiles: {
-    '0': { totem: null, fields: [] },
+    '0': { totem: null, fields: ['BURNING' as FieldType, 'EARTH' as FieldType] },
     '1': { totem: null, fields: [] },
     '2': { totem: null, fields: [] },
     '3': { totem: null, fields: [] },
@@ -47,11 +51,11 @@ const stateSecond = {
     '9': { totem: null, fields: [] },
     '10': { totem: null, fields: [] },
     '11': { totem: null, fields: [] },
-    '12': { totem: { type: 'LIGHT' as TotemType, direction: 'WEST' as Direction, id: '1'}, fields: [] },
+    '12': { totem: null, fields: ['BURNING' as FieldType, 'FLOODED' as FieldType] },
     '13': { totem: null, fields: [] },
-    '14': { totem: null, fields: [] },
+    '14': { totem: { type: 'LIGHT' as TotemType, direction: 'WEST' as Direction, id: '1'}, fields: [] },
     '15': { totem: null, fields: [] },
-    '16': { totem: null, fields: [] },
+    '16': { totem: null, fields: ['BURNING' as FieldType, 'FLOODED' as FieldType] },
     '17': { totem: null, fields: [] },
     '18': { totem: null, fields: [] },
     '19': { totem: null, fields: [] },
@@ -61,7 +65,14 @@ const stateSecond = {
     '23': { totem: null, fields: [] },
     '24': { totem: null, fields: [] },
   },
-  lightBeams: [{index: 10, direction: 'WEST' as Direction}, {index: 11, direction: 'WEST' as Direction}],
+  lightBeams: [
+    {index: 12, direction: 'WEST' as Direction}, 
+    {index: 13, direction: 'WEST' as Direction},
+    {index: 6, direction: 'WEST' as Direction},
+    {index: 16, direction: 'WEST' as Direction},
+    {index: 15, direction: 'WEST' as Direction},
+    {index: 21, direction: 'WEST' as Direction},
+  ],
 };
 
 const Container = styled.div`
@@ -81,10 +92,10 @@ const LightTotemPage = () => (
   <Container>
     <Text>
       <span style={{ marginBottom: '16px'}}>
-      Light totems are another directional totem, and they shoot a beam of light in the direction they point.
+      Light is refracted by steam and blocked by smoke.
       </span>
       <span>
-      These illuminated tiles will provide energy to the power lamps on your blueprints.
+      When light is refracted, it gets split into diagonal beams. If a diagonal beam is refracted, it gets split into perpendicular beams.
       </span>
     </Text>
     <ExampleBoard stateFirst={stateFirst} stateSecond={stateSecond} dimension={5} boardScale={70}/>

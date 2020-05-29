@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from "react-redux";
-import { addTotem, changeTotemDirection } from "../../../../../../../../../redux/actions";
-import type { State, TotemType, Direction, LightBeam } from '../../../../../../../../../redux/reducers';
+import { addTotem, changeTotemDirection } from "../../../../../../../redux/actions";
+import type { State, TotemType, Direction, LightBeam } from '../../../../../../../redux/reducers';
 import type { ExampleTile } from '../../index';
 import Totem from '../Totem';
 import Field from '../Field';
 import Arrow from './icons/arrow';
-import { getThemeFromFields } from '../../../../../../../../../logic/totemColor';
+import { getThemeFromFields } from '../../../../../../../logic/totemColor';
 
 
 const TileContainer = styled.div`

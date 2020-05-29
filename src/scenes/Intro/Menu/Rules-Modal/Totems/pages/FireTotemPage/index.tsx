@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ExampleBoard from '../ExampleBoard';
+import ExampleBoard from '../../../ExampleBoard';
 import type { TotemType, FieldType } from '../../../../../../../redux/reducers';
 
 const stateFirst = {

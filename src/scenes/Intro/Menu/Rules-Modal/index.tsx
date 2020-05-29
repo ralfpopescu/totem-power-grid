@@ -11,10 +11,10 @@ type ModalProps = { isOpen: boolean; close: () => void }
 
 const modalStyle = { content: { 
   backgroundColor: '#06053d', 
-top: '200px',
-left: '200px',
-right: '200px',
-bottom: '200px',
+top: '100px',
+left: '100px',
+right: '100px',
+bottom: '100px',
 display: 'flex',
 },
 overlay: { backgroundColor: 'rgb(6, 5, 61, 0.5)' }};

@@ -1,9 +1,9 @@
 import type { AnyStyledComponent } from 'styled-components';
 import styled from 'styled-components';
 import React from 'react';
-import type { FieldType  } from '../../../../../../../../../redux/reducers';
-import calculateFieldFromFields from '../../../../../../../../../logic/calculateFieldFromFields';
-import { getThemeFromFields } from '../../../../../../../../../logic/totemColor';
+import type { FieldType  } from '../../../../../../../redux/reducers';
+import calculateFieldFromFields from '../../../../../../../logic/calculateFieldFromFields';
+import { getThemeFromFields } from '../../../../../../../logic/totemColor';
 import { ReactComponent as Fire } from './fieldIcons/fire.svg';
 import { ReactComponent as Air } from './fieldIcons/air.svg';
 import { ReactComponent as Earth } from './fieldIcons/earth.svg';
