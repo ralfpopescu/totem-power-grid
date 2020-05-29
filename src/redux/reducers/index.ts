@@ -44,11 +44,8 @@ export type Action =
 
 const initialState: State = { tiles: initialTiles, lightBeams: [], totemSelection: 'FIRE', dimension: initialDimension };
 
-const canTotemBeInField = (totemType: TotemType, fields: Array<FieldType>) => {
-  return fields.length === 0 ||
+const canTotemBeInField = (totemType: TotemType, fields: Array<FieldType>) => fields.length === 0 ||
   (totemType === 'FIRE' && fields[0] === 'BURNING' && fields.length === 1);
-
-};
 
 const getInitialDirectionFromTotemType = (totemType: TotemType): Direction => {
   if(totemType === 'LIGHT' || totemType === 'ELECTRIC') {
@@ -83,7 +80,6 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
 
     const newLightBeams = calculateLightBeams(newTiles, dimension);
     const tilesAfterElectrification = electrify({ ...state, tiles: tilesAfterWaterDispersion});
-    console.log('newElectrifiedFields state', tilesAfterElectrification);
     return { ...state, tiles: tilesAfterElectrification, lightBeams: newLightBeams };
   }
   return state;
@@ -98,7 +94,6 @@ const changeTotemDirection = (state: State, totemIndex: number, direction: Direc
   const newTiles = { ...tiles, [totemIndex]: { ...tiles[totemIndex], totem: newTotem }};
   const newLightBeams = calculateLightBeams(newTiles, state.dimension);
   const tilesAfterElectrification = electrify({ ...state, tiles: newTiles });
-  console.log('newElectrifiedFields change', tilesAfterElectrification);
   return { ...state, tiles: tilesAfterElectrification, lightBeams: newLightBeams };
 };
 
@@ -107,13 +102,10 @@ const reducer = (state: State = initialState, action: Action): State => {
     case 'ADD_TOTEM':
       return addTotemToBoard(state, action.payload.totemType, action.payload.index);
     case 'CHANGE_TOTEM_SELECTION':
-      console.log('solution:', JSON.stringify(getSolutionFromState(state)));
       return {
         ...state,
         totemSelection: action.payload.totemType,
       };
-    case 'CHANGE_TOTEM_DIRECTION':
-      return changeTotemDirection(state, action.payload.totemIndex, action.payload.direction);
     case 'CHANGE_TOTEM_DIRECTION':
       return changeTotemDirection(state, action.payload.totemIndex, action.payload.direction);
     default:

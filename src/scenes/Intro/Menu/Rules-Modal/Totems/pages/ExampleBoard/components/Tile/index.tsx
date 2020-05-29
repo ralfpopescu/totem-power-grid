@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from "react-redux";
 import { addTotem, changeTotemDirection } from "../../../../../../../../../redux/actions";
-import type { State, TotemType, Direction, LightBeam, Tile as TileState } from '../../../../../../../../../redux/reducers';
+import type { State, TotemType, Direction, LightBeam } from '../../../../../../../../../redux/reducers';
+import type { ExampleTile } from '../../index';
 import Totem from '../Totem';
 import Field from '../Field';
 import Arrow from './icons/arrow';
@@ -16,7 +17,7 @@ grid-template-columns: 1fr 5fr 1fr;
 grid-template-rows: 1fr 5fr 1fr;
 `;
 
-type MainContainerProps = { lit: boolean; tile: TileState }
+type MainContainerProps = { lit: boolean; tile: ExampleTile }
 
 const MainItemContainer = styled.div<MainContainerProps>`
 background-color: ${props => {
@@ -115,7 +116,7 @@ cursor: pointer;
 
 type TileProps = { 
   index: number; 
-  tile: TileState; 
+  tile: ExampleTile; 
   lightBeam: LightBeam | undefined | null;
   boardScale: number;
 }
@@ -129,8 +130,8 @@ const Tile = ({ index, lightBeam, tile, boardScale }: TileProps) => (
 <TileContainer>
   {index}
    <MainItemContainer lit={!!lightBeam} tile={tile}>
-      {tile && tile.totem && <Totem totemType={tile.totem.type} boardScale={boardScale}/>}
-      {tile && tile.fields.length > 0 && <Field fields={tile.fields} />}
+      {tile && tile?.totem && <Totem totemType={tile?.totem.type} boardScale={boardScale}/>}
+      {tile && tile?.fields.length > 0 && <Field fields={tile?.fields} />}
     </MainItemContainer>
     <RightZone>
       {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(180deg)', ...activeStyle(tile.totem?.direction, 'EAST')}} 
