@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import type { AnyStyledComponent } from 'styled-components';
-import type { FieldType  } from '../../../../../../redux/reducers';
+import type { Field } from '../../../../../../redux/reducers';
 import calculateFieldFromFields from '../../../../../../logic/calculateFieldFromFields';
 import { getThemeFromFields } from '../../../../../../logic/totemColor';
 import { ReactComponent as Fire } from './fieldIcons/fire.svg';
@@ -11,9 +11,9 @@ import { ReactComponent as Water } from './fieldIcons/water.svg';
 import { ReactComponent as Smoke } from './fieldIcons/smoke.svg';
 import { ReactComponent as Electric } from './fieldIcons/electric.svg';
 
-type FieldProps = { fields: Array<FieldType>; boardScale: number }
+type FieldProps = { fields: Array<Field>; boardScale: number }
 
-const Icon = (IconComponent: AnyStyledComponent, fields: Array<FieldType>, boardScale: number) => styled(IconComponent)`
+const Icon = (IconComponent: AnyStyledComponent, fields: Array<Field>, boardScale: number) => styled(IconComponent)`
 height: ${boardScale / 3}px;
 width: ${boardScale / 3}px;
 position: relative;
@@ -26,7 +26,7 @@ fill: ${props => getThemeFromFields(props.theme, fields).secondary};
 `;
 
 
-const getFieldIconFromFields = (fields: Array<FieldType>, boardScale: number): AnyStyledComponent => {
+const getFieldIconFromFields = (fields: Array<Field>, boardScale: number): AnyStyledComponent => {
   const calculatedFieldType = calculateFieldFromFields(fields);
   if(calculatedFieldType === 'BURNING') {
     return Icon(Fire as AnyStyledComponent, fields, boardScale);
@@ -58,7 +58,7 @@ position: relative;
 
 `;
 
-const Field = ({ fields, boardScale }: FieldProps) => {
+const FieldComponent = ({ fields, boardScale }: FieldProps) => {
   const IconComponent = getFieldIconFromFields(fields, boardScale);
   return (
   <IconContainer boardScale={boardScale}>
@@ -67,4 +67,4 @@ const Field = ({ fields, boardScale }: FieldProps) => {
   );
 };
 
-export default Field;
+export default FieldComponent;

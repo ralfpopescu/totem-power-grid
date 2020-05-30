@@ -1,33 +1,46 @@
-import type { Tiles} from '.';
+import type { Tiles, FieldType } from '.';
 import { returnAdjacentCoordinates } from './calculateFields';
 import calculateIndexFromPosition from '../../logic/calculateIndexFromPosition';
+
+type WaterTile = { index: number; appliedBy: string }
 
 const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
   const indicesWithTiles = Object.keys(tiles);
   const tilesIndicesWithEarthAndWater = indicesWithTiles
-  .filter(index => tiles[index].fields.includes('FLOODED') && tiles[index].fields.includes('EARTH'));
+  .filter(index => tiles[index].fields.map(f => f.type).includes('FLOODED') 
+  && tiles[index].fields.map(f => f.type).includes('EARTH'));
 
   if(tilesIndicesWithEarthAndWater.length === 0) {
     return tiles;
   }
 
   const newTiles: Tiles = { ...tiles };
-  const tilesToAddWaterTo: Array<number> = [];
+  const tilesToAddWaterTo: Array<WaterTile> = [];
 
   tilesIndicesWithEarthAndWater.forEach(index => {
-    const adjacentCoordinates = returnAdjacentCoordinates(parseInt(index), dimension);
+    const totemIdsThatAreDispersingWater = tiles[index].fields.filter(f => f.type === 'FLOODED').map(f => f.appliedBy);
+    const adjacentCoordinates = returnAdjacentCoordinates(parseInt(index, 10), dimension);
     const adjacentIndices = adjacentCoordinates.map(coord => calculateIndexFromPosition({ ...coord, dimension }));
 
-    adjacentIndices.forEach(index => {
-      const tile = tiles[index];
+    adjacentIndices.forEach(i => {
+      const tile = tiles[i];
       const { fields, totem } = tile;
-      if(!fields.includes('FLOODED') && totem == null) {
-        tilesToAddWaterTo.push(index);
-      }
+      const fieldTypes = fields.map(f => f.type);
+      const fieldAppliedBys = fields.map(f => f.appliedBy);
+
+      const totemIdsThatHaveNotAppliedWater = totemIdsThatAreDispersingWater
+      .filter(tid => !fieldAppliedBys.includes(tid));
+
+      totemIdsThatHaveNotAppliedWater.forEach(totemId => {
+        tilesToAddWaterTo.push({ index: i, appliedBy: totemId });
+      });
+
+
     });
     if(tilesToAddWaterTo.length !== 0) {
-      tilesToAddWaterTo.forEach(index => {
-        newTiles[index] = {...newTiles[index], fields: [...newTiles[index].fields, 'FLOODED' ] };
+      tilesToAddWaterTo.forEach(waterTile => {
+        newTiles[waterTile.index] = {...newTiles[waterTile.index], 
+          fields: [...newTiles[waterTile.index].fields, { type: 'FLOODED', appliedBy: waterTile.appliedBy} ] };
       });
     }
   });

@@ -2,13 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from "react-redux";
 import { addTotem, changeTotemDirection } from "../../../../../../../redux/actions";
-import type { State, TotemType, Direction, LightBeam } from '../../../../../../../redux/reducers';
+import type { State, TotemType, FieldType, Direction, LightBeam } from '../../../../../../../redux/reducers';
 import type { ExampleTile } from '../../index';
 import Totem from '../Totem';
 import Field from '../Field';
 import Arrow from './icons/arrow';
 import { getThemeFromFields } from '../../../../../../../logic/totemColor';
 
+
+const attachAppliedByForType = (fieldTypes: Array<FieldType>) => fieldTypes.map(ft => ({ type: ft, appliedBy: '1' }));
 
 const TileContainer = styled.div`
 font-size: 8px;
@@ -21,7 +23,7 @@ type MainContainerProps = { lit: boolean; tile: ExampleTile }
 
 const MainItemContainer = styled.div<MainContainerProps>`
 background-color: ${props => {
-  if(!props.tile.totem) return  getThemeFromFields(props.theme, props.tile.fields).primary;
+  if(!props.tile.totem) return  getThemeFromFields(props.theme, attachAppliedByForType(props.tile.fields)).primary;
 }};
 display: flex;
 position: relative;

@@ -13,12 +13,14 @@ import { ReactComponent as Electric } from './fieldIcons/electric.svg';
 
 type FieldProps = { fields: Array<FieldType> }
 
+const attachAppliedByForType = (fieldTypes: Array<FieldType>) => fieldTypes.map(ft => ({ type: ft, appliedBy: '1' }));
+
 const Icon = (IconComponent: AnyStyledComponent, fields: Array<FieldType>) => styled(IconComponent)`
 height: 40px;
 width: 40px;
 position: relative;
 animation: pop 0.2s ease-in-out 1;
-fill: ${props => getThemeFromFields(props.theme, fields).secondary};
+fill: ${props => getThemeFromFields(props.theme, attachAppliedByForType(fields)).secondary};
 
 @keyframes pop{
   50%  {transform: scale(1.3);}
@@ -27,7 +29,7 @@ fill: ${props => getThemeFromFields(props.theme, fields).secondary};
 
 
 const getFieldIconFromFields = (fields: Array<FieldType>): AnyStyledComponent => {
-  const calculatedFieldType = calculateFieldFromFields(fields);
+  const calculatedFieldType = calculateFieldFromFields(attachAppliedByForType(fields));
   if(calculatedFieldType === 'BURNING') {
     return Icon(Fire as AnyStyledComponent, fields);
   }

@@ -12,11 +12,13 @@ export type Direction = 'NORTH' | 'SOUTH' | 'EAST' | 'WEST' | 'NORTHEAST' | 'SOU
 
 export type FieldType = 'BURNING' | 'FLOODED' | 'SMOKEY' | 'STEAMY' | 'ELECTRIC_CURRENT' | 'BRIGHT' | 'WINDY' | 'EARTH'
 
+export type Field = { type: FieldType; appliedBy: string }
+
 export type Totem = { type: TotemType; direction: Direction; id: string }
 
 export type Tile = {
   totem: Totem;
-  fields: Array<FieldType>;
+  fields: Array<Field>;
 }
 
 export type Tiles = { [key: string]: Tile }
@@ -42,10 +44,14 @@ export type Action =
 { type: 'CHANGE_TOTEM_DIRECTION'; payload: { totemIndex: number; direction: Direction };
 }
 
-const initialState: State = { tiles: initialTiles, lightBeams: [], totemSelection: 'FIRE', dimension: initialDimension };
+const initialState: State = { 
+  tiles: initialTiles, 
+  lightBeams: [], 
+  totemSelection: 'FIRE', 
+  dimension: initialDimension };
 
-const canTotemBeInField = (totemType: TotemType, fields: Array<FieldType>) => fields.length === 0 ||
-  (totemType === 'FIRE' && fields[0] === 'BURNING' && fields.length === 1);
+const canTotemBeInField = (totemType: TotemType, fields: Array<Field>) => fields.length === 0 ||
+  (totemType === 'FIRE' && fields[0].type === 'BURNING' && fields.length === 1);
 
 const getInitialDirectionFromTotemType = (totemType: TotemType): Direction => {
   if(totemType === 'LIGHT' || totemType === 'ELECTRIC') {
@@ -63,6 +69,7 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
     return state;
   }
   if(canTotemBeInField(totemType, tile.fields)) {
+    const id =  uuidv4();
     const totemEffects = applyTotemEffect(totemType, index, dimension);
 
     totemEffects.forEach((totemEffect) => {
@@ -71,11 +78,11 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
 
       const tileStateAtIndex = state.tiles[effectIndex] || { totem: null, fields: [] };
       const { fields } = tileStateAtIndex;
-      if(!fields.includes(fieldType)) {
-        newTiles[`${effectIndex}`] = { ...tileStateAtIndex, fields: [...fields, fieldType ]};
+      if(!fields.map(f => f.type).includes(fieldType)) {
+        newTiles[`${effectIndex}`] = { ...tileStateAtIndex, fields: [...fields, {type: fieldType, appliedBy: id} ]};
       }
     });
-    newTiles[index] = { ...newTiles[index], totem: { type: totemType, direction: getInitialDirectionFromTotemType(totemType), id: uuidv4() } };
+    newTiles[index] = { ...newTiles[index], totem: { type: totemType, direction: getInitialDirectionFromTotemType(totemType), id } };
     const tilesAfterWaterDispersion = doEarthWaterDispersion(newTiles, dimension);
 
     const newLightBeams = calculateLightBeams(newTiles, dimension);

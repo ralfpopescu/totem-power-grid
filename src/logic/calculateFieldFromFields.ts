@@ -1,16 +1,20 @@
-import type { FieldType } from './fieldTypes';
+import type { Field, FieldType } from '../redux/reducers';
 
-const calculateFieldFromFields = (fields: Array<FieldType>): FieldType => {
-  if(fields.includes('BURNING') && fields.includes('FLOODED')) {
+const calculateFieldFromFields = (fields: Array<Field>): FieldType => {
+  const fieldTypes = fields.map(f => f.type);
+  if(fieldTypes.includes('BURNING') && fieldTypes.includes('FLOODED')) {
     return 'STEAMY';
   }
-  if(fields.includes('BURNING') && fields.includes('EARTH')) {
+  if(fieldTypes.includes('BURNING') && fieldTypes.includes('EARTH')) {
     return 'SMOKEY';
   }
-  if(fields.includes('ELECTRIC_CURRENT')) {
+  if(fieldTypes.includes('FLOODED') && fieldTypes.includes('EARTH')) {
+    return 'EARTH';
+  }
+  if(fieldTypes.includes('ELECTRIC_CURRENT')) {
     return 'ELECTRIC_CURRENT';
   }
-  return fields[0];
+  return fieldTypes[0];
 };
 
 export default calculateFieldFromFields;

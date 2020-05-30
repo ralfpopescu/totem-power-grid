@@ -2,12 +2,13 @@ import totemTypes from './totemTypes';
 import calculateFieldsFromFields from './calculateFieldFromFields';
 import type { TotemType } from './totemTypes';
 import type { Theme } from '../App';
-import type { FieldType } from '../redux/reducers';
+import type { FieldType, Field } from '../redux/reducers';
 
 const { FIRE, WATER, ELECTRIC, LIGHT, WIND, EARTH } = totemTypes;
 
-export const getThemeFromFields = (theme: Theme, fields: Array<FieldType>) => {
-  if(fields.length === 0) {
+export const getThemeFromFields = (theme: Theme, fields: Array<Field>) => {
+  const fieldTypes = fields.map(f => f.type);
+  if(fieldTypes.length === 0) {
     return { primary: theme.main.primary, secondary: theme.main.secondary };
   }
   const field = calculateFieldsFromFields(fields);

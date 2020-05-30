@@ -110,8 +110,14 @@ const getRefractionDirections = (direction: Direction): Array<Direction> => {
   return refractionDirections;
 };
 
-const doesTileRefract = (tile: Tile) => tile.fields.includes('FLOODED') && tile.fields.includes('BURNING');
-const doesTileBlock = (tile: Tile) => tile.fields.includes('EARTH') && tile.fields.includes('BURNING');
+const doesTileRefract = (tile: Tile) => {
+  const fieldTypes = tile.fields.map(f => f.type);
+  return fieldTypes.includes('FLOODED') && fieldTypes.includes('BURNING');
+};
+const doesTileBlock = (tile: Tile) => {
+  const fieldTypes = tile.fields.map(f => f.type);
+  return fieldTypes.includes('EARTH') && fieldTypes.includes('BURNING');
+};
 
 const calculateLightBeams = (
   tiles: Tiles, 
@@ -146,7 +152,7 @@ const calculateAllBeams = (tiles: Tiles, dimension: number) => {
     .filter(item => item.totem?.type === 'LIGHT');
 
   const beamsPerLightTotem = lightTotems.map(lightTotem => 
-    calculateLightBeams(tiles, [], parseInt(lightTotem.index), lightTotem.totem.direction, dimension)
+    calculateLightBeams(tiles, [], parseInt(lightTotem.index, 10), lightTotem.totem.direction, dimension),
     );
   return beamsPerLightTotem.reduce((acc, curr) => ([ ...acc, ...curr ]), []);
 };

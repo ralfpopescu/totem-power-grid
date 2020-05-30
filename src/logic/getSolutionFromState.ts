@@ -18,10 +18,10 @@ const getSolutionFromFields = (fields: Array<FieldType>) => {
 
 const getSolutionFromState = (state: State): Solution => {
   const { tiles, lightBeams } = state;
-  const tileIndices = Object.keys(tiles).map(index => parseInt(index));
+  const tileIndices = Object.keys(tiles).map(index => parseInt(index, 10));
   const tileSolution = tileIndices.reduce((sol: TileSolution, tileIndex: number) => {
     const { fields } = tiles[tileIndex];
-    sol[tileIndex] = getSolutionFromFields(fields);
+    sol[tileIndex] = getSolutionFromFields(fields.map(f => f.type));
     return sol;
   }, {} as TileSolution);  
   return { tileSolution, lightBeams };
