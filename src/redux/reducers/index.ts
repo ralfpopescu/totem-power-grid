@@ -30,6 +30,7 @@ export type State = {
   lightBeams: Array<LightBeam>;
   totemSelection: TotemType;
   dimension: number;
+  hoveredTotemId: string | null;
 }
 
 const initialDimension = 8;
@@ -41,14 +42,17 @@ const initialTiles = initialIndices.reduce((acc, curr) => ({ ...acc, [curr]: { .
 export type Action = 
 { type: 'ADD_TOTEM'; payload: { index: number; totemType: TotemType }} |
 { type: 'CHANGE_TOTEM_SELECTION'; payload: { totemType: TotemType }} |
-{ type: 'CHANGE_TOTEM_DIRECTION'; payload: { totemIndex: number; direction: Direction };
-}
+{ type: 'CHANGE_TOTEM_DIRECTION'; payload: { totemIndex: number; direction: Direction }} |
+{ type: 'SET_HOVERED_TOTEM_ID'; payload: { totemId: string }};
+
 
 const initialState: State = { 
   tiles: initialTiles, 
   lightBeams: [], 
   totemSelection: 'FIRE', 
-  dimension: initialDimension };
+  dimension: initialDimension,
+  hoveredTotemId: null, 
+};
 
 const canTotemBeInField = (totemType: TotemType, fields: Array<Field>) => fields.length === 0 ||
   (totemType === 'FIRE' && fields[0].type === 'BURNING' && fields.length === 1);
@@ -115,6 +119,8 @@ const reducer = (state: State = initialState, action: Action): State => {
       };
     case 'CHANGE_TOTEM_DIRECTION':
       return changeTotemDirection(state, action.payload.totemIndex, action.payload.direction);
+    case 'SET_HOVERED_TOTEM_ID':
+      return { ...state, hoveredTotemId: action.payload.totemId };
     default:
       return state;
   }

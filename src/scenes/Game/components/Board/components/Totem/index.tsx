@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { connect } from "react-redux";
 import totemTypes from '../../../../../../logic/totemTypes';
@@ -48,14 +48,15 @@ animation: fall-in 0.2s ease-in-out 1;
 
 type TotemProps = { totemType: TotemType; boardScale: number }
 
-const Totem = ({ totemType, boardScale }: TotemProps) => {
-  return (
+const Totem = ({ totemType, boardScale }: TotemProps) => (
     <>
     {totemType && <TotemIcon totemType={totemType} boardScale={boardScale} />}
     </>
-);};
+);
+
+const MemoizedTotem = memo(Totem);
 
 export default connect(
   null,
-  { addTotem }
-)(Totem);
+  { addTotem },
+)(MemoizedTotem);

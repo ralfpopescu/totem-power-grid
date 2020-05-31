@@ -26,3 +26,11 @@ export const changeTotemDirection = ({ totemIndex, direction }: ChangeTotemDirec
   type: actionTypes.CHANGE_TOTEM_DIRECTION,
   payload: { totemIndex, direction },
 });
+
+export type SetHoveredTotemIdInput = { totemId: string | null }
+export type SetHoveredTotemId = (input: SetHoveredTotemIdInput) => void
+
+export const setHoveredTotemId = ({ totemId }: SetHoveredTotemIdInput) => ({
+  type: actionTypes.SET_HOVERED_TOTEM_ID,
+  payload: { totemId },
+});

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import type { AnyStyledComponent } from 'styled-components';
 import type { Field } from '../../../../../../redux/reducers';
@@ -67,4 +67,6 @@ const FieldComponent = ({ fields, boardScale }: FieldProps) => {
   );
 };
 
-export default FieldComponent;
+const MemoizedField = memo(FieldComponent);
+
+export default MemoizedField;

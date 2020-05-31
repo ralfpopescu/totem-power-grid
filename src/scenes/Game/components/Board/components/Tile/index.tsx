@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { connect } from "react-redux";
-import { addTotem, changeTotemDirection } from "../../../../../../redux/actions";
-import type { AddTotem, ChangeTotemDirection } from "../../../../../../redux/actions";
+import { addTotem, changeTotemDirection, setHoveredTotemId } from "../../../../../../redux/actions";
+import type { AddTotem, ChangeTotemDirection, SetHoveredTotemId } from "../../../../../../redux/actions";
 import type { State, TotemType, Direction, LightBeam, Tile as TileState } from '../../../../../../redux/reducers';
 import Totem from '../Totem';
 import Field from '../Field';
@@ -17,7 +17,7 @@ grid-template-columns: 1fr 5fr 1fr;
 grid-template-rows: 1fr 5fr 1fr;
 `;
 
-type MainContainerProps = { lit: boolean; tile: TileState; boardScale: number }
+type MainContainerProps = { lit: boolean; tile: TileState; boardScale: number; isTotemHovered: boolean }
 
 const MainItemContainer = styled.div<MainContainerProps>`
 background-color: ${props => {
@@ -32,7 +32,7 @@ justify-content: center;
   grid-row-start: 2;
   grid-row-end: 2;
    padding: ${props => props.boardScale / 12}px;
-   border: ${props => props.tile.totem ? '': `2px solid ${props.lit ? "white" : "black"}`};
+   border: ${props => props.isTotemHovered ? '2' : '0'}px solid black;
 border-radius: 5px;
 box-shadow: ${props => props.lit && "0px 0px 10px 10px #ffffff"};
 transition: all 0.1s ease;
@@ -122,6 +122,8 @@ type TileProps = {
   lightBeam: LightBeam | undefined | null;
   totemSelection: TotemType;
   boardScale: number; 
+  setHoveredTotemId: SetHoveredTotemId;
+  hoveredTotemId: string | null;
 }
 
 const arrowStyle = (boardScale: number) => ({ width: `${boardScale/8}px`, height: `${boardScale/8}px`, zIndex: 1 });
@@ -129,15 +131,35 @@ const arrowStyle = (boardScale: number) => ({ width: `${boardScale/8}px`, height
 const activeStyle = (totemDirection: Direction, arrowDirection: Direction) => 
 totemDirection === arrowDirection ? { fill: 'white' } : {};
 
-const Tile = ({ index, addTotem, lightBeam, changeTotemDirection, tile, totemSelection, boardScale }: TileProps) => {
-  return (
-<TileContainer>
+const Tile = ({ 
+  index, 
+  addTotem, 
+  lightBeam,
+  changeTotemDirection, 
+  tile, 
+  totemSelection, 
+  boardScale, 
+  hoveredTotemId,
+  setHoveredTotemId }: TileProps) => (
+<TileContainer 
+>
   {index}
-   <MainItemContainer onClick={() => addTotem({ totemType: totemSelection, index })} lit={!!lightBeam} tile={tile} boardScale={boardScale}>
+   <MainItemContainer onClick={() => addTotem({ totemType: totemSelection, index })} 
+     lit={!!lightBeam} tile={tile} boardScale={boardScale}
+     onMouseEnter={() => {
+       if(tile.totem?.id != null) {
+        setHoveredTotemId({ totemId: tile.totem?.id });
+       }
+      }} 
+      onMouseLeave={() => setHoveredTotemId({ totemId: null })}
+      isTotemHovered={hoveredTotemId != null && (hoveredTotemId === tile.totem?.id 
+        || tile.fields.map(f => f.appliedBy).includes(hoveredTotemId))}
+      >
       {tile && tile.totem && <Totem totemType={tile.totem.type} boardScale={boardScale} />}
       {tile && tile.fields.length > 0 && <Field fields={tile.fields} boardScale={boardScale} />}
     </MainItemContainer>
     <RightZone>
+      {console.log(hoveredTotemId)}
       {tile.totem?.direction && <Arrow style={{ ...arrowStyle(boardScale), transform: 'rotate(180deg)', ...activeStyle(tile.totem?.direction, 'EAST')}} 
       onClick={() => changeTotemDirection({ totemIndex: index, direction: 'EAST' as Direction})} />}
     </RightZone >
@@ -154,13 +176,16 @@ const Tile = ({ index, addTotem, lightBeam, changeTotemDirection, tile, totemSel
     onClick={() => changeTotemDirection({ totemIndex: index, direction: 'SOUTH' as Direction})}/>}
     </BottomZone>
   </TileContainer>
-);};
+);
 
-const mapStateToProps = (state: State) => {
-  return { totemSelection: state.totemSelection };
-};
+const mapStateToProps = (state: State) => ({ 
+  totemSelection: state.totemSelection, 
+  hoveredTotemId: state.hoveredTotemId, 
+});
+
+const MemoizedTile = memo(Tile);
 
 export default connect(
   mapStateToProps,
-  { addTotem, changeTotemDirection }
-)(Tile);
+  { addTotem, changeTotemDirection, setHoveredTotemId },
+)(MemoizedTile);
