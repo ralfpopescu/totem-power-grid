@@ -13,6 +13,7 @@ import type { State } from '../../redux/reducers';
 import getSolutionFromState from '../../logic/getSolutionFromState';
 import { ReactComponent as BluePrints } from './assets/history.svg';
 import BluePrintModal from './components/Blueprint-Modal';
+import ActivateModal from './components/Activate-Modal';
 
 const AppContainer = styled.div`
 position: absolute;
@@ -104,18 +105,21 @@ z-index: 1;
 
 const solve = (state: State, solution: SolutionType) => {
   const playerSolution = getSolutionFromState(state);
-  const isSolved = _.isEqual(playerSolution, solution);
-  if(isSolved) {
-    console.log('solved!');
-  } else {
-    console.log('The village blew up.');
-  }
+  return _.isEqual(playerSolution, solution);
 };
 
 type AppProps = { state: State }
 
 const App = ({ state }: AppProps) => {
   const [bluePrintModalOpen, setBluePrintModalOpen] = useState<boolean>(false);
+  const [activateModalOpen, setActivateModalOpen] = useState<boolean>(false);
+  const [isSolved, setIsSolved] = useState<boolean>(false);
+
+  const handleActivate = () => {
+    setActivateModalOpen(true);
+    setIsSolved(solve(state, exampleSolution as SolutionType));
+  };
+
   return (
     <AppContainer>
       <Landscape />
@@ -123,7 +127,7 @@ const App = ({ state }: AppProps) => {
         <Board />
         <BottomToolBar>
           <ActiveButtonContainer>
-            <ActivateButton onClick={() => solve(state, exampleSolution as SolutionType)} />
+            <ActivateButton onClick={handleActivate} />
             ACTIVATE
           </ActiveButtonContainer>
           <BluePrintMenuContainer>
@@ -142,13 +146,12 @@ const App = ({ state }: AppProps) => {
         <TotemSelector />
       </SideBar>
       <BluePrintModal isOpen={bluePrintModalOpen} close={() => setBluePrintModalOpen(false)}/>
+      <ActivateModal isOpen={activateModalOpen} close={() => setActivateModalOpen(false)} isSolved={isSolved}/>
     </AppContainer>
   );
 };
 
-const mapStateToProps = (state: State) => {
-  return { state };
-};
+const mapStateToProps = (state: State) => ({ state });
 
 export default connect(mapStateToProps)(App);
 
