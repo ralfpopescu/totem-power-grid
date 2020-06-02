@@ -15,6 +15,14 @@ display: 'flex',
 },
 overlay: { backgroundColor: 'rgb(6, 5, 61, 0.5)' }};
 
+const LinkDiv = styled.div`
+cursor: pointer;
+
+&:hover {
+  transform: scale(1.2);
+}
+`;
+
 type MessageProps = { title: string; description: string; linkText: string; linkPath: string }
 
 const Message = ({ title, description, linkText, linkPath }: MessageProps) => {
@@ -27,9 +35,9 @@ const Message = ({ title, description, linkText, linkPath }: MessageProps) => {
     <div style={{ fontSize: '20px' }}>
       {description}
     </div>
-    <div style={{ fontSize: '20px' }} onClick={() => history.push(linkPath)}>
+    <LinkDiv style={{ fontSize: '20px' }} onClick={() => history.push(linkPath)}>
       {linkText}
-    </div>
+    </LinkDiv>
   </div>
 );};
 

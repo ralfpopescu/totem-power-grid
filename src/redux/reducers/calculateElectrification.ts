@@ -9,28 +9,38 @@ const moveOneUnitInDirection = (index: number, dimension: number, direction: Dir
   switch(direction) {
     case 'EAST':
       nextPosition = { row, column: column + 1 };
-      if (nextPosition.column === dimension) nextPosition = null;
+      if (nextPosition.column >= dimension) nextPosition = null;
       break;
     case 'WEST':
       nextPosition = { row, column: column - 1 };
-      if (nextPosition.column === 0) nextPosition = null;
+      if (nextPosition.column < 0) nextPosition = null;
       break;
     case 'NORTH':
       nextPosition = { row: row - 1, column };
-      if (nextPosition.column === 0) nextPosition = null;
+      if (nextPosition.row < 0) nextPosition = null;
       break;
     case 'SOUTH':
       nextPosition = { row: row + 1, column };
-      if (nextPosition.column === dimension) nextPosition = null;
+      if (nextPosition.row >= dimension) nextPosition = null;
       break;
     default:
       console.log('no direction');
   }
+  console.log('dimension', dimension);
+  console.log('nextPosition', nextPosition);
     if(!nextPosition) {
       return null;
     }
     return calculateIndexFromPosition({ ...nextPosition, dimension });
   };
+
+const isTotemPointingOffBoard = (dimension: number, index: number, direction: Direction) => {
+  const totemPosition = calculatePositionFromIndex(index, dimension);
+  return totemPosition.column === 0 && direction === 'WEST' ||
+     totemPosition.column === dimension && direction === 'EAST' ||
+     totemPosition.row === 0 && direction === 'NORTH' || 
+     totemPosition.row === dimension && direction === 'SOUTH'; 
+};
 
 type ElectricTotem = { index: number; totem: Totem }
 
@@ -57,7 +67,9 @@ const electrifyNeighbors = (
   const { dimension, tiles } = state;
 
   const adjacentCoordinates = returnAdjacentCoordinates(startIndex, dimension);
+  console.log('adjacentCoordinates', adjacentCoordinates);
   const adjacentIndices = adjacentCoordinates.map(coordinate => calculateIndexFromPosition({ ...coordinate, dimension }));
+  console.log('adjacentIndices', adjacentIndices);
   const adjacentFields = adjacentIndices.map(index => ({ fields: tiles[index].fields, index, totem:  tiles[index].totem}));
 
   const fieldsWithWaterAndNoElectrification = adjacentFields
@@ -112,6 +124,7 @@ const calculateElectrification = (state: State): Array<ElectrifiedTile> => {
     const totemId = totem.id;
     const { direction } = totem;
     const startIndex = moveOneUnitInDirection(index, dimension, direction);
+    console.log('startIndex', startIndex);
 
     if(!startIndex) {
       return [];

@@ -159,7 +159,6 @@ const Tile = ({
       {tile && tile.fields.length > 0 && <Field fields={tile.fields} boardScale={boardScale} />}
     </MainItemContainer>
     <RightZone>
-      {console.log(hoveredTotemId)}
       {tile.totem?.direction && <Arrow style={{ ...arrowStyle(boardScale), transform: 'rotate(180deg)', ...activeStyle(tile.totem?.direction, 'EAST')}} 
       onClick={() => changeTotemDirection({ totemIndex: index, direction: 'EAST' as Direction})} />}
     </RightZone >

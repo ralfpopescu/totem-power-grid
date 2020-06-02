@@ -33,7 +33,7 @@ export type State = {
   hoveredTotemId: string | null;
 }
 
-const initialDimension = 8;
+const initialDimension = 5;
 
 const initialTile = { totem: null, fields: [] };
 const initialIndices = Array(initialDimension * initialDimension).fill(1).map((_, index) => index);
@@ -113,6 +113,7 @@ const reducer = (state: State = initialState, action: Action): State => {
     case 'ADD_TOTEM':
       return addTotemToBoard(state, action.payload.totemType, action.payload.index);
     case 'CHANGE_TOTEM_SELECTION':
+      console.log(state);
       return {
         ...state,
         totemSelection: action.payload.totemType,
