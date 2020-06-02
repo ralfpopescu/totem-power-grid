@@ -19,6 +19,7 @@
     "eslint-config-airbnb-base": "^14.1.0",
     "lodash": "^4.17.15",
     "react": "^16.13.1",
+    "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
     "react-interval": "^2.1.1",
     "react-modal": "^3.11.2",

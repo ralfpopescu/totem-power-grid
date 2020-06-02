@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useCookies } from 'react-cookie';
 import Tile from './Tile';
 import Levels from '../../../levels';
 
@@ -71,6 +72,10 @@ export type LevelSelectTitle = { name: string; number: number; difficulty: strin
 
 const LevelSelect = () => {
   const [levelSelectTitle, setLevelSelectTitle] = useState<LevelSelectTitle | null>();
+  const [cookies, setCookie] = useCookies(['levelsComplete']);
+  console.log('cookies', cookies);
+  console.log('cookiescookies', cookies.levelsComplete);
+
   return (
   <Container>
     <FaOweiah>Fa'Owei-ah</FaOweiah>

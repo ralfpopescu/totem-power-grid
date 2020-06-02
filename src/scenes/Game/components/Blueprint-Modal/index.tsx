@@ -1,14 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import Modal from 'react-modal';
 import { connect } from "react-redux";
 import type { Solution as SolutionType } from '../../../../logic/getSolutionFromState';
 import Solution from './Solution';
-import exampleSolution from './Solution/example-solution-2.json';
 import type { State } from '../../../../redux/reducers';
-
-;
-
 
 type BluePrintModalProps = { isOpen: boolean; close: () => void; solution: SolutionType }
 

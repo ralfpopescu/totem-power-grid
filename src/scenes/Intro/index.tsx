@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useCookies } from 'react-cookie';
 import Menu from './Menu';
 import LevelSelect from './Level-Select';
 import { ReactComponent as Shaman} from '../../top-level-assets/shaman1.svg';
@@ -43,8 +44,7 @@ grid-column-start: 2;
 grid-row-start: 1;
 `;
 
-const Intro = () => {
-  return (
+const Intro = () => (
     <AppContainer>
       <SideBar>
         <TotemPowerGridTitle>TOTEM POWER GRID</TotemPowerGridTitle>
@@ -56,7 +56,6 @@ const Intro = () => {
       </LevelSelectContainer>
     </AppContainer>
   );
-};
 
 export default Intro;
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
+import { CookiesProvider } from 'react-cookie';
 import Game from './scenes/Game';
 import Intro from './scenes/Intro';
 import type { State } from './redux/reducers';
@@ -74,8 +75,8 @@ const GlobalStyle = createGlobalStyle`
 
 type AppProps = { state: State }
 
-const App = ({ state }: AppProps) => {
-  return (
+const App = ({ state }: AppProps) => (
+  <CookiesProvider>
       <ThemeProvider theme={theme}>
       <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet" />
         <GlobalStyle />
@@ -86,12 +87,10 @@ const App = ({ state }: AppProps) => {
           <Intro />
         </Route>
       </ThemeProvider>
+      </CookiesProvider>
   );
-};
 
-const mapStateToProps = (state: State) => {
-  return { state };
-};
+const mapStateToProps = (state: State) => ({ state });
 
 export default connect(mapStateToProps)(App);
 

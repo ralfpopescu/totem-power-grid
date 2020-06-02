@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { connect } from "react-redux";
 import _ from 'lodash';
+import { useCookies } from 'react-cookie';
 import Board from './components/Board';
 import TotemSelector from './components/TotemSelector';
 import Solution from './components/Solution';
@@ -114,10 +115,17 @@ const App = ({ state }: AppProps) => {
   const [bluePrintModalOpen, setBluePrintModalOpen] = useState<boolean>(false);
   const [activateModalOpen, setActivateModalOpen] = useState<boolean>(false);
   const [isSolved, setIsSolved] = useState<boolean>(false);
+  const [cookies, setCookie] = useCookies(['levelsComplete']);
 
   const handleActivate = () => {
+    const levelsComplete = cookies.levelsComplete || [];
     setActivateModalOpen(true);
-    setIsSolved(solve(state, exampleSolution as SolutionType));
+    const solutionResuit = solve(state, exampleSolution as SolutionType);
+    setIsSolved(solutionResuit);
+    // if(solutionResuit) {
+    //   cookies.set('levels-complete', [...levelsComplete, state.level.number], { path: '/' });
+    // }
+    setCookie('levelsComplete', [...levelsComplete, state.level.number], { path: '/' });
   };
 
   return (
