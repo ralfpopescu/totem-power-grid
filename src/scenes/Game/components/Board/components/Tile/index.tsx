@@ -156,7 +156,7 @@ const Tile = ({
         || tile.fields.map(f => f.appliedBy).includes(hoveredTotemId))}
       >
       {tile && tile.totem && <Totem totemType={tile.totem.type} boardScale={boardScale} />}
-      {tile && tile.fields.length > 0 && <Field fields={tile.fields} boardScale={boardScale} />}
+      {tile && tile.fields.length > 0 && !tile.totem && <Field fields={tile.fields} boardScale={boardScale} />}
     </MainItemContainer>
     <RightZone>
       {tile.totem?.direction && <Arrow style={{ ...arrowStyle(boardScale), transform: 'rotate(180deg)', ...activeStyle(tile.totem?.direction, 'EAST')}} 

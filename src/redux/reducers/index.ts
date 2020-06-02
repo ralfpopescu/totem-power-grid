@@ -5,6 +5,8 @@ import calculateLightBeams from './calculateLightBeams';
 import doEarthWaterDispersion from './doEarthWaterDispersion';
 import electrify from './calculateElectrification';
 import getSolutionFromState from '../../logic/getSolutionFromState';
+import type { Level } from '../../levels';
+import levels from '../../levels';
 
 export type TotemType = 'FIRE' | 'ELECTRIC' | 'LIGHT' | 'WATER' | 'WIND' | 'EARTH'
 
@@ -31,27 +33,42 @@ export type State = {
   totemSelection: TotemType;
   dimension: number;
   hoveredTotemId: string | null;
+  level: Level;
 }
 
-const initialDimension = 5;
 
 const initialTile = { totem: null, fields: [] };
-const initialIndices = Array(initialDimension * initialDimension).fill(1).map((_, index) => index);
-const initialTiles = initialIndices.reduce((acc, curr) => ({ ...acc, [curr]: { ...initialTile }}), {});
+
+const createInitialTilesFromDimension = (initialDimension: number) => {
+  const initialIndices = Array(initialDimension * initialDimension).fill(1).map((_, index) => index);
+  const initialTiles = initialIndices.reduce((acc, curr) => ({ ...acc, [curr]: { ...initialTile }}), {});
+  return initialTiles;
+};
+
+const initializeStateFromLevel = (level: Level) => ({
+  tiles: createInitialTilesFromDimension(level.dimension), 
+  lightBeams: [], 
+  totemSelection: 'FIRE' as TotemType, 
+  dimension: level.dimension,
+  hoveredTotemId: null, 
+  level,
+});
 
 export type Action = 
 { type: 'ADD_TOTEM'; payload: { index: number; totemType: TotemType }} |
 { type: 'CHANGE_TOTEM_SELECTION'; payload: { totemType: TotemType }} |
 { type: 'CHANGE_TOTEM_DIRECTION'; payload: { totemIndex: number; direction: Direction }} |
-{ type: 'SET_HOVERED_TOTEM_ID'; payload: { totemId: string }};
+{ type: 'SET_HOVERED_TOTEM_ID'; payload: { totemId: string }} |
+{ type: 'SET_LEVEL'; payload: { level: Level }};
 
 
 const initialState: State = { 
-  tiles: initialTiles, 
+  tiles: createInitialTilesFromDimension(levels.l0.dimension), 
   lightBeams: [], 
   totemSelection: 'FIRE', 
-  dimension: initialDimension,
+  dimension: levels.l0.dimension,
   hoveredTotemId: null, 
+  level: levels.l0,
 };
 
 const canTotemBeInField = (totemType: TotemType, fields: Array<Field>) => fields.length === 0 ||
@@ -113,7 +130,7 @@ const reducer = (state: State = initialState, action: Action): State => {
     case 'ADD_TOTEM':
       return addTotemToBoard(state, action.payload.totemType, action.payload.index);
     case 'CHANGE_TOTEM_SELECTION':
-      console.log(state);
+      console.log(JSON.stringify(getSolutionFromState(state)));
       return {
         ...state,
         totemSelection: action.payload.totemType,
@@ -122,6 +139,8 @@ const reducer = (state: State = initialState, action: Action): State => {
       return changeTotemDirection(state, action.payload.totemIndex, action.payload.direction);
     case 'SET_HOVERED_TOTEM_ID':
       return { ...state, hoveredTotemId: action.payload.totemId };
+    case 'SET_LEVEL':
+      return initializeStateFromLevel(action.payload.level);
     default:
       return state;
   }

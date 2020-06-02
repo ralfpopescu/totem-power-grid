@@ -1,6 +1,7 @@
 import actionTypes from './actionTypes';
 import type { TotemType } from '../logic/totemTypes';
 import type { Direction } from './reducers';
+import type { Level } from '../levels';
 
 export type AddTotemInput = { totemType: TotemType; index: number }
 export type AddTotem = (input: AddTotemInput ) => void
@@ -33,4 +34,12 @@ export type SetHoveredTotemId = (input: SetHoveredTotemIdInput) => void
 export const setHoveredTotemId = ({ totemId }: SetHoveredTotemIdInput) => ({
   type: actionTypes.SET_HOVERED_TOTEM_ID,
   payload: { totemId },
+});
+
+export type SetLevelInput = { level: Level }
+export type SetLevel = (input: SetLevelInput) => void
+
+export const setLevel = ({ level }: SetLevelInput) => ({
+  type: actionTypes.SET_LEVEL,
+  payload: { level },
 });

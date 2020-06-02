@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Tile from './Tile';
+import Levels from '../../../levels';
 
 const LevelSelectContainer = styled.div`
 display: grid;
@@ -66,53 +67,53 @@ color: ${props => getDifficultyColor(props.difficulty)}
 `;
 
 
-type Level = { name: string; number: number; difficulty: string }
+export type LevelSelectTitle = { name: string; number: number; difficulty: string }
 
 const LevelSelect = () => {
-  const [level, setLevel] = useState<Level | null>();
+  const [levelSelectTitle, setLevelSelectTitle] = useState<LevelSelectTitle | null>();
   return (
   <Container>
     <FaOweiah>Fa'Owei-ah</FaOweiah>
-    <LevelTitle>{level ? level.name : null}</LevelTitle>
-    <LevelDifficulty difficulty={level?.difficulty}>{level?.difficulty}</LevelDifficulty>
+    <LevelTitle>{levelSelectTitle ? levelSelectTitle.name : null}</LevelTitle>
+    <LevelDifficulty difficulty={levelSelectTitle?.difficulty}>{levelSelectTitle?.difficulty}</LevelDifficulty>
     <LevelSelectGridContainer>
       <LevelSelectContainer>
-        <Tile setLevel={setLevel} adjacencies={['NORTH', 'WEST']} level={{ name: 'Fisherman’s Dream', difficulty: 'hard', number: 0 }} />
-        <Tile setLevel={setLevel} adjacencies={['NORTH']} level={{ name: 'Jami\'s Coconut Farm', difficulty: 'easy', number: 1 }}/>
-        <Tile setLevel={setLevel} adjacencies={['NORTH', 'EAST']} level={{ name: 'Kaka Wawa', difficulty: 'easy', number: 2 }}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={['WEST']} level={{ name: 'Capitol Village', difficulty: 'very hard', number: 3 }}/>
-        <Tile setLevel={setLevel} adjacencies={[]} land level={{ name: 'N\'eva Eva', difficulty: 'easy', number: 4 }}/>
-        <Tile setLevel={setLevel} adjacencies={['EAST']} level={{ name: 'Here Be Surfers', difficulty: 'medium', number: 5 }}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={['NORTH', 'WEST', 'SOUTH', 'EAST']} level={{ name: 'Penthouse Island', difficulty: 'very hard', number: 5 }}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={['SOUTH', 'WEST']}/>
-        <Tile setLevel={setLevel} adjacencies={[]} land />
-        <Tile setLevel={setLevel} adjacencies={[]} land />
-        <Tile setLevel={setLevel} adjacencies={['NORTH', 'EAST']}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={['SOUTH', 'WEST']}/>
-        <Tile setLevel={setLevel} adjacencies={[]} land />
-        <Tile setLevel={setLevel} adjacencies={['SOUTH', 'EAST']}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={['EAST', 'WEST']}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={['NORTH', 'SOUTH', 'WEST']}/>
-        <Tile setLevel={setLevel} adjacencies={['SOUTH', 'EAST']}/>
-        <Tile setLevel={setLevel} adjacencies={[]}/>
-        <Tile setLevel={setLevel} adjacencies={['NORTH', 'SOUTH', 'WEST']}/>
-        <Tile setLevel={setLevel} adjacencies={['NORTH', 'SOUTH', 'EAST']}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['NORTH', 'WEST']}  level={Levels.l0}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['NORTH']} level={Levels.l1}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['NORTH', 'EAST']} />
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['WEST']} />
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]} land />
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['EAST']} />
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['NORTH', 'WEST', 'SOUTH', 'EAST']} />
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['SOUTH', 'WEST']}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]} land />
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]} land />
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['NORTH', 'EAST']}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['SOUTH', 'WEST']}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]} land />
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['SOUTH', 'EAST']}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['EAST', 'WEST']}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['NORTH', 'SOUTH', 'WEST']}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['SOUTH', 'EAST']}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['NORTH', 'SOUTH', 'WEST']}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={['NORTH', 'SOUTH', 'EAST']}/>
       </LevelSelectContainer>
     </LevelSelectGridContainer>
   </Container>

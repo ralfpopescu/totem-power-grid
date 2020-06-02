@@ -24,8 +24,7 @@ grid-template-columns: repeat(${props => props.dimension}, ${boardScale}px);
 
 type BoardProps = { dimension: number; tiles: Tiles; lightBeams: Array<LightBeam> }
 
-const Board = ({ dimension, tiles, lightBeams }: BoardProps) => {
-  return (
+const Board = ({ dimension, tiles, lightBeams }: BoardProps) => (
     <Container>
   <BoardContainer dimension={dimension}>
     {Array(dimension * dimension).fill(1).map((_, index) => (
@@ -33,10 +32,8 @@ const Board = ({ dimension, tiles, lightBeams }: BoardProps) => {
     ))}
   </BoardContainer>
   </Container>
-);};
+);
 
-const mapStateToProps = (state: State) => {
-  return { tiles: state.tiles, dimension: state.dimension, lightBeams: state.lightBeams };
-};
+const mapStateToProps = (state: State) => ({ tiles: state.tiles, dimension: state.level.dimension, lightBeams: state.lightBeams });
 
 export default connect(mapStateToProps)(Board);

@@ -16,17 +16,14 @@ grid-template-columns: repeat(${props => props.dimension}, 80px);
 
 type SolutionProps = { dimension: number; solution: SolutionType }
 
-const Solution = ({ dimension, solution }: SolutionProps) => {
-  return (
+const Solution = ({ dimension, solution }: SolutionProps) => (
   <SolutionContainer dimension={dimension}>
     {Array(dimension * dimension).fill(1).map((_, index) => (
       <SolutionTile hasLightBeam={!!solution.lightBeams.find(lb => lb.index === index)} tileSolution={solution.tileSolution[index]} index={index}/>
     ))}
   </SolutionContainer>
-);};
+);
 
-const mapStateToProps = (state: State) => {
-  return { dimension: state.dimension };
-};
+const mapStateToProps = (state: State) => ({ dimension: state.level.dimension });
 
 export default connect(mapStateToProps)(Solution);

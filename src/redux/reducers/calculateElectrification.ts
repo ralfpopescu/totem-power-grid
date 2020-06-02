@@ -26,21 +26,11 @@ const moveOneUnitInDirection = (index: number, dimension: number, direction: Dir
     default:
       console.log('no direction');
   }
-  console.log('dimension', dimension);
-  console.log('nextPosition', nextPosition);
     if(!nextPosition) {
       return null;
     }
     return calculateIndexFromPosition({ ...nextPosition, dimension });
   };
-
-const isTotemPointingOffBoard = (dimension: number, index: number, direction: Direction) => {
-  const totemPosition = calculatePositionFromIndex(index, dimension);
-  return totemPosition.column === 0 && direction === 'WEST' ||
-     totemPosition.column === dimension && direction === 'EAST' ||
-     totemPosition.row === 0 && direction === 'NORTH' || 
-     totemPosition.row === dimension && direction === 'SOUTH'; 
-};
 
 type ElectricTotem = { index: number; totem: Totem }
 

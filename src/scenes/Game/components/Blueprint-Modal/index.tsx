@@ -1,12 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
+import { connect } from "react-redux";
 import type { Solution as SolutionType } from '../../../../logic/getSolutionFromState';
 import Solution from './Solution';
 import exampleSolution from './Solution/example-solution-2.json';
+import type { State } from '../../../../redux/reducers';
+
+;
 
 
-type BluePrintModalProps = { isOpen: boolean; close: () => void }
+type BluePrintModalProps = { isOpen: boolean; close: () => void; solution: SolutionType }
 
 const modalStyle = { content: { 
   backgroundColor: '#06053d', 
@@ -16,10 +20,18 @@ display: 'flex',
 },
 overlay: { backgroundColor: 'rgb(6, 5, 61, 0.5)' }};
 
-const StoryModal = ({ isOpen, close }: BluePrintModalProps) => (
+const BluePrintModal = ({ isOpen, close, solution }: BluePrintModalProps) => (
   <Modal isOpen={isOpen} onRequestClose={close} style={modalStyle}>
-    <Solution solution={exampleSolution as SolutionType}/>
+    <Solution solution={solution}/>
   </Modal>
 );
 
-export default StoryModal;
+const mapStateToProps = (state: State) => ({ 
+  solution: state.level.solution, 
+});
+
+
+export default connect(
+  mapStateToProps,
+)(BluePrintModal);
+

@@ -1,13 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
+import { connect } from "react-redux";
 import { ReactComponent as Village } from './assets/tipi.svg';
+import type { Level } from '../../../../levels';
+import type { LevelSelectTitle } from "..";
+import { setLevel } from '../../../../redux/actions';
+import type { SetLevel } from '../../../../redux/actions';
 
 type Adjancency = 'NORTH' | 'SOUTH' | 'EAST' | 'WEST'
 
-type Level = { name: string; number: number; difficulty: string }
-
-type TileProps = { adjacencies: Array<Adjancency>; land?: boolean | undefined; level?: Level | undefined; setLevel: (level: Level | undefined | null) => void }
+type TileProps = { 
+  adjacencies: Array<Adjancency>; 
+  land?: boolean | undefined; 
+  level?: Level | undefined; 
+  setLevelSelectTitle: (level: LevelSelectTitle | null) => void; 
+  setLevel: SetLevel;
+}
 
 type BeachGradientProps = { adjacency: Adjancency }
 
@@ -98,15 +107,16 @@ width: 100%:
 border: 1px solid black; 
 `; 
 
-const Tile = ({ adjacencies, land, level, setLevel }: TileProps) => {
+const Tile = ({ adjacencies, land, level, setLevel, setLevelSelectTitle }: TileProps) => {
   const history = useHistory();
   return (
 <TileContainer 
 land={land}
-onMouseEnter={() => setLevel(level)} 
-onMouseLeave={() => setLevel(null)} 
+onMouseEnter={() => setLevelSelectTitle(level ? { difficulty: level?.difficulty, name: level?.name, number: level.number } : null)} 
+onMouseLeave={() => setLevelSelectTitle(null)} 
 onClick={() => {
   if(level != null) {
+    setLevel({ level });
     history.push(`/game/${level.number}`);
   }
 }}>
@@ -119,4 +129,7 @@ onClick={() => {
 </TileContainer>
 );};
 
-export default Tile;
+export default connect(
+  null,
+  { setLevel },
+)(Tile);

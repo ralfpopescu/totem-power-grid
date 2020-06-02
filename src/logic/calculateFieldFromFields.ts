@@ -2,7 +2,7 @@ import type { Field, FieldType } from '../redux/reducers';
 
 const calculateFieldFromFields = (fields: Array<Field>): FieldType => {
   const fieldTypes = fields.map(f => f.type);
-  if(fieldTypes.includes('BURNING') && fieldTypes.includes('FLOODED')) {
+  if(fieldTypes.includes('BURNING') && fieldTypes.includes('FLOODED')  && !fieldTypes.includes('EARTH')) {
     return 'STEAMY';
   }
   if(fieldTypes.includes('BURNING') && fieldTypes.includes('EARTH')) {
