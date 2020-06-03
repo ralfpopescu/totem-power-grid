@@ -1,8 +1,9 @@
-import React, { memo } from 'react';
+import React, { memo, MouseEvent } from 'react';
 import styled from 'styled-components';
 import { connect } from "react-redux";
 import totemTypes from '../../../../../../logic/totemTypes';
-import { addTotem } from "../../../../../../redux/actions";
+import { removeTotem } from "../../../../../../redux/actions";
+import type { RemoveTotem } from "../../../../../../redux/actions";
 import type { TotemType } from '../../../../../../redux/reducers';
 import { ReactComponent as TotemImage } from './totem.svg';
 
@@ -35,6 +36,10 @@ width: ${props => props.boardScale / 3}px;
 height: ${props => props.boardScale / 3}px;
 animation: fall-in 0.2s ease-in-out 1;
 
+&:hover {
+  opacity: 0.7;
+}
+
 @keyframes fall-in {
   0% {
     {transform: scale(1.5);}
@@ -46,11 +51,14 @@ animation: fall-in 0.2s ease-in-out 1;
 
 `;
 
-type TotemProps = { totemType: TotemType; boardScale: number }
+type TotemProps = { totemType: TotemType; boardScale: number; index: number; removeTotem: RemoveTotem }
 
-const Totem = ({ totemType, boardScale }: TotemProps) => (
+const Totem = ({ totemType, boardScale, index, removeTotem }: TotemProps) => (
     <>
-    {totemType && <TotemIcon totemType={totemType} boardScale={boardScale} />}
+    {totemType && <TotemIcon totemType={totemType} boardScale={boardScale} onClick={(e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+      e.stopPropagation();
+      removeTotem({ index });
+      }}/>}
     </>
 );
 
@@ -58,5 +66,5 @@ const MemoizedTotem = memo(Totem);
 
 export default connect(
   null,
-  { addTotem },
+  { removeTotem },
 )(MemoizedTotem);

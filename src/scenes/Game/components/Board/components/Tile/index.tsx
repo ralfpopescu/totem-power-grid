@@ -155,7 +155,7 @@ const Tile = ({
       isTotemHovered={hoveredTotemId != null && (hoveredTotemId === tile.totem?.id 
         || tile.fields.map(f => f.appliedBy).includes(hoveredTotemId))}
       >
-      {tile && tile.totem && <Totem totemType={tile.totem.type} boardScale={boardScale} />}
+      {tile && tile.totem && <Totem totemType={tile.totem.type} boardScale={boardScale} index={index} />}
       {tile && tile.fields.length > 0 && !tile.totem && <Field fields={tile.fields} boardScale={boardScale} />}
     </MainItemContainer>
     <RightZone>

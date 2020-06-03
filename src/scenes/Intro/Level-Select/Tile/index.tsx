@@ -138,10 +138,10 @@ onClick={() => {
   {adjacencies.length > 0 && (
   <Land adjacencies={adjacencies} > 
     {adjacencies.map(adj => <BeachGradient adjacency={adj} />)}
-    <Village powered={cookies.levelsComplete.includes(level?.number)}/>
+    <Village powered={cookies.levelsComplete?.includes(level?.number)}/>
     </Land>
     )}
-  {adjacencies.length === 0 && land && <FullLand><Village powered={cookies.levelsComplete.includes(level?.number)}/></FullLand>}
+  {adjacencies.length === 0 && land && <FullLand><Village powered={cookies.levelsComplete?.includes(level?.number)}/></FullLand>}
 </TileContainer>
 );};
 

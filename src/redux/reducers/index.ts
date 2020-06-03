@@ -56,6 +56,7 @@ const initializeStateFromLevel = (level: Level) => ({
 
 export type Action = 
 { type: 'ADD_TOTEM'; payload: { index: number; totemType: TotemType }} |
+{ type: 'REMOVE_TOTEM'; payload: { index: number }} |
 { type: 'CHANGE_TOTEM_SELECTION'; payload: { totemType: TotemType }} |
 { type: 'CHANGE_TOTEM_DIRECTION'; payload: { totemIndex: number; direction: Direction }} |
 { type: 'SET_HOVERED_TOTEM_ID'; payload: { totemId: string }} |
@@ -114,12 +115,14 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
 };
 
 const removeTotem = (state: State, index: number): State => {
-  const { tiles, dimension } = state;
+  console.log('removing totem', index);
+  const { tiles } = state;
   const tile = tiles[index];
   if(!tile.totem) {
     return state;
   }
   const totemToRemoveId = tile.totem.id;
+  console.log('totemToRemoveId', totemToRemoveId);
   const tileIndices = Object.keys(tiles);
 
   const newTiles = {...tiles};
@@ -133,6 +136,7 @@ const removeTotem = (state: State, index: number): State => {
   });
 
   newTiles[index] = { ...newTiles[index], totem: null };
+  console.log('newTiles', newTiles);
 
   return { ...state, tiles: newTiles};
 };
@@ -152,7 +156,10 @@ const changeTotemDirection = (state: State, totemIndex: number, direction: Direc
 const reducer = (state: State = initialState, action: Action): State => {
   switch(action.type) {
     case 'ADD_TOTEM':
+      console.log('adding totem');
       return addTotemToBoard(state, action.payload.totemType, action.payload.index);
+    case 'REMOVE_TOTEM':
+      return removeTotem(state, action.payload.index);
     case 'CHANGE_TOTEM_SELECTION':
       console.log(JSON.stringify(getSolutionFromState(state)));
       return {

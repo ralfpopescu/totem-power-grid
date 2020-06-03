@@ -11,6 +11,14 @@ export const addTotem = ({ totemType, index }: AddTotemInput) => ({
   payload: { totemType, index },
 });
 
+export type RemoveTotemInput = { index: number }
+export type RemoveTotem = (input: RemoveTotemInput ) => void
+
+export const removeTotem = ({ index }: RemoveTotemInput) => ({
+  type: actionTypes.REMOVE_TOTEM,
+  payload: { index },
+});
+
 export type ChangeTotemSelectionInput = { totemType: TotemType }
 export type ChangeTotemSelection = (input: ChangeTotemSelectionInput) => void
 
