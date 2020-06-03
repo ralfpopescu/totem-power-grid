@@ -19,7 +19,7 @@ export type Field = { type: FieldType; appliedBy: string }
 export type Totem = { type: TotemType; direction: Direction; id: string }
 
 export type Tile = {
-  totem: Totem;
+  totem: Totem | null;
   fields: Array<Field>;
 }
 
@@ -111,6 +111,30 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
     return { ...state, tiles: tilesAfterElectrification, lightBeams: newLightBeams };
   }
   return state;
+};
+
+const removeTotem = (state: State, index: number): State => {
+  const { tiles, dimension } = state;
+  const tile = tiles[index];
+  if(!tile.totem) {
+    return state;
+  }
+  const totemToRemoveId = tile.totem.id;
+  const tileIndices = Object.keys(tiles);
+
+  const newTiles = {...tiles};
+
+  tileIndices.forEach(i => {
+    const { fields } = newTiles[i];
+    if(fields.length > 0) {
+      const fieldWithoutTotemApplications = fields.filter(field => field.appliedBy !== totemToRemoveId);
+      newTiles[i] = { ...newTiles[i], fields: fieldWithoutTotemApplications };
+    }
+  });
+
+  newTiles[index] = { ...newTiles[index], totem: null };
+
+  return { ...state, tiles: newTiles};
 };
 
 

@@ -37,13 +37,21 @@ type ElectricTotem = { index: number; totem: Totem }
 type ElectrifiedTile = { index: number; appliedBy: string }
 
 
-const getElectricTotems = (tiles: Tiles): Array<ElectricTotem> => Object.keys(tiles)
-  .map(index => ({ totem: tiles[index].totem, index: parseInt(index, 10) }))
-  .filter(item => item.totem?.type === 'ELECTRIC');
+const getElectricTotems = (tiles: Tiles): Array<ElectricTotem> =>{
+
+ const flattened = Object.keys(tiles)
+  .map(index => ({ totem: tiles[index].totem, index: parseInt(index, 10) }));
+
+  const filteredNulls: Array<ElectricTotem> = 
+  flattened.filter((item) => item.totem != null) as Array<ElectricTotem>;
+
+  return filteredNulls.filter(item => item.totem?.type === 'ELECTRIC');
+
+};
 
 
 
-const canElectrifyTile = (fields: Array<Field>, electrifiedFields: Array<number>, index: number, totem: Totem) => 
+const canElectrifyTile = (fields: Array<Field>, electrifiedFields: Array<number>, index: number, totem: Totem | null) => 
   fields.map(f => f.type).includes('FLOODED') 
   && !fields.map(f => f.type).includes('EARTH') 
   && !electrifiedFields.includes(index)

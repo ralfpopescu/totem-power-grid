@@ -1,4 +1,4 @@
-import type { Direction, LightBeam, Tiles, Tile } from '.';
+import type { Direction, LightBeam, Tiles, Tile, Totem } from '.';
 import calculatePositionFromIndex from '../../logic/calculatePositionFromIndex';
 import calculateIndexFromPosition from '../../logic/calculateIndexFromPosition';
 
@@ -146,10 +146,12 @@ const calculateLightBeams = (
     return calculateLightBeams(tiles, newLightBeamsWithNext, nextIndex, direction, dimension);
 };
 
+type LightTotem = { index: string; totem: Totem }
+
 const calculateAllBeams = (tiles: Tiles, dimension: number) => {
   const lightTotems = Object.keys(tiles)
     .map(index => ({ totem: tiles[index].totem, index }))
-    .filter(item => item.totem?.type === 'LIGHT');
+    .filter(item => item.totem?.type === 'LIGHT') as Array<LightTotem>;
 
   const beamsPerLightTotem = lightTotems.map(lightTotem => 
     calculateLightBeams(tiles, [], parseInt(lightTotem.index, 10), lightTotem.totem.direction, dimension),
