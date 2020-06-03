@@ -16,9 +16,17 @@ import { ReactComponent as BluePrints } from './assets/history.svg';
 import BluePrintModal from './components/Blueprint-Modal';
 import ActivateModal from './components/Activate-Modal';
 
+const AbsoluteContainer = styled.div`
+background-color: #7FD4FF;
+position: absolute;
+top: 0;
+bottom: 0;
+right: 0;
+left: 0;
+`;
+
 const AppContainer = styled.div`
 position: absolute;
-background-color: #7FD4FF;
 top: 0;
 bottom: 0;
 right: 0;
@@ -52,7 +60,6 @@ justify-self: center;
 align-self: center;
 align-items: center;
 justify-content: center;
-z-index: 1;
 `;
 
 const ActivateButton = styled.button`
@@ -92,7 +99,6 @@ place-items: center;
 align-self: flex-end;
 grid-column-start: 4;
 
-z-index: 1;
 `;
 
 const ActiveButtonContainer = styled.div`
@@ -101,7 +107,6 @@ flex-direction: row;
 grid-column-start: 2;
 font-size: 30px;
 place-items: center;
-z-index: 1;
 `;
 
 const solve = (state: State, solution: SolutionType) => {
@@ -129,8 +134,9 @@ const App = ({ state }: AppProps) => {
   };
 
   return (
+    <AbsoluteContainer>
+    <Landscape />
     <AppContainer>
-      <Landscape />
       <BoardGridItem>
         <Board />
         <BottomToolBar>
@@ -156,6 +162,7 @@ const App = ({ state }: AppProps) => {
       <BluePrintModal isOpen={bluePrintModalOpen} close={() => setBluePrintModalOpen(false)}/>
       <ActivateModal isOpen={activateModalOpen} close={() => setActivateModalOpen(false)} isSolved={isSolved}/>
     </AppContainer>
+    </AbsoluteContainer>
   );
 };
 
