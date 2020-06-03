@@ -82,11 +82,6 @@ const TileContainer = styled.div<TileContainerProps>`
   overflow: visible;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.8;
-  }
 
 `;
 
@@ -104,20 +99,29 @@ const Land = styled.div<LandProps>`
   justify-content: center;
   border-radius: ${props => getBorderRadiusFromAdjacencies(props.adjacencies)};
   overflow: hidden;
+  cursor: pointer;
+
 
   &:hover {
-    opacity: 0.8;
+    background-color: #c0ff85;
   }
 `;
 
 const FullLand = styled.div`
 background-color: #8cff66;
-height: 100%
-width: 100%:
-border: 1px solid black; 
+position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom 0;
 display: flex;
+cursor: pointer;
   align-items: center;
   justify-content: center;
+
+  &:hover {
+    background-color: #c0ff85;
+  }
 `; 
 
 const Tile = ({ adjacencies, land, level, setLevel, setLevelSelectTitle }: TileProps) => {

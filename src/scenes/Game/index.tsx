@@ -16,6 +16,16 @@ import { ReactComponent as BluePrints } from './assets/history.svg';
 import BluePrintModal from './components/Blueprint-Modal';
 import ActivateModal from './components/Activate-Modal';
 
+type GridItemProps = { column: number; row: number; align?: string }
+
+const GridItem = styled.div<GridItemProps>`
+grid-column-start: ${props => props.column};
+grid-row-start:  ${props => props.row};
+display: flex;
+justify-content: center;
+align-items: ${props => props.align || 'center'};
+`;
+
 const AbsoluteContainer = styled.div`
 background-color: #7FD4FF;
 position: absolute;
@@ -40,13 +50,15 @@ grid-template-columns: 1fr 4fr 1fr;
 const BoardGridItem = styled.div`
 grid-column-start: 2;
 grid-row-start: 1;
-display: flex;
-flex-direction: column;
+display: grid;
+grid-template-rows: 100px 1fr;
+grid-template-columns: 300px 5fr 300px;
 `;
 
 const TotemPowerGridTitle = styled.div`
-font-size: 50px;
+font-size: 40px;
 color: white;
+text-align: center;
 `;
 
 const SideBar = styled.div`
@@ -65,10 +77,10 @@ justify-content: center;
 const ActivateButton = styled.button`
 grid-column-start: 1;
 background-image: linear-gradient(#f74d4d, #f86569);
-min-height: 90px;
-min-width: 100px;
+min-height: 45px;
+min-width: 50px;
 border-radius: 50%;
-box-shadow: 0 20px #e24f4f;
+box-shadow: 0 10px #e24f4f;
 margin-right: 20px;
 cursor: pointer;
 transition: 0.1s all ease-out;
@@ -80,11 +92,6 @@ transition: 0.1s all ease-out;
 
 `;
 
-const BottomToolBar = styled.div`
-display: grid;
-grid-template-columns: 80px 80px 1fr 80px 80px;
-`;
-
 const BluePrintIconContainer = styled.div`
 fill: white;
 cursor: pointer;
@@ -94,10 +101,8 @@ margin-left: 20px;
 const BluePrintMenuContainer = styled.div`
 display: flex;
 flex-direction: row;
-font-size: 30px;
+font-size: 20px;
 place-items: center;
-align-self: flex-end;
-grid-column-start: 4;
 
 `;
 
@@ -105,7 +110,7 @@ const ActiveButtonContainer = styled.div`
 display: flex;
 flex-direction: row;
 grid-column-start: 2;
-font-size: 30px;
+font-size: 20px;
 place-items: center;
 `;
 
@@ -127,10 +132,9 @@ const App = ({ state }: AppProps) => {
     setActivateModalOpen(true);
     const solutionResuit = solve(state, exampleSolution as SolutionType);
     setIsSolved(solutionResuit);
-    // if(solutionResuit) {
-    //   cookies.set('levels-complete', [...levelsComplete, state.level.number], { path: '/' });
-    // }
-    setCookie('levelsComplete', [...levelsComplete, state.level.number], { path: '/' });
+    if(solutionResuit) {
+      setCookie('levelsComplete', [...levelsComplete, state.level.number], { path: '/' });
+    }
   };
 
   return (
@@ -138,19 +142,23 @@ const App = ({ state }: AppProps) => {
     <Landscape />
     <AppContainer>
       <BoardGridItem>
-        <Board />
-        <BottomToolBar>
-          <ActiveButtonContainer>
-            <ActivateButton onClick={handleActivate} />
-            ACTIVATE
-          </ActiveButtonContainer>
-          <BluePrintMenuContainer>
-            BLUEPRINTS
-            <BluePrintIconContainer onClick={() => setBluePrintModalOpen(true)} >
-              <BluePrints style={{ height: '100px', width: '100px' }}/>
-            </BluePrintIconContainer>
-          </BluePrintMenuContainer>
-        </BottomToolBar>
+      <GridItem row={1} column={1}>
+        <ActiveButtonContainer>
+          <ActivateButton onClick={handleActivate} />
+          ACTIVATE
+        </ActiveButtonContainer>
+        </GridItem>
+        <GridItem row={1} column={3}>
+        <BluePrintMenuContainer>
+          BLUEPRINTS
+          <BluePrintIconContainer onClick={() => setBluePrintModalOpen(true)} >
+            <BluePrints style={{ height: '50px', width: '50px' }}/>
+          </BluePrintIconContainer>
+        </BluePrintMenuContainer>
+        </GridItem>
+        <GridItem row={2} column={2} align="flex-start">
+          <Board />
+        </GridItem>
       </BoardGridItem>
       <SideBar>
       <TotemPowerGridTitle>TOTEM POWER GRID</TotemPowerGridTitle>
