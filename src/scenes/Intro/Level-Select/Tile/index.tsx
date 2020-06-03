@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from "react-redux";
-import { ReactComponent as Village } from './assets/tipi.svg';
+import { useCookies } from 'react-cookie';
+import { ReactComponent as VillageIcon } from './assets/tipi.svg';
 import type { Level } from '../../../../levels';
 import type { LevelSelectTitle } from "..";
 import { setLevel } from '../../../../redux/actions';
@@ -66,6 +67,10 @@ const getBorderRadiusFromAdjacencies = (adjacencies: Array<Adjancency>) => {
  return borderRadiusString;
 };
 
+const Village = ({ powered }: { powered: boolean | undefined }) => (
+  <VillageIcon style={{ height: '28px', width: '28px', fill: powered ? 'rgb(240, 217, 70)' : 'rgb(110, 58, 2' }}/>
+);
+
 type TileContainerProps = { land: boolean | undefined }
 
 const TileContainer = styled.div<TileContainerProps>`
@@ -88,10 +93,15 @@ const TileContainer = styled.div<TileContainerProps>`
 type LandProps = { adjacencies: Array<Adjancency> }
 
 const Land = styled.div<LandProps>`
-  position: relative;
-  height: 100px;
-  width: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom 0;
   background-color: #8cff66;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: ${props => getBorderRadiusFromAdjacencies(props.adjacencies)};
   overflow: hidden;
 
@@ -105,10 +115,15 @@ background-color: #8cff66;
 height: 100%
 width: 100%:
 border: 1px solid black; 
+display: flex;
+  align-items: center;
+  justify-content: center;
 `; 
 
 const Tile = ({ adjacencies, land, level, setLevel, setLevelSelectTitle }: TileProps) => {
   const history = useHistory();
+  const [cookies, setCookie] = useCookies(['levelsComplete']);
+
   return (
 <TileContainer 
 land={land}
@@ -123,9 +138,10 @@ onClick={() => {
   {adjacencies.length > 0 && (
   <Land adjacencies={adjacencies} > 
     {adjacencies.map(adj => <BeachGradient adjacency={adj} />)}
+    <Village powered={cookies.levelsComplete.includes(level?.number)}/>
     </Land>
     )}
-  {adjacencies.length === 0 && land && <FullLand />}
+  {adjacencies.length === 0 && land && <FullLand><Village powered={cookies.levelsComplete.includes(level?.number)}/></FullLand>}
 </TileContainer>
 );};
 
