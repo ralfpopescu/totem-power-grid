@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useCookies } from 'react-cookie';
 import Menu from './Menu';
 import LevelSelect from './Level-Select';
-import { ReactComponent as Shaman} from '../../top-level-assets/shaman1.svg';
+import { ReactComponent as Shaman} from '../../assets/shaman1.svg';
 
 const AppContainer = styled.div`
 position: absolute;

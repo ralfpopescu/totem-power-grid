@@ -7,7 +7,7 @@ import Board from './components/Board';
 import TotemSelector from './components/TotemSelector';
 import Solution from './components/Solution';
 import Landscape from './components/Landscape';
-import { ReactComponent as Shaman } from '../../top-level-assets/shaman1.svg';
+import { ReactComponent as Shaman } from '../../assets/shaman1.svg';
 import exampleSolution from './components/Solution/example-solution-2.json';
 import type { Solution as SolutionType } from '../../logic/getSolutionFromState';
 import type { State } from '../../redux/reducers';
@@ -142,19 +142,22 @@ const App = ({ state }: AppProps) => {
     <Landscape />
     <AppContainer>
       <BoardGridItem>
-      <GridItem row={1} column={1}>
-        <ActiveButtonContainer>
-          <ActivateButton onClick={handleActivate} />
-          ACTIVATE
-        </ActiveButtonContainer>
+        <GridItem row={1} column={1}>
+          <ActiveButtonContainer>
+            <ActivateButton onClick={handleActivate} />
+            ACTIVATE
+          </ActiveButtonContainer>
         </GridItem>
         <GridItem row={1} column={3}>
-        <BluePrintMenuContainer>
-          BLUEPRINTS
-          <BluePrintIconContainer onClick={() => setBluePrintModalOpen(true)} >
-            <BluePrints style={{ height: '50px', width: '50px' }}/>
-          </BluePrintIconContainer>
-        </BluePrintMenuContainer>
+          <BluePrintMenuContainer>
+            BLUEPRINTS
+            <BluePrintIconContainer onClick={() => setBluePrintModalOpen(true)} >
+              <BluePrints style={{ height: '50px', width: '50px' }}/>
+            </BluePrintIconContainer>
+          </BluePrintMenuContainer>
+        </GridItem>
+        <GridItem row={1} column={2} style={{ fontSize: '32px'}}>
+          {state.level.name}
         </GridItem>
         <GridItem row={2} column={2} align="flex-start">
           <Board />

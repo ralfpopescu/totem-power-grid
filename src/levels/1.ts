@@ -3,7 +3,7 @@ import type { Direction } from '../redux/reducers';
 
 const Level = {
    number: 1,
-   name: 'Fisherman’s Dream',
+   name: 'Port Kahm-Oh’nin',
    dimension: 6,
    difficulty: 'MEDIUM',
    solution: {
