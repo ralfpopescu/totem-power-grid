@@ -14,12 +14,6 @@ import { ReactComponent as Light } from '../../../../assets/light.svg';
 
 const typesArray: Array<TotemType> = ['FIRE', 'ELECTRIC', 'LIGHT', 'WATER', 'EARTH'];
 
-const SelectorContainer = styled.div`
-display: grid;
-grid-template-columns: repeat(6, 50px);
-padding: 20px;
-`;
-
 const angle = 360 / typesArray.length;
 const circleSize = 200;
 const itemSize = 36;
@@ -27,12 +21,33 @@ const degreeOff = 360 / (36 / 2);
 
 type CircleContainerProps = { rotation: number }
 
+const SelectorContainer = styled.div`
+position: relative;
+  width:  ${circleSize}px;
+  height: ${circleSize}px;
+  display: flex;
+`;
+
+const TotemSelectionNameContainer = styled.div`
+position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const CircleContainer = styled.div<CircleContainerProps>`
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width:  ${circleSize}px;
   height: ${circleSize}px;
   padding: 0;
-  border: 1px solid black;
   transform: rotate(${props => props.rotation * angle}deg);
   transition: all 0.5s ease-in-out;
   display: flex;
@@ -124,14 +139,18 @@ const GetIcon = (totemType: TotemType) => {
 type TotemSelectorProps = { totemSelection: TotemType; changeTotemSelection: ChangeTotemSelection }
 
 const TotemSelector = ({ totemSelection, changeTotemSelection }: TotemSelectorProps) => (
-  <CircleContainer rotation={getActiveIndexFromTotemSelection(totemSelection)}>
-  {typesArray.map((totemType: TotemType, index: number) => (
-  <CircleItem totemType={totemType} totemSelection={totemSelection} onClick={() => changeTotemSelection({ totemType })} number={index}>
-    {GetIcon(totemType)}
-    </CircleItem>
-  ))}
-  {totemSelection}
-  </CircleContainer>
+  <SelectorContainer>
+    <TotemSelectionNameContainer>
+      {totemSelection}
+    </TotemSelectionNameContainer>
+    <CircleContainer rotation={getActiveIndexFromTotemSelection(totemSelection)}>
+    {typesArray.map((totemType: TotemType, index: number) => (
+    <CircleItem totemType={totemType} totemSelection={totemSelection} onClick={() => changeTotemSelection({ totemType })} number={index}>
+      {GetIcon(totemType)}
+      </CircleItem>
+    ))}
+    </CircleContainer>
+  </SelectorContainer>
 );
 
 const mapStateToProps = (state: State) => ({ totemSelection: state.totemSelection });
