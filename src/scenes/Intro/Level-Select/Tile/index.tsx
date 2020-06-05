@@ -17,6 +17,7 @@ type TileProps = {
   level?: Level | undefined; 
   setLevelSelectTitle: (level: LevelSelectTitle | null) => void; 
   setLevel: SetLevel;
+  index?: number;
 }
 
 type BeachGradientProps = { adjacency: Adjancency }
@@ -124,7 +125,7 @@ cursor: pointer;
   }
 `; 
 
-const Tile = ({ adjacencies, land, level, setLevel, setLevelSelectTitle }: TileProps) => {
+const Tile = ({ adjacencies, land, level, setLevel, setLevelSelectTitle, index }: TileProps) => {
   const history = useHistory();
   const [cookies, setCookie] = useCookies(['levelsComplete']);
 

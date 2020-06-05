@@ -22,6 +22,7 @@ const TotemPowerGridTitle = styled.div`
 font-size: 60px;
 color: white;
 margin-bottom: 20px;
+display: flex;
 `;
 
 
@@ -43,12 +44,56 @@ grid-column-start: 2;
 grid-row-start: 1;
 `;
 
+type TitleProps = { delay: number }
+
+const TitleIntroSpan = styled.div<TitleProps>`
+animation: title-intro 0.5s ease-in-out;
+animation-delay: ${props => props.delay}s;
+animation-fill-mode: forwards;
+opacity: 0;
+
+@keyframes title-intro {
+  0% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
+
+const ShamanContainer = styled.div`
+animation: shaman-entry 0.5s ease-in-out;
+width: 200px;
+
+@keyframes shaman-entry {
+  0% {
+    opacity: 0;
+    {transform: scale(0.1);}
+  }
+  75% {
+    opacity: 1;
+    {transform: scale(1.2);}
+  }
+  100% {
+    opacity: 1;
+    {transform: scale(1);}
+  }
+`;
+
 const Intro = () => (
     <AppContainer>
       <SideBar>
-        <TotemPowerGridTitle>TOTEM POWER GRID</TotemPowerGridTitle>
+        <TotemPowerGridTitle>
+          <TitleIntroSpan delay={0} style={{ marginRight: '20px'}}>TOTEM </TitleIntroSpan> 
+          <TitleIntroSpan delay={0.2} style={{ marginRight: '20px'}}>POWER </TitleIntroSpan> 
+          <TitleIntroSpan delay={0.4}>GRID</TitleIntroSpan>
+        </TotemPowerGridTitle>
         <Menu />
-      <Shaman style={{ width: '200px', height: '200px'}} />
+        <ShamanContainer>
+          <Shaman style={{ width: '200px', height: '200px'}} />
+        </ShamanContainer>
       </SideBar>
       <LevelSelectContainer>
         <LevelSelect />

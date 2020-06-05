@@ -20,6 +20,10 @@ export type Theme = {
   BRIGHT: color;
   WINDY: color;
   ocean: color;
+  FIRE: color;
+  ELECTRIC: color;
+  LIGHT: color;
+  WATER: color;
 }
 
 
@@ -40,10 +44,6 @@ const theme: Theme = {
     primary: '#20a4f3',
     secondary: '#56cbf9',
   },
-  EARTH: {
-    primary: '#553A41',
-    secondary: '#2F0601',
-  },
   STEAMY: {
     primary: '#F8F8F8',
     secondary: '#b4d2e7',
@@ -58,11 +58,31 @@ const theme: Theme = {
   },
   BRIGHT: {
     primary: '#white',
-    secondary: '#white',
+    secondary: '#D7F3F3',
   },
   WINDY: {
     primary: '#white',
     secondary: '#white',
+  },
+  ELECTRIC: {
+    primary: '#F5DD90',
+    secondary: '#FF9F1C',
+  },
+  LIGHT: {
+    primary: '#fff',
+    secondary: '#D7F3F3',
+  },
+  FIRE: {
+    primary: '#f76c5e',
+    secondary: '#f68e5f',
+  },
+  WATER: {
+    primary: '#20a4f3',
+    secondary: '#56cbf9',
+  },
+  EARTH: {
+    primary: '#553A41',
+    secondary: '#2F0601',
   },
 };
 

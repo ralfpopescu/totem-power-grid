@@ -10,11 +10,24 @@ import Arrow from './icons/arrow';
 import { getThemeFromFields } from '../../../../../../logic/totemColor';
 
 
-const TileContainer = styled.div`
+type TileContainerProps = { index: number }
+
+const TileContainer = styled.div<TileContainerProps>`
 font-size: 8px;
 display: inline-grid;
 grid-template-columns: 1fr 5fr 1fr;
 grid-template-rows: 1fr 5fr 1fr;
+animation: tile-entry ${props => props.index * 0.03}s ease-in-out;
+
+@keyframes tile-entry {
+  0% {
+    opacity: 0;
+    {transform: scale(1.5);}
+  }
+  100% {
+    opacity: 1;
+    {transform: scale(1);}
+  }
 `;
 
 type MainContainerProps = { lit: boolean; tile: TileState; boardScale: number; isTotemHovered: boolean }
@@ -141,8 +154,7 @@ const Tile = ({
   boardScale, 
   hoveredTotemId,
   setHoveredTotemId }: TileProps) => (
-<TileContainer 
->
+<TileContainer index={index}>
   {index}
    <MainItemContainer onClick={() => addTotem({ totemType: totemSelection, index })} 
      lit={!!lightBeam} tile={tile} boardScale={boardScale}

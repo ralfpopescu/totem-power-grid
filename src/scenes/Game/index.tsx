@@ -5,7 +5,6 @@ import _ from 'lodash';
 import { useCookies } from 'react-cookie';
 import Board from './components/Board';
 import TotemSelector from './components/TotemSelector';
-import Solution from './components/Solution';
 import Landscape from './components/Landscape';
 import { ReactComponent as Shaman } from '../../assets/shaman1.svg';
 import exampleSolution from './components/Solution/example-solution-2.json';
@@ -33,6 +32,15 @@ top: 0;
 bottom: 0;
 right: 0;
 left: 0;
+animation: sky-fade-in 0.5s ease-in-out;
+
+@keyframes sky-fade-in {
+  0% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: #7FD4FF;
+  }
 `;
 
 const AppContainer = styled.div`
@@ -114,6 +122,25 @@ font-size: 20px;
 place-items: center;
 `;
 
+const ShamanContainer = styled.div`
+animation: shaman-entry 0.5s ease-in-out;
+width: 200px;
+
+@keyframes shaman-entry {
+  0% {
+    opacity: 0;
+    {transform: scale(0.1);}
+  }
+  75% {
+    opacity: 1;
+    {transform: scale(1.2);}
+  }
+  100% {
+    opacity: 1;
+    {transform: scale(1);}
+  }
+`;
+
 const solve = (state: State, solution: SolutionType) => {
   const playerSolution = getSolutionFromState(state);
   return _.isEqual(playerSolution, solution);
@@ -162,13 +189,15 @@ const App = ({ state }: AppProps) => {
         <GridItem row={2} column={2} align="flex-start">
           <Board />
         </GridItem>
+        <GridItem row={2} column={3}>
+        <TotemSelector />
+        </GridItem>
       </BoardGridItem>
       <SideBar>
       <TotemPowerGridTitle>TOTEM POWER GRID</TotemPowerGridTitle>
-        <div style={{ width: '200px'}}>
+        <ShamanContainer>
         <Shaman style={{ width: '200px'}} fill="red"/>
-        </div>
-        <TotemSelector />
+        </ShamanContainer>
       </SideBar>
       <BluePrintModal isOpen={bluePrintModalOpen} close={() => setBluePrintModalOpen(false)}/>
       <ActivateModal isOpen={activateModalOpen} close={() => setActivateModalOpen(false)} isSolved={isSolved}/>
