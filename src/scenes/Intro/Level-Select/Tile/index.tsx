@@ -72,7 +72,7 @@ const Village = ({ powered }: { powered: boolean | undefined }) => (
   <VillageIcon style={{ height: '28px', width: '28px', fill: powered ? 'rgb(240, 217, 70)' : 'rgb(110, 58, 2' }}/>
 );
 
-type TileContainerProps = { land: boolean | undefined }
+type TileContainerProps = { land: boolean | undefined; index?: number | undefined }
 
 const TileContainer = styled.div<TileContainerProps>`
   height: 100px;
@@ -83,6 +83,16 @@ const TileContainer = styled.div<TileContainerProps>`
   overflow: visible;
   align-items: center;
   justify-content: center;
+  animation: island-fade-in ${props => props.index ? props.index * 0.1 : 0.1}s;
+
+  @keyframes island-fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 
 `;
 
@@ -132,6 +142,7 @@ const Tile = ({ adjacencies, land, level, setLevel, setLevelSelectTitle, index }
   return (
 <TileContainer 
 land={land}
+index={index}
 onMouseEnter={() => setLevelSelectTitle(level ? { difficulty: level?.difficulty, name: level?.name, number: level.number } : null)} 
 onMouseLeave={() => setLevelSelectTitle(null)} 
 onClick={() => {

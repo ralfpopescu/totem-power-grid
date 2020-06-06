@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from "react-redux";
 import _ from 'lodash';
 import { useCookies } from 'react-cookie';
+import { useHistory } from 'react-router-dom';
 import Board from './components/Board';
 import TotemSelector from './components/TotemSelector';
 import Landscape from './components/Landscape';
@@ -87,11 +88,13 @@ grid-column-start: 1;
 background-image: linear-gradient(#f74d4d, #f86569);
 min-height: 45px;
 min-width: 50px;
+border: none;
 border-radius: 50%;
 box-shadow: 0 10px #e24f4f;
 margin-right: 20px;
 cursor: pointer;
 transition: 0.1s all ease-out;
+outline: none; 
 
 &:active {
   box-shadow: 0 0 #e24f4f;
@@ -120,6 +123,15 @@ flex-direction: row;
 grid-column-start: 2;
 font-size: 20px;
 place-items: center;
+`;
+
+const BackToFaoweiah = styled.div`
+margin-top: 24px;
+cursor: pointer;
+
+&:hover {
+  transform: scale(1.2);
+}
 `;
 
 const ShamanContainer = styled.div`
@@ -153,6 +165,7 @@ const App = ({ state }: AppProps) => {
   const [activateModalOpen, setActivateModalOpen] = useState<boolean>(false);
   const [isSolved, setIsSolved] = useState<boolean>(false);
   const [cookies, setCookie] = useCookies(['levelsComplete']);
+  const history = useHistory();
 
   const handleActivate = () => {
     const levelsComplete = cookies.levelsComplete || [];
@@ -183,7 +196,7 @@ const App = ({ state }: AppProps) => {
             </BluePrintIconContainer>
           </BluePrintMenuContainer>
         </GridItem>
-        <GridItem row={1} column={2} style={{ fontSize: '32px'}}>
+        <GridItem row={1} column={2} style={{ fontSize: '32px'}}> 
           {state.level.name}
         </GridItem>
         <GridItem row={2} column={2} align="flex-start">
@@ -195,6 +208,7 @@ const App = ({ state }: AppProps) => {
       </BoardGridItem>
       <SideBar>
       <TotemPowerGridTitle>TOTEM POWER GRID</TotemPowerGridTitle>
+      <BackToFaoweiah onClick={() => history.push('/faoweiah')}>Back to Fa'Owei-ah</BackToFaoweiah>
         <ShamanContainer>
         <Shaman style={{ width: '200px'}} fill="red"/>
         </ShamanContainer>
