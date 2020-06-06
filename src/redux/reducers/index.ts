@@ -14,7 +14,7 @@ export type Direction = 'NORTH' | 'SOUTH' | 'EAST' | 'WEST' | 'NORTHEAST' | 'SOU
 
 export type FieldType = 'BURNING' | 'FLOODED' | 'SMOKEY' | 'STEAMY' | 'ELECTRIC_CURRENT' | 'BRIGHT' | 'WINDY' | 'EARTH'
 
-export type Field = { type: FieldType; appliedBy: string }
+export type Field = { type: FieldType; appliedBy: string; displacedBy?: Array<string> }
 
 export type Totem = { type: TotemType; direction: Direction; id: string }
 
@@ -115,14 +115,12 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
 };
 
 const removeTotem = (state: State, index: number): State => {
-  console.log('removing totem', index);
   const { tiles } = state;
   const tile = tiles[index];
   if(!tile.totem) {
     return state;
   }
   const totemToRemoveId = tile.totem.id;
-  console.log('totemToRemoveId', totemToRemoveId);
   const tileIndices = Object.keys(tiles);
 
   const newTiles = {...tiles};
@@ -130,15 +128,19 @@ const removeTotem = (state: State, index: number): State => {
   tileIndices.forEach(i => {
     const { fields } = newTiles[i];
     if(fields.length > 0) {
-      const fieldWithoutTotemApplications = fields.filter(field => field.appliedBy !== totemToRemoveId);
-      newTiles[i] = { ...newTiles[i], fields: fieldWithoutTotemApplications };
+      let newFields;
+      newFields = fields.filter(field => field.appliedBy !== totemToRemoveId);
+      if(tile.totem?.type === 'EARTH') {
+        newFields = newFields.filter(field => !field.displacedBy?.includes(totemToRemoveId));
+      }
+      newTiles[i] = { ...newTiles[i], fields: newFields };
     }
   });
 
   newTiles[index] = { ...newTiles[index], totem: null };
-  console.log('newTiles', newTiles);
+  const newLightBeams = calculateLightBeams(newTiles, state.dimension);
 
-  return { ...state, tiles: newTiles};
+  return { ...state, tiles: newTiles, lightBeams: newLightBeams};
 };
 
 

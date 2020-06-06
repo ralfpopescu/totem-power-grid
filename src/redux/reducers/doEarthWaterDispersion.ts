@@ -2,7 +2,7 @@ import type { Tiles, FieldType } from '.';
 import { returnAdjacentCoordinates } from './calculateFields';
 import calculateIndexFromPosition from '../../logic/calculateIndexFromPosition';
 
-type WaterTile = { index: number; appliedBy: string }
+type WaterTile = { index: number; appliedBy: string; displacedBy: Array<string> }
 
 const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
   const indicesWithTiles = Object.keys(tiles);
@@ -19,6 +19,7 @@ const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
 
   tilesIndicesWithEarthAndWater.forEach(index => {
     const totemIdsThatAreDispersingWater = tiles[index].fields.filter(f => f.type === 'FLOODED').map(f => f.appliedBy);
+    const earthTotemIdsThatAreDisplacingWater = tiles[index].fields.filter(f => f.type === 'EARTH').map(f => f.appliedBy); 
     const adjacentCoordinates = returnAdjacentCoordinates(parseInt(index, 10), dimension);
     const adjacentIndices = adjacentCoordinates.map(coord => calculateIndexFromPosition({ ...coord, dimension }));
 
@@ -32,7 +33,7 @@ const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
       .filter(tid => !fieldAppliedBys.includes(tid));
 
       totemIdsThatHaveNotAppliedWater.forEach(totemId => {
-        tilesToAddWaterTo.push({ index: i, appliedBy: totemId });
+        tilesToAddWaterTo.push({ index: i, appliedBy: totemId, displacedBy: earthTotemIdsThatAreDisplacingWater });
       });
 
 
@@ -40,7 +41,10 @@ const doEarthWaterDispersion = (tiles: Tiles, dimension: number): Tiles => {
     if(tilesToAddWaterTo.length !== 0) {
       tilesToAddWaterTo.forEach(waterTile => {
         newTiles[waterTile.index] = {...newTiles[waterTile.index], 
-          fields: [...newTiles[waterTile.index].fields, { type: 'FLOODED', appliedBy: waterTile.appliedBy} ] };
+          fields: [...newTiles[waterTile.index].fields, { 
+            type: 'FLOODED', 
+            appliedBy: waterTile.appliedBy, 
+            displacedBy: waterTile.displacedBy } ] };
       });
     }
   });
