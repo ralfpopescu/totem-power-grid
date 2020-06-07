@@ -81,7 +81,6 @@ grid-template-columns: 1fr 1fr;
 `;
 
 const Text = styled.div`
-font-size: 16px;
 display: flex;
 flex-direction: column;
 flex-grow: 1;

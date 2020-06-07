@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { CookiesProvider } from 'react-cookie';
 import Game from './scenes/Game';
@@ -105,6 +105,9 @@ const App = ({ state }: AppProps) => (
         </Route>
         <Route path="/faoweiah">
           <Intro />
+        </Route>
+        <Route exact path="/">
+          <Redirect to="/faoweiah" />
         </Route>
       </ThemeProvider>
       </CookiesProvider>

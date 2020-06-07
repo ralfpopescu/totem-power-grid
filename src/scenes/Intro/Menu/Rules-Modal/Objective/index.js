@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ReactComponent as Hut } from "../../../../../assets/hut.svg";
+import { ReactComponent as PowerLamp } from "../../../../../assets/power-lamp.svg";
 
 const Container = styled.div`
 display: flex;
-height: 100%;
-width: 100%;
+padding: 40px;
+height: 500px;
+width: 1000px;
 font-size: 20px;
 color: white;
 display: flex;

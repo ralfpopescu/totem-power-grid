@@ -38,7 +38,6 @@ grid-template-columns: 1fr 1fr;
 `;
 
 const Text = styled.div`
-font-size: 16px;
 display: flex;
 flex-direction: column;
 flex-grow: 1;
@@ -50,6 +49,9 @@ const FireAndWaterPage = () => (
     <Text>
       <span style={{ marginBottom: '16px'}}>
       Earth will displace water to the adjacent tiles.
+      </span>
+      <span style={{ marginBottom: '16px'}}>
+      If water gets displaced onto another earth tile, it will continue to get displaced by that one!
       </span>
     </Text>
     <ExampleBoard stateFirst={stateFirst} stateSecond={stateSecond} dimension={3} boardScale={70}/>

@@ -158,7 +158,6 @@ const changeTotemDirection = (state: State, totemIndex: number, direction: Direc
 const reducer = (state: State = initialState, action: Action): State => {
   switch(action.type) {
     case 'ADD_TOTEM':
-      console.log('adding totem');
       return addTotemToBoard(state, action.payload.totemType, action.payload.index);
     case 'REMOVE_TOTEM':
       return removeTotem(state, action.payload.index);

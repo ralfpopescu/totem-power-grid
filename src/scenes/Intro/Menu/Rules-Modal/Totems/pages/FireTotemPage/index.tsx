@@ -35,10 +35,11 @@ const stateSecond = {
 const Container = styled.div`
 display: grid;
 grid-template-columns: 1fr 1fr;
+justify-content: center;
+align-items: center;
 `;
 
 const Text = styled.div`
-font-size: 16px;
 display: flex;
 flex-direction: column;
 flex-grow: 1;
@@ -52,7 +53,7 @@ const FireTotemPage = () => (
       Fire totems create fire in adjacent spaces.
       </span>
       <span>
-      These fire tiles will power fire units on your blueprints.
+      These fire tiles will power fire units on your blueprints. If combined with another tile, the fire power will be lost.
       </span>
     </Text>
     <ExampleBoard stateFirst={stateFirst} stateSecond={stateSecond} dimension={3} boardScale={70}/>

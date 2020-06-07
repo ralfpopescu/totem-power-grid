@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
-import { Route, useHistory } from 'react-router-dom';
+import { Route, useHistory, useRouteMatch } from 'react-router-dom';
 import Objective from './Objective';
 import Totems from './Totems';
 import Interactions from './Interactions';
@@ -24,6 +24,8 @@ display: grid;
 grid-template-rows: 80px 1fr;
 height: 100%;
 width: 100%;
+align-item: center;
+justify-content: center;
 `;
 
 const TabsContainer = styled.div`
@@ -35,9 +37,13 @@ justify-content: center;
 flex-grow: 1;
 `;
 
-const Tab = styled.div`
-font-size: 30px;
+type TabProps = { active: boolean }
+
+const Tab = styled.div<TabProps>`
+font-size: 40px;
 cursor: pointer;
+transform: scale(${props => props.active ? 1.2 : 1});
+text-decoration: ${props => props.active ? 'underline' : 'none'};
 
 &:hover {
   opacity: 0.7;
@@ -46,17 +52,21 @@ cursor: pointer;
 
 const RulesModal = ({ isOpen, close }: ModalProps) => {
   const history = useHistory();
+  const objectiveRouteMatch = useRouteMatch('/faoweiah/rules/objective');
+  const totemsRouteMatch = useRouteMatch('/faoweiah/rules/totems');
+  const interactionsRouteMatch = useRouteMatch('/faoweiah/rules/interactions');
+
   return (
   <Modal isOpen={isOpen} onRequestClose={close} style={modalStyle}>
     <ModalContainer>
       <TabsContainer>
-        <Tab style={{ marginRight: '30px'}} onClick={() => history.push('/faoweiah/rules/objective')}>
+        <Tab style={{ marginRight: '50px'}} onClick={() => history.push('/faoweiah/rules/objective')} active={!!objectiveRouteMatch}>
           Objective
         </Tab>
-        <Tab style={{ marginRight: '30px'}} onClick={() => history.push('/faoweiah/rules/totems')}>
+        <Tab style={{ marginRight: '50px'}} onClick={() => history.push('/faoweiah/rules/totems/overview')} active={!!totemsRouteMatch}>
           Totems
         </Tab>
-        <Tab onClick={() => history.push('/faoweiah/rules/interactions')}>
+        <Tab onClick={() => history.push('/faoweiah/rules/interactions/overview')} active={!!interactionsRouteMatch}>
           Interactions
         </Tab>
         </TabsContainer>

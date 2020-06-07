@@ -51,7 +51,7 @@ const Menu = () => {
       <IconRow>
         <IconContainer style={{ marginRight: '20px' }} 
         onMouseEnter={() => setMenuItemName('Directions')} onMouseLeave={() => setMenuItemName('')}>
-          <Compass style={iconStyle} onClick={() => history.push('/faoweiah/rules')}/>
+          <Compass style={iconStyle} onClick={() => history.push('/faoweiah/rules/objective')}/>
         </IconContainer>
         <IconContainer style={{ marginRight: '20px' }} onClick={() => setStoryModalOpen(true)} 
         onMouseEnter={() => setMenuItemName('Story')} onMouseLeave={() => setMenuItemName('')}>
