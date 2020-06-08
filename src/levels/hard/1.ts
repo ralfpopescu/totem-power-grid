@@ -3,9 +3,9 @@ import type { Direction } from '../../redux/reducers';
 
 const Level = {
    number: 0,
-   name: 'Fisherman’s Dream',
-   dimension: 5,
-   difficulty: 'EASY',
+   name: 'Nu Yak Village',
+   dimension: 7,
+   difficulty: 'HARD',
    solution: {
      tileSolution: {
        '0': 'BURNING' as FieldPower,

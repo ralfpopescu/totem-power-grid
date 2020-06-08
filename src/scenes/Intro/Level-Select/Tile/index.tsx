@@ -44,6 +44,15 @@ background: linear-gradient(${({adjacency}) => {
 }}deg, rgba(255,239,196,1) 0%, rgba(255,254,199,1) 11%, rgba(97,255,90,0) 43%);
 `;
 
+const UnpoweredOverlay = styled.div`
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+background-color: rgba(0, 0, 0, 0.1);
+`;
+
 const getCorners = (adjacencies: Array<Adjancency>) => {
   const corners = [];
   if(adjacencies.includes('NORTH') && adjacencies.includes('WEST')) {
@@ -154,10 +163,10 @@ onClick={() => {
   {adjacencies.length > 0 && (
   <Land adjacencies={adjacencies} > 
     {adjacencies.map(adj => <BeachGradient adjacency={adj} />)}
-    <Village powered={cookies.levelsComplete?.includes(level?.number)}/>
+    {!cookies.levelsComplete?.includes(level?.number) && <UnpoweredOverlay />}
     </Land>
     )}
-  {adjacencies.length === 0 && land && <FullLand><Village powered={cookies.levelsComplete?.includes(level?.number)}/></FullLand>}
+  {adjacencies.length === 0 && land && <FullLand>{!cookies.levelsComplete?.includes(level?.number) && <UnpoweredOverlay />}</FullLand>}
 </TileContainer>
 );};
 
