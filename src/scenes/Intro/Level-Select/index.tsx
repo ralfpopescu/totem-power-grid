@@ -73,8 +73,6 @@ export type LevelSelectTitle = { name: string; number: number; difficulty: strin
 const LevelSelect = () => {
   const [levelSelectTitle, setLevelSelectTitle] = useState<LevelSelectTitle | null>();
   const [cookies, setCookie] = useCookies(['levelsComplete']);
-  console.log('cookies', cookies);
-  console.log('cookiescookies', cookies.levelsComplete);
 
   return (
   <Container>
