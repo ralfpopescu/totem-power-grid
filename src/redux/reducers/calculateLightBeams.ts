@@ -74,7 +74,10 @@ const getNextIndex = (startingIndex: number, direction: Direction, dimension: nu
     default:
       console.log('no direction: ', direction);
   }
-  return nextIndex || 1000;
+  if(nextIndex != null) {
+    return nextIndex;
+  }
+  return 1000;
 };
 
 const getRefractionDirections = (direction: Direction): Array<Direction> => {
@@ -129,7 +132,9 @@ const calculateLightBeams = (
       return newLightBeams;
     }
     const nextIndex = getNextIndex(startIndex, direction, dimension);
+    console.log('nextindex', nextIndex);
     const nextTile = tiles[nextIndex];
+    console.log('nextTile', nextTile);
 
     if(doesTileBlock(nextTile)) {
       return newLightBeams;
