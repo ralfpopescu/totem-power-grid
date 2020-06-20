@@ -36,6 +36,8 @@ type ElectricTotem = { index: number; totem: Totem }
 
 type ElectrifiedTile = { index: number; appliedBy: string }
 
+type ElectrifiedFieldMap = { [key: string]: Array<string> }
+
 
 const getElectricTotems = (tiles: Tiles): Array<ElectricTotem> =>{
 
@@ -49,19 +51,37 @@ const getElectricTotems = (tiles: Tiles): Array<ElectricTotem> =>{
 
 };
 
+// merges 2 electric field maps together
+const mergeElectricFieldMaps = (map1: ElectrifiedFieldMap, map2: ElectrifiedFieldMap): ElectrifiedFieldMap => {
+  const newMap: ElectrifiedFieldMap = { ...map1 };
+  const map2Indices = Object.keys(map2);
+  map2Indices.forEach(index => {
+    if(newMap[index]) {
+      const merged = [...newMap[index], ...map2[index]];
+      newMap[index] = [...Array.from(new Set(merged))];
+    } else {
+      newMap[index] = map2[index];
+    }
+  });
+  return newMap;
+};
 
-
-const canElectrifyTile = (fields: Array<Field>, electrifiedFields: Array<number>, index: number, totem: Totem | null) => 
+const canElectrifyTile = (
+  fields: Array<Field>, 
+  electrifiedFields: ElectrifiedFieldMap, 
+  index: number, 
+  totem: Totem | null, 
+  applyingTotemId: string) => 
   fields.map(f => f.type).includes('FLOODED') 
   && !fields.map(f => f.type).includes('EARTH') 
-  && !electrifiedFields.includes(index)
+  && (electrifiedFields[index] && !electrifiedFields[index].includes(applyingTotemId) || !electrifiedFields[index])
   && !totem;
 
 const electrifyNeighbors = (
   startIndex: number,
    state: State, 
-   startingElectricFields: Array<number>, 
-   totemId: string): Array<ElectrifiedTile> => {
+   startingElectricFields: ElectrifiedFieldMap, 
+   totemId: string): ElectrifiedFieldMap => {
   const { dimension, tiles } = state;
 
   const adjacentCoordinates = returnAdjacentCoordinates(startIndex, dimension);
@@ -70,25 +90,36 @@ const electrifyNeighbors = (
   console.log('adjacentIndices', adjacentIndices);
   const adjacentFields = adjacentIndices.map(index => ({ fields: tiles[index].fields, index, totem:  tiles[index].totem}));
 
-  const fieldsWithWaterAndNoElectrification = adjacentFields
-  .filter(({ fields, index, totem }) => canElectrifyTile(fields, startingElectricFields, index, totem));
 
-  if(fieldsWithWaterAndNoElectrification.length === 0) {
-    const startingElectricFieldsWithTotemId = startingElectricFields.map(index => ({ index, appliedBy: totemId }));
-    return startingElectricFieldsWithTotemId;
+  // find neighbors that can conduct electricity
+  const fieldsThatCanBeElectrified = adjacentFields
+  .filter(({ fields, index, totem }) => canElectrifyTile(fields, startingElectricFields, index, totem, totemId));
+
+  if(fieldsThatCanBeElectrified.length === 0) {
+    return startingElectricFields;
   }
 
-  const indicesWithWaterAndNoElectrification = fieldsWithWaterAndNoElectrification.map(({ index }) => index);
+  const indicesThatCanBeElectrified = fieldsThatCanBeElectrified.map(({ index }) => index);
 
-  const addedElectrifiedFields = [...startingElectricFields, ...indicesWithWaterAndNoElectrification];
+  const newElectrifiedFields = { ...startingElectricFields };
 
-  return [...addedElectrifiedFields, ...indicesWithWaterAndNoElectrification]
-    .map(index => electrifyNeighbors(index, state, addedElectrifiedFields, totemId ))
-    .reduce((acc, curr) => [...acc, ...curr]);
+  // for each tile index that can be electrified, 
+  // add the totem id that is applying the electricity to the map
+ indicesThatCanBeElectrified.forEach(index => {
+    const oldFields = newElectrifiedFields[index] || [];
+    newElectrifiedFields[index] = [...oldFields, totemId ];
+  });
+
+  // recursively solve for each of the tiles their 
+  const mergedMaps: ElectrifiedFieldMap = indicesThatCanBeElectrified
+  .map(index => electrifyNeighbors(index, state, newElectrifiedFields, totemId))
+  .reduce((acc, curr) => mergeElectricFieldMaps(acc, curr));
+
+  return mergedMaps;
 };
 
 
-export const electrifyTiles = (tiles: Tiles, electrifiedFields: Array<ElectrifiedTile>) => {
+export const electrifyTiles = (tiles: Tiles, electrifiedFields: ElectrifiedFieldMap) => {
   const newTiles = { ...tiles };
   const tileIndices = Object.keys(tiles);
   const removeElectricityFromTiles: Tiles = tileIndices.map(index => {
@@ -99,47 +130,47 @@ export const electrifyTiles = (tiles: Tiles, electrifiedFields: Array<Electrifie
     acc[curr.index] = { ...newTiles[curr.index], fields: curr.fields};
     return acc;
   }, {});
-  console.log(removeElectricityFromTiles);
   const returnTiles = { ...removeElectricityFromTiles };
-  electrifiedFields.forEach(electrifiedTile => {
-    returnTiles[electrifiedTile.index] = { ...newTiles[electrifiedTile.index], 
-      fields: [...newTiles[electrifiedTile.index].fields, 
-      { type: 'ELECTRIC_CURRENT', appliedBy: electrifiedTile.appliedBy }]};
+  const electriedFieldIndices = Object.keys(electrifiedFields);
+  electriedFieldIndices.forEach(index => {
+    const appliedBys = electrifiedFields[index];
+    const newApplications = appliedBys.map(totemId => ({ appliedBy: totemId, type: 'ELECTRIC_CURRENT' } as Field));
+    returnTiles[index] = { ...returnTiles[index], fields: [...returnTiles[index].fields, ...newApplications]};
   });
   return returnTiles;
 };
 
-const calculateElectrification = (state: State): Array<ElectrifiedTile> => {
+const calculateElectrification = (state: State): ElectrifiedFieldMap => {
   const { tiles, dimension } = state;
   const electricTotems = getElectricTotems(tiles);
 
   if(electricTotems.length === 0) {
-    return [];
+    return {};
   }
 
-  const newElectrifiedIndices = electricTotems.map(electricTotem => {
+  const newElectrifiedFieldMap: ElectrifiedFieldMap = electricTotems.map(electricTotem => {
     const { totem, index } = electricTotem;
     const totemId = totem.id;
     const { direction } = totem;
     const startIndex = moveOneUnitInDirection(index, dimension, direction);
-    console.log('startIndex', startIndex);
 
     if(!startIndex) {
-      return [];
+      return {};
     }
 
-    const initialElectrifiedFields = [startIndex];
+    const initialElectrifiedFields = { [startIndex]: [totemId] };
 
-    if(!canElectrifyTile(tiles[startIndex].fields, [], startIndex, tiles[startIndex].totem)|| 
+    // is the first tile even electrifiable?
+    if(!canElectrifyTile(tiles[startIndex].fields, {}, startIndex, tiles[startIndex].totem, totemId) || 
     tiles[startIndex].fields.length === 0) {
-      return initialElectrifiedFields.map(index => ({ index, appliedBy: totemId }));
+      return initialElectrifiedFields;
     }
 
     return electrifyNeighbors(startIndex, state, initialElectrifiedFields, totemId);
-  }).reduce((acc, curr) => [...acc, ...curr]);
+  }).reduce((acc, curr) => mergeElectricFieldMaps(acc, curr));
 
-console.log('newElectrifiedIndices', newElectrifiedIndices);
-return newElectrifiedIndices;
+console.log('newElectrifiedFieldMap', newElectrifiedFieldMap);
+return newElectrifiedFieldMap;
 };
 
 const electrify = (state: State): Tiles => {
