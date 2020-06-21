@@ -5,7 +5,6 @@ import { Route, useHistory } from "react-router-dom";
 
 const ContentContainer = styled.div`
 align-items: center;
-justify-content: center;
 display: flex;
 flex-direction: column;
 `;
@@ -37,11 +36,15 @@ white-space:pre;
 `;
 
 const modalStyle = { content: { 
-  backgroundColor: '#06053d', 
-top: '200px',
-left: '200px',
-right: '200px',
-bottom: '200px'},
+  backgroundColor: '#33bbff', 
+top: '100px',
+left: '100px',
+right: '100px',
+bottom: '100px',
+display: 'flex',
+borderRadius: '40px',
+border: 'none',
+},
 overlay: { backgroundColor: 'rgb(6, 5, 61, 0.5)' }};
 
 const StoryModal = ({ isOpen, close }: StoryModalProps) => (

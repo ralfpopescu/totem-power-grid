@@ -2,7 +2,7 @@ import type { FieldPower } from '../../logic/getSolutionFromState';
 import type { Direction } from '../../redux/reducers';
 
 const Level = {
-   number: 0,
+   number: 18,
    name: 'Cape Ne’va E’va',
    dimension: 8,
    difficulty: 'VERY-HARD',

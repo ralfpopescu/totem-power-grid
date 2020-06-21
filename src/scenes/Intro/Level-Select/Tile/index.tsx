@@ -152,7 +152,14 @@ const Tile = ({ adjacencies, land, level, setLevel, setLevelSelectTitle, index }
 <TileContainer 
 land={land}
 index={index}
-onMouseEnter={() => setLevelSelectTitle(level ? { difficulty: level?.difficulty, name: level?.name, number: level.number } : null)} 
+onMouseEnter={() => setLevelSelectTitle(level ? { 
+  difficulty: level?.difficulty, 
+  name: level?.name, 
+  number: level.number, 
+  complete: cookies.levelsComplete?.includes(level?.number),
+} 
+  : null,
+  )} 
 onMouseLeave={() => setLevelSelectTitle(null)} 
 onClick={() => {
   if(level != null) {

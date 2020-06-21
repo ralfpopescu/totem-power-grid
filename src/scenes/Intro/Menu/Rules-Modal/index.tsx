@@ -10,12 +10,14 @@ import Interactions from './Interactions';
 type ModalProps = { isOpen: boolean; close: () => void }
 
 const modalStyle = { content: { 
-  backgroundColor: '#06053d', 
+  backgroundColor: '#33bbff', 
 top: '100px',
 left: '100px',
 right: '100px',
 bottom: '100px',
 display: 'flex',
+borderRadius: '40px',
+border: 'none',
 },
 overlay: { backgroundColor: 'rgb(6, 5, 61, 0.5)' }};
 

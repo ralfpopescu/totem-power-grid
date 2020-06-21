@@ -2,7 +2,7 @@ import type { FieldPower } from '../../logic/getSolutionFromState';
 import type { Direction } from '../../redux/reducers';
 
 const Level = {
-   number: 0,
+   number: 9,
    name: 'Baba Bay',
    dimension: 6,
    difficulty: 'MEDIUM',

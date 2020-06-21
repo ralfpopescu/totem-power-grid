@@ -35,7 +35,7 @@ place-self: center;
 
 const LevelTitle = styled.div`
 grid-row-start: 2;
-font-size: 20px;
+font-size: 24px;
 place-self: center;
 `;
 
@@ -67,8 +67,32 @@ place-self: center;
 color: ${props => getDifficultyColor(props.difficulty)}
 `;
 
+type LevelCompleteProps = { complete: boolean }
 
-export type LevelSelectTitle = { name: string; number: number; difficulty: string }
+const LevelComplete = styled.div<LevelCompleteProps>`
+grid-row-start: 3;
+font-size: 20px;
+place-self: center;
+color: ${props => props.complete ? 'white' : 'grey'};
+margin-left: 16px;
+`;
+
+const SubLevelSelectContainer = styled.div`
+place-self: center;
+grid-row-start: 3;
+display: flex;
+flex-direction: row;
+`;
+
+
+export type LevelSelectTitle = { name: string; number: number; difficulty: string; complete: boolean }
+
+const getCompletion = (levelSelectTitle: LevelSelectTitle | null | undefined) => {
+  if(!levelSelectTitle) {
+    return '';
+  }
+  return levelSelectTitle.complete ? '(powered)' : '(unpowered)';
+};
 
 const LevelSelect = () => {
   const [levelSelectTitle, setLevelSelectTitle] = useState<LevelSelectTitle | null>();
@@ -78,7 +102,10 @@ const LevelSelect = () => {
   <Container>
     <FaOweiah>Fa'Owei-ah</FaOweiah>
     <LevelTitle>{levelSelectTitle ? levelSelectTitle.name : null}</LevelTitle>
-    <LevelDifficulty difficulty={levelSelectTitle?.difficulty}>{levelSelectTitle?.difficulty}</LevelDifficulty>
+    <SubLevelSelectContainer>
+      <LevelDifficulty difficulty={levelSelectTitle?.difficulty}>{levelSelectTitle?.difficulty}</LevelDifficulty>
+      <LevelComplete complete={!!levelSelectTitle?.complete}>{getCompletion(levelSelectTitle)}</LevelComplete>
+    </SubLevelSelectContainer>
     <LevelSelectGridContainer>
       <LevelSelectContainer>
         <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.easy.l0} adjacencies={['NORTH', 'WEST']}   index={1}/>

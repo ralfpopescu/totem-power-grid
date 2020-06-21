@@ -2,7 +2,7 @@ import type { FieldPower } from '../../logic/getSolutionFromState';
 import type { Direction } from '../../redux/reducers';
 
 const Level = {
-   number: 0,
+   number: 8,
    name: 'Tipi Rows',
    dimension: 6,
    difficulty: 'MEDIUM',

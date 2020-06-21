@@ -2,7 +2,7 @@ import type { FieldPower } from '../../logic/getSolutionFromState';
 import type { Direction } from '../../redux/reducers';
 
 const Level = {
-   number: 0,
+   number: 10,
    name: 'Dark Jungle Road',
    dimension: 7,
    difficulty: 'HARD',

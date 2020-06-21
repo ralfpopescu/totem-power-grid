@@ -30,6 +30,8 @@ const isAtLimitPosition = (index: number, direction: Direction, dimension: numbe
     case 'SOUTHWEST':
       result = position.column <= 0 || position.row >= dimension - 1;
       break;
+    default:
+      result = false;
   }
   return result;
 };

@@ -34,9 +34,8 @@ justify-content: center;
   grid-row-start: 2;
   grid-row-end: 2;
    padding: 10px;
-   border: ${props => props.tile.totem ? '': `2px solid ${props.lit ? "white" : "black"}`};
 border-radius: 5px;
-box-shadow: ${props => props.lit && "0px 0px 20px 20px #888888"};
+box-shadow: ${props => props.lit && "0px 0px 20px 20px #FFF"};
 transition: all 0.1s ease;
 
 cursor: pointer;

@@ -15,6 +15,7 @@ import getSolutionFromState from '../../logic/getSolutionFromState';
 import { ReactComponent as BluePrints } from './assets/history.svg';
 import BluePrintModal from './components/Blueprint-Modal';
 import ActivateModal from './components/Activate-Modal';
+import solve from './solve';
 
 type GridItemProps = { column: number; row: number; align?: string }
 
@@ -153,11 +154,6 @@ width: 200px;
   }
 `;
 
-const solve = (state: State, solution: SolutionType) => {
-  const playerSolution = getSolutionFromState(state);
-  return _.isEqual(playerSolution, solution);
-};
-
 type AppProps = { state: State }
 
 const App = ({ state }: AppProps) => {
@@ -170,9 +166,12 @@ const App = ({ state }: AppProps) => {
   const handleActivate = () => {
     const levelsComplete = cookies.levelsComplete || [];
     setActivateModalOpen(true);
-    const solutionResuit = solve(state, exampleSolution as SolutionType);
+    const playerSolution = getSolutionFromState(state);
+    const actualSolution = state.level.solution;
+    const solutionResuit = solve(playerSolution, actualSolution);
     setIsSolved(solutionResuit);
     if(solutionResuit) {
+      console.log('Level complete!', state.level.number);
       setCookie('levelsComplete', [...levelsComplete, state.level.number], { path: '/' });
     }
   };

@@ -2,7 +2,7 @@ import type { FieldPower } from '../../logic/getSolutionFromState';
 import type { Direction } from '../../redux/reducers';
 
 const Level = {
-   number: 0,
+   number: 15,
    name: 'Chief’s Private Island',
    dimension: 8,
    difficulty: 'VERY-HARD',

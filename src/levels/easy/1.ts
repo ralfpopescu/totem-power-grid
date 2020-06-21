@@ -2,7 +2,7 @@ import type { FieldPower } from '../../logic/getSolutionFromState';
 import type { Direction } from '../../redux/reducers';
 
 const Level = {
-   number: 0,
+   number: 1,
    name: 'Jawi’s Coconut Farm',
    dimension: 5,
    difficulty: 'EASY',

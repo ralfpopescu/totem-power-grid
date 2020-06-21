@@ -2,7 +2,7 @@ import type { FieldPower } from '../../logic/getSolutionFromState';
 import type { Direction } from '../../redux/reducers';
 
 const Level = {
-   number: 0,
+   number: 2,
    name: 'Surfer Hideout',
    dimension: 5,
    difficulty: 'EASY',
