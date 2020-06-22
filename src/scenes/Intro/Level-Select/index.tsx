@@ -43,7 +43,7 @@ const getDifficultyColor = (difficulty: string | undefined) => {
   if(!difficulty) {
     return 'black';
   }
-  if(difficulty.toLowerCase() === 'very hard') {
+  if(difficulty.toLowerCase() === 'very-hard') {
     return 'red';
   }
   if(difficulty.toLowerCase() === 'hard') {
@@ -139,11 +139,11 @@ const LevelSelect = () => {
         <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
         <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
         <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l2} adjacencies={['NORTH', 'SOUTH', 'WEST']}  index={16}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.veryHard.l3} adjacencies={['NORTH', 'SOUTH', 'WEST']}  index={16}/>
         <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l3} adjacencies={['SOUTH', 'EAST']} index={17}/>
         <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
         <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l4}adjacencies={['NORTH', 'SOUTH', 'WEST']} index={18}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.veryHard.l3}adjacencies={['NORTH', 'SOUTH', 'EAST']} index={19}/>
+        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l2}adjacencies={['NORTH', 'SOUTH', 'EAST']} index={19}/>
       </LevelSelectContainer>
     </LevelSelectGridContainer>
   </Container>

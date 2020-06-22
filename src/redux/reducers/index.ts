@@ -104,7 +104,11 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
         newTiles[`${effectIndex}`] = { ...tileStateAtIndex, fields: [...fields, {type: fieldType, appliedBy: id} ]};
       }
     });
-    newTiles[index] = { ...newTiles[index], totem: { type: totemType, direction: getInitialDirectionFromTotemType(totemType), id } };
+    newTiles[index] = { ...newTiles[index], 
+      totem: { 
+      type: totemType, 
+      direction: getInitialDirectionFromTotemType(totemType), id }, 
+    };
     const tilesAfterWaterDispersion = doEarthWaterDispersion(newTiles, dimension);
 
     const newLightBeams = calculateLightBeams(newTiles, dimension);
