@@ -13,12 +13,25 @@ import { ReactComponent as Electric } from './fieldIcons/electric.svg';
 
 type FieldProps = { fields: Array<Field>; boardScale: number }
 
-const Icon = (IconComponent: AnyStyledComponent, fields: Array<Field>, boardScale: number) => styled(IconComponent)`
-height: ${boardScale / 3}px;
-width: ${boardScale / 3}px;
+
+const BurningIcon = styled(Fire)<FieldProps>`
+height: ${props => props.boardScale / 3}px;
+width: ${props => props.boardScale / 3}px;
 position: relative;
 animation: pop 0.2s ease-in-out 1;
-fill: ${props => getThemeFromFields(props.theme, fields).secondary};
+fill: ${props => getThemeFromFields(props.theme, props.fields).secondary};
+
+@keyframes pop{
+  50%  {transform: scale(1.3);}
+}
+`;
+
+const FloodedIcon = styled(Water)<FieldProps>`
+height: ${props => props.boardScale / 3}px;
+width: ${props => props.boardScale / 3}px;
+position: relative;
+animation: pop 0.2s ease-in-out 1;
+fill: ${props => getThemeFromFields(props.theme, props.fields).secondary};
 
 @keyframes pop{
   50%  {transform: scale(1.3);}
@@ -26,25 +39,78 @@ fill: ${props => getThemeFromFields(props.theme, fields).secondary};
 `;
 
 
-const getFieldIconFromFields = (fields: Array<Field>, boardScale: number): AnyStyledComponent => {
+const EarthIcon = styled(Earth)<FieldProps>`
+height: ${props => props.boardScale / 3}px;
+width: ${props => props.boardScale / 3}px;
+position: relative;
+animation: pop 0.2s ease-in-out 1;
+fill: ${props => getThemeFromFields(props.theme, props.fields).secondary};
+
+@keyframes pop{
+  50%  {transform: scale(1.3);}
+}
+`;
+
+
+const SmokeIcon = styled(Smoke)<FieldProps>`
+height: ${props => props.boardScale / 3}px;
+width: ${props => props.boardScale / 3}px;
+position: relative;
+animation: pop 0.2s ease-in-out 1;
+fill: ${props => getThemeFromFields(props.theme, props.fields).secondary};
+
+@keyframes pop{
+  50%  {transform: scale(1.3);}
+}
+`;
+
+
+const ElectricIcon = styled(Electric)<FieldProps>`
+height: ${props => props.boardScale / 3}px;
+width: ${props => props.boardScale / 3}px;
+position: relative;
+animation: pop 0.2s ease-in-out 1;
+fill: ${props => getThemeFromFields(props.theme, props.fields).secondary};
+
+@keyframes pop{
+  50%  {transform: scale(1.3);}
+}
+`;
+
+const SteamyIcon = styled(Air)<FieldProps>`
+height: ${props => props.boardScale / 3}px;
+width: ${props => props.boardScale / 3}px;
+position: relative;
+animation: pop 0.2s ease-in-out 1;
+fill: ${props => getThemeFromFields(props.theme, props.fields).secondary};
+
+@keyframes pop{
+  50%  {transform: scale(1.3);}
+}
+`;
+
+
+
+
+const getFieldIconFromFields = (fields: Array<Field>, boardScale: number): any => {
   const calculatedFieldType = calculateFieldFromFields(fields);
   if(calculatedFieldType === 'BURNING') {
-    return Icon(Fire as AnyStyledComponent, fields, boardScale);
+    return <BurningIcon fields={fields} boardScale={boardScale} />;
   }
   if(calculatedFieldType === 'FLOODED') {
-    return Icon(Water as AnyStyledComponent, fields, boardScale);
+    return <FloodedIcon fields={fields} boardScale={boardScale} />;
   }
   if(calculatedFieldType === 'STEAMY') {
-    return Icon(Air as AnyStyledComponent, fields, boardScale);
+    return <SteamyIcon fields={fields} boardScale={boardScale} />;
   }
   if(calculatedFieldType === 'EARTH') {
-    return Icon(Earth as AnyStyledComponent, fields, boardScale);
+    return <EarthIcon fields={fields} boardScale={boardScale} />;
   }
   if(calculatedFieldType === 'SMOKEY') {
-    return Icon(Smoke as AnyStyledComponent, fields, boardScale);
+    return <SmokeIcon fields={fields} boardScale={boardScale} />;
   }
   if(calculatedFieldType === 'ELECTRIC_CURRENT') {
-    return Icon(Electric as AnyStyledComponent, fields, boardScale);
+    return <ElectricIcon fields={fields} boardScale={boardScale} />;
   }
   return styled.div``;
 };
@@ -58,14 +124,11 @@ position: relative;
 
 `;
 
-const FieldComponent = ({ fields, boardScale }: FieldProps) => {
-  const IconComponent = getFieldIconFromFields(fields, boardScale);
-  return (
+const FieldComponent = ({ fields, boardScale }: FieldProps) => (
   <IconContainer boardScale={boardScale}>
-     <IconComponent />
+     {getFieldIconFromFields(fields, boardScale)}
   </IconContainer>
   );
-};
 
 const MemoizedField = memo(FieldComponent);
 

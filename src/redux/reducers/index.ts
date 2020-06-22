@@ -86,10 +86,12 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
   const { tiles, dimension } = state;
   const tile = tiles[index] || { totem: null, fields: [] };
   const newTiles: Tiles = { ...state.tiles };
+  
 
   if(tile.totem) {
     return state;
   }
+  let start = new Date().getTime();
   if(canTotemBeInField(totemType, tile.fields)) {
     const id =  uuidv4();
     const totemEffects = applyTotemEffect(totemType, index, dimension);
@@ -104,15 +106,27 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
         newTiles[`${effectIndex}`] = { ...tileStateAtIndex, fields: [...fields, {type: fieldType, appliedBy: id} ]};
       }
     });
+    let end = new Date().getTime();
     newTiles[index] = { ...newTiles[index], 
       totem: { 
       type: totemType, 
       direction: getInitialDirectionFromTotemType(totemType), id }, 
     };
+    console.log('totem applications total time', end - start);
+    start = new Date().getTime();
     const tilesAfterWaterDispersion = doEarthWaterDispersion(newTiles, dimension);
+    end = new Date().getTime();
+    console.log('water dispersion total time', end - start);
 
+    start = new Date().getTime();
     const newLightBeams = calculateLightBeams(newTiles, dimension);
+    end = new Date().getTime();
+    console.log('light beams total time', end - start);
+    
+    start = new Date().getTime();
     const tilesAfterElectrification = electrify({ ...state, tiles: tilesAfterWaterDispersion});
+    end = new Date().getTime();
+    console.log('electrification', end - start);
     return { ...state, tiles: tilesAfterElectrification, lightBeams: newLightBeams };
   }
   return state;
