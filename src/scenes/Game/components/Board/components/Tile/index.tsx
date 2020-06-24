@@ -45,7 +45,7 @@ justify-content: center;
   grid-row-start: 2;
   grid-row-end: 2;
    padding: ${props => props.boardScale / 12}px;
-   border: ${props => props.isTotemHovered ? '2' : '0'}px solid black;
+   border: ${props => props.isTotemHovered ? '2' : '0'}px solid #1d5bbf;
 border-radius: 5px;
 box-shadow: ${props => props.lit && "0px 0px 10px 10px #ffffff"};
 transition: all 0.1s ease;

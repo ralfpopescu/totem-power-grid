@@ -8,6 +8,8 @@ import Board from './components/Board';
 import TotemSelector from './components/TotemSelector';
 import Landscape from './components/Landscape';
 import { ReactComponent as Shaman } from '../../assets/shaman1.svg';
+import { ReactComponent as Island } from '../../assets/island.svg';
+import { ReactComponent as Back } from '../../assets/back.svg';
 import exampleSolution from './components/Solution/example-solution-2.json';
 import type { Solution as SolutionType } from '../../logic/getSolutionFromState';
 import type { State } from '../../redux/reducers';
@@ -16,6 +18,7 @@ import { ReactComponent as BluePrints } from './assets/history.svg';
 import BluePrintModal from './components/Blueprint-Modal';
 import ActivateModal from './components/Activate-Modal';
 import solve from './solve';
+// import phrases from './phrases';
 
 type GridItemProps = { column: number; row: number; align?: string }
 
@@ -69,6 +72,7 @@ const TotemPowerGridTitle = styled.div`
 font-size: 40px;
 color: white;
 text-align: center;
+padding: 12px;
 `;
 
 const SideBar = styled.div`
@@ -126,12 +130,19 @@ font-size: 20px;
 place-items: center;
 `;
 
-const BackToFaoweiah = styled.div`
-margin-top: 24px;
+
+const BackContainer = styled.div`
+position: relative;
+align-items: center;
+justify-content: center;
+height: 200px;
+width: 200px;
+display: flex;
+flex-direction: column;
 cursor: pointer;
 
 &:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 `;
 
@@ -156,7 +167,7 @@ width: 200px;
 
 type AppProps = { state: State }
 
-const App = ({ state }: AppProps) => {
+const Game = ({ state }: AppProps) => {
   const [bluePrintModalOpen, setBluePrintModalOpen] = useState<boolean>(false);
   const [activateModalOpen, setActivateModalOpen] = useState<boolean>(false);
   const [isSolved, setIsSolved] = useState<boolean>(false);
@@ -206,11 +217,14 @@ const App = ({ state }: AppProps) => {
         </GridItem>
       </BoardGridItem>
       <SideBar>
-      <TotemPowerGridTitle>TOTEM POWER GRID</TotemPowerGridTitle>
-      <BackToFaoweiah onClick={() => history.push('/faoweiah')}>Back to Fa'Owei-ah</BackToFaoweiah>
         <ShamanContainer>
+  {/* <div>{phrases[state.totemSelection][Math.floor(Math.random() * phrases[state.totemSelection].length)]}</div> */}
         <Shaman style={{ width: '200px'}} fill="red"/>
         </ShamanContainer>
+        <BackContainer onClick={() => history.push('/faoweiah')}>
+          <Island style={{ width: '150px', height: '150px'}}/>
+          <Back style={{ width: '50px', height: '50px', fill: 'white'}}/>
+        </BackContainer>
       </SideBar>
       <BluePrintModal isOpen={bluePrintModalOpen} close={() => setBluePrintModalOpen(false)}/>
       <ActivateModal isOpen={activateModalOpen} close={() => setActivateModalOpen(false)} isSolved={isSolved}/>
@@ -221,5 +235,5 @@ const App = ({ state }: AppProps) => {
 
 const mapStateToProps = (state: State) => ({ state });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(Game);
 

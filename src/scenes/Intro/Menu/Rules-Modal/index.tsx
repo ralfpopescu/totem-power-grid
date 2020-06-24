@@ -10,14 +10,15 @@ import Interactions from './Interactions';
 type ModalProps = { isOpen: boolean; close: () => void }
 
 const modalStyle = { content: { 
-  backgroundColor: '#33bbff', 
-top: '100px',
-left: '100px',
-right: '100px',
-bottom: '100px',
+top: '50px',
+left: '50px',
+right: '50px',
+bottom: '50px',
 display: 'flex',
+backgroundColor: '#33bbff', 
 borderRadius: '40px',
 border: 'none',
+flexDirection: 'column' as any,
 },
 overlay: { backgroundColor: 'rgb(6, 5, 61, 0.5)' }};
 
@@ -27,6 +28,7 @@ grid-template-rows: 80px 1fr;
 height: 100%;
 width: 100%;
 align-item: center;
+height: 600px;
 justify-content: center;
 `;
 
@@ -49,6 +51,24 @@ text-decoration: ${props => props.active ? 'underline' : 'none'};
 
 &:hover {
   opacity: 0.7;
+}
+`;
+
+const CloseButton = styled.button`
+margin-top: 50px;
+outline: none;
+font-family: 'Chelsea Market';
+padding: 16px;
+width: 400px;
+border: none;
+color: ${props => props.theme.ocean.primary};
+border-radius: 12px;
+cursor: pointer;
+place-self: center;
+margin-bottom: 32px;
+
+&:hover {
+  transform: scale(1.05);
 }
 `;
 
@@ -82,6 +102,7 @@ const RulesModal = ({ isOpen, close }: ModalProps) => {
         <Interactions />
       </Route>
     </ModalContainer>
+    <CloseButton onClick={close}>Close</CloseButton>
   </Modal>
 );};
 

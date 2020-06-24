@@ -82,6 +82,7 @@ width: 200px;
   }
 `;
 
+
 const Intro = () => (
     <AppContainer>
       <SideBar>
