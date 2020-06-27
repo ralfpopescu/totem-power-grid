@@ -37,33 +37,39 @@ cursor: pointer;
 }
 `;
 
+const ContentContainer = styled.div`
+width: 1000px;
+display: flex;
+flex-direction: column;
+`;
 
-type MessageProps = { title: string; description: string; linkText: string; linkPath: string }
 
-const Message = ({ title, description, linkText, linkPath }: MessageProps) => {
-  const history = useHistory();
-  return (
-  <div style={{ display: 'flex', flexDirection: 'column' }}>
+type MessageProps = { title: string; description: string; linkText: string; onClick: () => void }
+
+const Message = ({ title, description, linkText, onClick }: MessageProps) => (
+  <ContentContainer>
     <div style={{ fontSize: '40px' }}>
       {title}
     </div>
     <div style={{ fontSize: '20px', marginTop: '40px' }}>
       {description}
     </div>
-    <CloseButton style={{ fontSize: '20px' }} onClick={() => history.push(linkPath)}>
+    <CloseButton style={{ fontSize: '20px' }} onClick={onClick}>
       {linkText}
     </CloseButton>
-  </div>
-);};
+  </ContentContainer>
+);
 
-const StoryModal = ({ isOpen, close, isSolved }: ActivateModalProps) => (
+const StoryModal = ({ isOpen, close, isSolved }: ActivateModalProps) => {
+  const history = useHistory();
+  return (
   <Modal isOpen={isOpen} onRequestClose={close} style={modalStyle}>
-    {isSolved ? <Message title="Success!" description="The power is on! The villages thank you profusely for your brave work."
-    linkText="Back to Fa'Owei-ah" linkPath="/faoweiah" /> :
-    <Message title="Oh no! The village blew up." description="Luckily, the Shaman of Time has agreed to rewind the universe to the moment right before you pushed the button."
-    linkText="Back to the power grid" linkPath="/game" />
+    {isSolved ? <Message title="Success!" description="The power is on! The villages thank you profusely for not blowing them up."
+    linkText="Back to Fa'Owei-ah" onClick={() => history.push('/faoweiah')} /> :
+    <Message title="Oh no! The village blew up." description="Luckily, the Time Shaman has agreed to rewind the universe to the moment right before you pushed the button, but just this once!! (He says that every time.)"
+    linkText="Back to the power grid" onClick={close} />
   }
   </Modal>
-);
+);};
 
 export default StoryModal;

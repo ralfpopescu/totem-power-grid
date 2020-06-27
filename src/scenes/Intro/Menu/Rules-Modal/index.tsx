@@ -59,7 +59,7 @@ margin-top: 50px;
 outline: none;
 font-family: 'Chelsea Market';
 padding: 16px;
-width: 400px;
+width: 200px;
 border: none;
 color: ${props => props.theme.ocean.primary};
 border-radius: 12px;

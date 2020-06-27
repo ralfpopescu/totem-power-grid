@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from "react-redux";
 import _ from 'lodash';
 import { useCookies } from 'react-cookie';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Board from './components/Board';
 import TotemSelector from './components/TotemSelector';
 import Landscape from './components/Landscape';
@@ -18,6 +18,9 @@ import { ReactComponent as BluePrints } from './assets/history.svg';
 import BluePrintModal from './components/Blueprint-Modal';
 import ActivateModal from './components/Activate-Modal';
 import solve from './solve';
+import { setLevel } from '../../redux/actions';
+import type { SetLevel } from '../../redux/actions';
+import levels from '../../levels';
 // import phrases from './phrases';
 
 type GridItemProps = { column: number; row: number; align?: string }
@@ -165,14 +168,23 @@ width: 200px;
   }
 `;
 
-type AppProps = { state: State }
+type AppProps = { state: State; setLevel: SetLevel }
 
-const Game = ({ state }: AppProps) => {
+
+
+const Game = ({ state, setLevel }: AppProps) => {
   const [bluePrintModalOpen, setBluePrintModalOpen] = useState<boolean>(false);
   const [activateModalOpen, setActivateModalOpen] = useState<boolean>(false);
   const [isSolved, setIsSolved] = useState<boolean>(false);
   const [cookies, setCookie] = useCookies(['levelsComplete']);
+  const { level: levelNumber } = useParams();
   const history = useHistory();
+
+  useEffect(() => {
+    if(`${state.level.number}` !== `${levelNumber}`) {
+      setLevel({ level: levels.levelMap[levelNumber] });
+    }
+  });
 
   const handleActivate = () => {
     const levelsComplete = cookies.levelsComplete || [];
@@ -235,5 +247,8 @@ const Game = ({ state }: AppProps) => {
 
 const mapStateToProps = (state: State) => ({ state });
 
-export default connect(mapStateToProps)(Game);
+export default connect(
+  mapStateToProps,
+  { setLevel },
+)(Game);
 

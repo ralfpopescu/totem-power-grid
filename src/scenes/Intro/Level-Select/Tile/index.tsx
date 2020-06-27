@@ -144,9 +144,10 @@ cursor: pointer;
   }
 `; 
 
-const Tile = ({ adjacencies, land, level, setLevel, setLevelSelectTitle, index }: TileProps) => {
+const Tile = ({ adjacencies, land, level, setLevelSelectTitle, index }: TileProps) => {
   const history = useHistory();
   const [cookies, setCookie] = useCookies(['levelsComplete']);
+  const levelNumber = level?.number;
 
   return (
 <TileContainer 
@@ -162,9 +163,9 @@ onMouseEnter={() => setLevelSelectTitle(level ? {
   )} 
 onMouseLeave={() => setLevelSelectTitle(null)} 
 onClick={() => {
-  if(level != null) {
-    setLevel({ level });
-    history.push(`/game/${level.number}`);
+  if(levelNumber) {
+    console.log('levelNumber', levelNumber);
+    history.push(`/game/${levelNumber}`);
   }
 }}>
   {adjacencies.length > 0 && (

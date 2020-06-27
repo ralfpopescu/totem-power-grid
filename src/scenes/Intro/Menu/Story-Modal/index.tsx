@@ -37,15 +37,34 @@ white-space:pre;
 
 const modalStyle = { content: { 
   backgroundColor: '#33bbff', 
-top: '100px',
-left: '100px',
-right: '100px',
-bottom: '100px',
+top: '180px',
+left: '180px',
+right: '180px',
+bottom: '180px',
 display: 'flex',
 borderRadius: '40px',
 border: 'none',
+flexDirection: 'column' as any,
 },
 overlay: { backgroundColor: 'rgb(6, 5, 61, 0.5)' }};
+
+const CloseButton = styled.button`
+margin-top: 50px;
+outline: none;
+font-family: 'Chelsea Market';
+padding: 16px;
+width: 200px;
+border: none;
+color: ${props => props.theme.ocean.primary};
+border-radius: 12px;
+cursor: pointer;
+place-self: center;
+margin-bottom: 32px;
+
+&:hover {
+  transform: scale(1.05);
+}
+`;
 
 const StoryModal = ({ isOpen, close }: StoryModalProps) => (
   <Modal isOpen={isOpen} onRequestClose={close} style={modalStyle}>
@@ -59,6 +78,7 @@ const StoryModal = ({ isOpen, close }: StoryModalProps) => (
       <DescriptionItem>Make sure not to provide power to areas of the grid without the correct unit to absorb the power: disaster will occur!</DescriptionItem>
       </TotemPowerGridDescription>
       </ContentContainer>
+      <CloseButton onClick={close}>Close</CloseButton>
   </Modal>
 );
 

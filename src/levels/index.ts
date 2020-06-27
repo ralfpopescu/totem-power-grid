@@ -14,6 +14,20 @@ export type Level = {
   difficulty: string;
 }
 
-const Levels = { l0, l1, easy, medium, hard, veryHard };
+const easyLevels = Object.values(easy);
+const mediumLevels = Object.values(medium);
+const hardLevels = Object.values(hard);
+const veryHardLevels = Object.values(veryHard);
+
+type LevelMap = { [key: string]: Level }
+
+
+const levelMap: LevelMap = [...easyLevels, ...mediumLevels, ...hardLevels, ...veryHardLevels]
+.reduce((acc: LevelMap, curr: Level) => {
+  acc[curr.number] = curr;
+  return acc;
+}, {});
+
+const Levels = { l0, l1, easy, medium, hard, veryHard, levelMap };
 
 export default Levels;

@@ -6,6 +6,7 @@ import { ReactComponent as Compass} from './assets/compass.svg';
 import { ReactComponent as Message} from './assets/message.svg';
 import StoryModal from './Story-Modal';
 import RulesModal from './Rules-Modal';
+import ContactModal from './Contact-Modal';
 
 const MenuContainer = styled.div`
 display: flex;
@@ -43,7 +44,7 @@ const Menu = () => {
   const [menuItemName, setMenuItemName] = useState<string>('');
   const [storyModalOpen, setStoryModalOpen] = useState<boolean>(false);
   const [rulesModalOpen, setRulesModalOpen] = useState<boolean>(false);
-  const [infoModalOpen, setInfoModalOpen] = useState<boolean>(false);
+  const [contactModalOpen, setContactModalOpen] = useState<boolean>(false);
   const history = useHistory();
 
   return (
@@ -57,10 +58,11 @@ const Menu = () => {
         onMouseEnter={() => setMenuItemName('Story')} onMouseLeave={() => setMenuItemName('')}>
           <Papyrus style={iconStyle} />
         </IconContainer>
-        <IconContainer onMouseEnter={() => setMenuItemName('Contact')} onMouseLeave={() => setMenuItemName('')}>
+        <IconContainer onMouseEnter={() => setMenuItemName('Contact')} onMouseLeave={() => setMenuItemName('')} onClick={() => setContactModalOpen(true)} >
           <Message style={iconStyle} />
         </IconContainer>
         <StoryModal isOpen={storyModalOpen} close={() => setStoryModalOpen(false)}/>
+        <ContactModal isOpen={contactModalOpen} close={() => setContactModalOpen(false)} />
         <Route path="/faoweiah/rules">
           <RulesModal isOpen close={() => history.push('/faoweiah')}/>
         </Route>
