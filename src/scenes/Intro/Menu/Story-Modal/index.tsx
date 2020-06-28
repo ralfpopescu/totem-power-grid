@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
-import { Route, useHistory } from "react-router-dom";
 
 const ContentContainer = styled.div`
 align-items: center;
 display: flex;
 flex-direction: column;
+overflow: scroll;
 `;
 
 const TotemPowerGridDescription = styled.div`
@@ -15,7 +15,7 @@ color: white;
 display: flex;
 flex-direction: column;
 padding: 32px;
-
+overflow: scroll;
 `;
 
 const Title = styled.div`
@@ -36,17 +36,28 @@ white-space:pre;
 `;
 
 const modalStyle = { content: { 
-  backgroundColor: '#33bbff', 
-top: '180px',
-left: '180px',
-right: '180px',
-bottom: '180px',
+top: '0',
+left: '0',
+right: '0',
+bottom: '0',
 display: 'flex',
-borderRadius: '40px',
 border: 'none',
+backgroundColor: 'rgb(0, 0, 0, 0)',
 flexDirection: 'column' as any,
+alignItems: 'center',
+justifyContent: 'center',
 },
 overlay: { backgroundColor: 'rgb(6, 5, 61, 0.5)' }};
+
+const ModalContainer = styled.div`
+padding: 40px;
+background-color: #33bbff;
+height: 500px;
+display: flex;
+flex-direction: column;
+border-radius: 40px;
+border: none;
+`;
 
 const CloseButton = styled.button`
 margin-top: 50px;
@@ -66,19 +77,35 @@ margin-bottom: 32px;
 }
 `;
 
+const CoverDiv = styled.div`
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+`;
+
 const StoryModal = ({ isOpen, close }: StoryModalProps) => (
   <Modal isOpen={isOpen} onRequestClose={close} style={modalStyle}>
-    <ContentContainer>
-    <Title>Welcome to the Islands of Fa'Owei-ah!</Title>
-    <TotemPowerGridDescription>
-      <DescriptionItem>You are <Emphasis>Toto,</Emphasis> the power shaman of your island<Emphasis>, Fa'Owei-ah.</Emphasis></DescriptionItem>
-      <DescriptionItem>A massive tropical storm came through and completely knocked out the island's power grids!</DescriptionItem>
-      <DescriptionItem>Villagers need <span style={{ color: 'red'}}>fire</span>, <span style={{ color: 'yellow'}}>electricity</span>, and <span style={{ color: 'lightblue'}}>light</span> to do their daily activities.</DescriptionItem>
-      <DescriptionItem>You are assigned parts of the island to restore power to using your powerful elemental totems.</DescriptionItem>
-      <DescriptionItem>Make sure not to provide power to areas of the grid without the correct unit to absorb the power: disaster will occur!</DescriptionItem>
-      </TotemPowerGridDescription>
-      </ContentContainer>
-      <CloseButton onClick={close}>Close</CloseButton>
+    <CoverDiv onClick={close}>
+      <ModalContainer onClick={e => e.stopPropagation()}>
+        <ContentContainer>
+        <Title>Welcome to the Islands of Fa'Owei-ah!</Title>
+        <TotemPowerGridDescription>
+          <DescriptionItem>You are <Emphasis>Toto,</Emphasis> the power shaman of your island<Emphasis>, Fa'Owei-ah.</Emphasis></DescriptionItem>
+          <DescriptionItem>A massive tropical storm came through and completely knocked out the island's power grids!</DescriptionItem>
+          <DescriptionItem>Villagers need <span style={{ color: 'red'}}>fire</span>, <span style={{ color: 'yellow'}}>electricity</span>, and <span style={{ color: 'lightblue'}}>light</span> to do their daily activities.</DescriptionItem>
+          <DescriptionItem>You are assigned parts of the island to restore power to using your powerful elemental totems.</DescriptionItem>
+          <DescriptionItem>Make sure not to provide power to areas of the grid without the correct unit to absorb the power: disaster will occur!</DescriptionItem>
+          </TotemPowerGridDescription>
+          </ContentContainer>
+          <CloseButton onClick={close}>Close</CloseButton>
+        </ModalContainer>
+      </CoverDiv>
   </Modal>
 );
 
