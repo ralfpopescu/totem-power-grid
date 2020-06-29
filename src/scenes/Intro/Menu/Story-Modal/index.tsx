@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Modal from 'react-modal';
+import Modal from '../../../../shared/Modal';
 
 const ContentContainer = styled.div`
 align-items: center;
@@ -90,22 +90,17 @@ justify-content: center;
 `;
 
 const StoryModal = ({ isOpen, close }: StoryModalProps) => (
-  <Modal isOpen={isOpen} onRequestClose={close} style={modalStyle}>
-    <CoverDiv onClick={close}>
-      <ModalContainer onClick={e => e.stopPropagation()}>
-        <ContentContainer>
-        <Title>Welcome to the Islands of Fa'Owei-ah!</Title>
-        <TotemPowerGridDescription>
-          <DescriptionItem>You are <Emphasis>Toto,</Emphasis> the power shaman of your island<Emphasis>, Fa'Owei-ah.</Emphasis></DescriptionItem>
-          <DescriptionItem>A massive tropical storm came through and completely knocked out the island's power grids!</DescriptionItem>
-          <DescriptionItem>Villagers need <span style={{ color: 'red'}}>fire</span>, <span style={{ color: 'yellow'}}>electricity</span>, and <span style={{ color: 'lightblue'}}>light</span> to do their daily activities.</DescriptionItem>
-          <DescriptionItem>You are assigned parts of the island to restore power to using your powerful elemental totems.</DescriptionItem>
-          <DescriptionItem>Make sure not to provide power to areas of the grid without the correct unit to absorb the power: disaster will occur!</DescriptionItem>
-          </TotemPowerGridDescription>
-          </ContentContainer>
-          <CloseButton onClick={close}>Close</CloseButton>
-        </ModalContainer>
-      </CoverDiv>
+  <Modal isOpen={isOpen} close={close} >
+    <ContentContainer>
+    <Title>Welcome to the Islands of Fa'Owei-ah!</Title>
+    <TotemPowerGridDescription>
+      <DescriptionItem>You are <Emphasis>Toto,</Emphasis> the power shaman of your island<Emphasis>, Fa'Owei-ah.</Emphasis></DescriptionItem>
+      <DescriptionItem>A massive tropical storm came through and completely knocked out the island's power grids!</DescriptionItem>
+      <DescriptionItem>Villagers need <span style={{ color: 'red'}}>fire</span>, <span style={{ color: 'yellow'}}>electricity</span>, and <span style={{ color: 'lightblue'}}>light</span> to do their daily activities.</DescriptionItem>
+      <DescriptionItem>You are assigned parts of the island to restore power to using your powerful elemental totems.</DescriptionItem>
+      <DescriptionItem>Make sure not to provide power to areas of the grid without the correct unit to absorb the power: disaster will occur!</DescriptionItem>
+      </TotemPowerGridDescription>
+      </ContentContainer>
   </Modal>
 );
 

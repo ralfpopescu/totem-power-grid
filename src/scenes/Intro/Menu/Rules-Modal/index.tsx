@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Modal from 'react-modal';
 import { Route, useHistory, useRouteMatch } from 'react-router-dom';
+import Modal from '../../../../shared/Modal';
 import Objective from './Objective';
 import Totems from './Totems';
 import Interactions from './Interactions';
@@ -28,7 +28,7 @@ grid-template-rows: 80px 1fr;
 height: 100%;
 width: 100%;
 align-item: center;
-height: 600px;
+height: 500px;
 justify-content: center;
 `;
 
@@ -79,7 +79,7 @@ const RulesModal = ({ isOpen, close }: ModalProps) => {
   const interactionsRouteMatch = useRouteMatch('/faoweiah/rules/interactions');
 
   return (
-  <Modal isOpen={isOpen} onRequestClose={close} style={modalStyle}>
+  <Modal isOpen={isOpen} close={close}>
     <ModalContainer>
       <TabsContainer>
         <Tab style={{ marginRight: '50px'}} onClick={() => history.push('/faoweiah/rules/objective')} active={!!objectiveRouteMatch}>
@@ -102,7 +102,6 @@ const RulesModal = ({ isOpen, close }: ModalProps) => {
         <Interactions />
       </Route>
     </ModalContainer>
-    <CloseButton onClick={close}>Close</CloseButton>
   </Modal>
 );};
 
