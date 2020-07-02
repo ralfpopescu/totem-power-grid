@@ -2,8 +2,8 @@ import type { FieldPower } from '../../logic/getSolutionFromState';
 import type { Direction } from '../../redux/reducers';
 
 const Level = {
-   number: 17,
-   name: 'The Island Slums',
+   number: 18,
+   name: 'Cape N\'eva E\'va',
    dimension: 8,
    difficulty: 'VERY-HARD',
    solution: {
