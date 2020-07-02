@@ -1,10 +1,11 @@
 import React from 'react';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { CookiesProvider } from 'react-cookie';
 import Game from './scenes/Game';
 import Intro from './scenes/Intro';
+import SmallScreenMessage from './scenes/SmallScreenMessage';
 import type { State } from './redux/reducers';
 
 type color = { primary: string; secondary: string }
@@ -93,6 +94,20 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const MobileMessage = styled.div`
+display: flex;
+position: absolute;
+background-color: #33bbff;
+bottom: 0;
+top: 0;
+left: 0;
+right: 0;
+
+@media only screen and (min-width: 1400px) {
+  display: none;
+}
+`;
+
 type AppProps = { state: State }
 
 const App = ({ state }: AppProps) => (
@@ -110,6 +125,7 @@ const App = ({ state }: AppProps) => (
           <Redirect to="/faoweiah" />
         </Route>
       </ThemeProvider>
+      <SmallScreenMessage />
       </CookiesProvider>
   );
 

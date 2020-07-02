@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
 
-type ModalProps = { isOpen: boolean; close: () => void; height?: number; children: any }
+type ModalProps = { isOpen: boolean; close: () => void; height?: number; width?: number; children: any }
 
 
 const modalStyle = { content: { 
@@ -19,12 +19,13 @@ justifyContent: 'center',
 },
 overlay: { backgroundColor: 'rgb(6, 5, 61, 0.5)' }};
 
-type ModalContainerProps = { height?: number }
+type ModalContainerProps = { height?: number; width?: number }
 
 const ModalContainer = styled.div<ModalContainerProps>`
 padding: 40px;
 background-color: #33bbff;
 height: ${props => props.height || 600}px;
+width: ${props => props.width ? `${props.width}px` : 'auto'};
 display: flex;
 flex-direction: column;
 border-radius: 40px;
@@ -32,7 +33,6 @@ border: none;
 `;
 
 const CloseButton = styled.button`
-margin-top: 50px;
 outline: none;
 font-family: 'Chelsea Market';
 padding: 16px;
@@ -62,11 +62,13 @@ align-items: center;
 justify-content: center;
 `;
 
-const Modal = ({ isOpen, close, height, children }: ModalProps) => (
+const Modal = ({ isOpen, close, height, width, children }: ModalProps) => (
   <ReactModal isOpen={isOpen} onRequestClose={close} style={modalStyle}>
     <CoverDiv onClick={close}>
-      <ModalContainer onClick={e => e.stopPropagation()} height={height}>
-        {children}
+      <ModalContainer onClick={e => e.stopPropagation()} height={height} width={width}>
+        <div style={{ flexGrow: 1, display: 'flex' }}>
+          {children}
+        </div>
         <CloseButton onClick={close}>Close</CloseButton>
       </ModalContainer>
     </CoverDiv>

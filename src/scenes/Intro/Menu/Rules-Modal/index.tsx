@@ -72,6 +72,10 @@ margin-bottom: 32px;
 }
 `;
 
+const ContentContainer = styled.div`
+width: 1000px;
+`;
+
 const RulesModal = ({ isOpen, close }: ModalProps) => {
   const history = useHistory();
   const objectiveRouteMatch = useRouteMatch('/faoweiah/rules/objective');
@@ -79,7 +83,7 @@ const RulesModal = ({ isOpen, close }: ModalProps) => {
   const interactionsRouteMatch = useRouteMatch('/faoweiah/rules/interactions');
 
   return (
-  <Modal isOpen={isOpen} close={close}>
+  <Modal isOpen={isOpen} close={close} width={1200} height={700}>
     <ModalContainer>
       <TabsContainer>
         <Tab style={{ marginRight: '50px'}} onClick={() => history.push('/faoweiah/rules/objective')} active={!!objectiveRouteMatch}>
@@ -92,15 +96,17 @@ const RulesModal = ({ isOpen, close }: ModalProps) => {
           Interactions
         </Tab>
         </TabsContainer>
-      <Route path="/faoweiah/rules/objective">
-        <Objective />
-      </Route>
-      <Route path="/faoweiah/rules/totems">
-        <Totems />
-      </Route>
-      <Route path="/faoweiah/rules/interactions">
-        <Interactions />
-      </Route>
+        <ContentContainer>
+          <Route path="/faoweiah/rules/objective">
+            <Objective />
+          </Route>
+          <Route path="/faoweiah/rules/totems">
+            <Totems />
+          </Route>
+          <Route path="/faoweiah/rules/interactions">
+            <Interactions />
+          </Route>
+        </ContentContainer>
     </ModalContainer>
   </Modal>
 );};

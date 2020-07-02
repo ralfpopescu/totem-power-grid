@@ -15,6 +15,7 @@ place-items: center;
 const LevelSelectGridContainer = styled.div`
 grid-row-start: 4;
 place-items: center;
+padding: 20px;
 
 `;
 
@@ -27,15 +28,27 @@ width: 100%:
 place-items: center;
 `;
 
-const FaOweiah = styled.div`
+const Hero = styled.div`
 grid-row-start: 1;
-font-size: 50px;
+place-self: center;
+display: flex;
+flex-direction: column;
+`;
+
+
+const TheIslesOf = styled.div`
+font-size: 20px;
+place-self: center;
+`;
+
+const FaOweiah = styled.div`
+font-size: 40px;
 place-self: center;
 `;
 
 const LevelTitle = styled.div`
 grid-row-start: 2;
-font-size: 24px;
+font-size: 20px;
 place-self: center;
 `;
 
@@ -100,7 +113,10 @@ const LevelSelect = () => {
 
   return (
   <Container>
-    <FaOweiah>Fa'Owei-ah</FaOweiah>
+    <Hero>
+      <TheIslesOf>The Isles Of</TheIslesOf>
+      <FaOweiah>Fa'Owei-ah</FaOweiah>
+    </Hero>
     <LevelTitle>{levelSelectTitle ? levelSelectTitle.name : null}</LevelTitle>
     <SubLevelSelectContainer>
       <LevelDifficulty difficulty={levelSelectTitle?.difficulty}>{levelSelectTitle?.difficulty}</LevelDifficulty>

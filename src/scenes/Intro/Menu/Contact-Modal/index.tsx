@@ -6,9 +6,11 @@ const ContentContainer = styled.div`
 align-items: center;
 display: flex;
 flex-direction: column;
+width: 100%;
 `;
 
 const Title = styled.div`
+align-items: center;
 font-size: 40px;
 padding: 20px;
 `;
@@ -21,7 +23,7 @@ type ModalProps = { isOpen: boolean; close: () => void }
 
 
 const StoryModal = ({ isOpen, close }: ModalProps) => (
-  <Modal isOpen={isOpen} close={close} height={300}>
+  <Modal isOpen={isOpen} close={close} height={300} width={300}>
     <ContentContainer>
     <Title>Contact</Title>
       <DescriptionItem>INSTAGRAM: @popeska</DescriptionItem>

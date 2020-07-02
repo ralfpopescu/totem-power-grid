@@ -55,12 +55,12 @@ const Totems = () => {
   return (
 <Container>
   <SubMenu>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/overview')} style={{ marginRight: '28px' }} active={!!overviewRouteMatch}>Overview</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/fire')} style={{ marginRight: '28px' }} active={!!fireRouteMatch}>Fire</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/water')} style={{ marginRight: '28px' }} active={!!waterRouteMatch}>Water</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/earth')} style={{ marginRight: '28px' }} active={!!earthRouteMatch}>Earth</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/electric')} style={{ marginRight: '28px' }} active={!!electricRouteMatch}>Electric</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/light')} style={{ marginRight: '28px' }} active={!!lightRouteMatch}>Light</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/overview')} style={{ marginRight: '56px' }} active={!!overviewRouteMatch}>Overview</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/fire')} style={{ marginRight: '56px' }} active={!!fireRouteMatch}>Fire</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/water')} style={{ marginRight: '56px' }} active={!!waterRouteMatch}>Water</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/earth')} style={{ marginRight: '56px' }} active={!!earthRouteMatch}>Earth</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/electric')} style={{ marginRight: '56px' }} active={!!electricRouteMatch}>Electric</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/light')} style={{ marginRight: '56px' }} active={!!lightRouteMatch}>Light</MenuItem>
   </SubMenu>
   <ContentContainer>
     <Route path="/faoweiah/rules/totems/overview">

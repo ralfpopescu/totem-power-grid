@@ -14,7 +14,7 @@ left: 0;
 overflow: scroll;
 display: grid;
 grid-template-columns: 1fr 1fr;
-grid-template-columns: 1fr 1fr;
+grid-template-rows: 3fr 1fr;
 justify-content: center;
 `;
 
@@ -23,25 +23,6 @@ font-size: 60px;
 color: white;
 margin-bottom: 20px;
 display: flex;
-`;
-
-
-const SideBar = styled.div`
-grid-column-start: 1;
-grid-row-start: 1;
-height: 100%;
-display: flex;
-flex-direction: column;
-padding: 10px;
-justify-self: center;
-align-self: center;
-align-items: center;
-justify-content: center;
-`;
-
-const LevelSelectContainer = styled.div`
-grid-column-start: 2;
-grid-row-start: 1;
 `;
 
 type TitleProps = { delay: number }
@@ -63,6 +44,25 @@ opacity: 0;
   }
 `;
 
+
+const SideBar = styled.div`
+grid-column-start: 1;
+grid-row-start: 1;
+height: 100%;
+display: flex;
+flex-direction: column;
+padding: 10px;
+justify-self: center;
+align-self: center;
+align-items: center;
+justify-content: center;
+`;
+
+const LevelSelectContainer = styled.div`
+grid-column-start: 2;
+grid-row-start: 1;
+`;
+
 const ShamanContainer = styled.div`
 animation: shaman-entry 0.5s ease-in-out;
 width: 200px;
@@ -82,6 +82,21 @@ width: 200px;
   }
 `;
 
+const Notice = styled.div`
+padding: 20px;
+grid-column-start: 1;
+grid-row-start: 3;
+font-size: 12px;
+`;
+
+const SecondNotice = styled.div`
+padding: 20px;
+grid-column-start: 2;
+grid-row-start: 3;
+font-size: 12px;
+text-align: right;
+`;
+
 
 const Intro = () => (
     <AppContainer>
@@ -99,6 +114,12 @@ const Intro = () => (
       <LevelSelectContainer>
         <LevelSelect />
       </LevelSelectContainer>
+      <Notice>
+        This site uses cookies to track your progress.
+      </Notice>
+      <SecondNotice>
+      © 2020 Popeska Music, LLC. All rights reserved.
+      </SecondNotice>
     </AppContainer>
   );
 
