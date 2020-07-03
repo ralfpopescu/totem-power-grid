@@ -10,6 +10,11 @@ grid-template-rows: repeat(6, 100px);
 grid-template-columns: repeat(6, 100px);
 overflow: visible;
 place-items: center;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  grid-template-rows: repeat(6, 50px);
+  grid-template-columns: repeat(6, 50px);
+}
 `;
 
 const LevelSelectGridContainer = styled.div`
@@ -26,6 +31,12 @@ grid-row-start: 4;
 height: 100%;
 width: 100%:
 place-items: center;
+
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  display: flex;
+  flex-direction: column;
+}
 `;
 
 const Hero = styled.div`
@@ -96,7 +107,6 @@ grid-row-start: 3;
 display: flex;
 flex-direction: row;
 `;
-
 
 export type LevelSelectTitle = { name: string; number: number; difficulty: string; complete: boolean }
 

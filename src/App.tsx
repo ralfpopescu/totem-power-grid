@@ -9,6 +9,7 @@ import SmallScreenMessage from './scenes/SmallScreenMessage';
 import type { State } from './redux/reducers';
 
 type color = { primary: string; secondary: string }
+type media = { mobile: number }
 
 export type Theme = {
   main: color;
@@ -25,6 +26,7 @@ export type Theme = {
   ELECTRIC: color;
   LIGHT: color;
   WATER: color;
+  media: media;
 }
 
 
@@ -85,6 +87,9 @@ const theme: Theme = {
     primary: '#553A41',
     secondary: '#2F0601',
   },
+  media: {
+    mobile: 700,
+  },
 };
 
 const GlobalStyle = createGlobalStyle`
@@ -92,20 +97,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Chelsea Market';
     color: white;
   }
-`;
-
-const MobileMessage = styled.div`
-display: flex;
-position: absolute;
-background-color: #33bbff;
-bottom: 0;
-top: 0;
-left: 0;
-right: 0;
-
-@media only screen and (min-width: 1400px) {
-  display: none;
-}
 `;
 
 type AppProps = { state: State }

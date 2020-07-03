@@ -77,15 +77,11 @@ const getBorderRadiusFromAdjacencies = (adjacencies: Array<Adjancency>) => {
  return borderRadiusString;
 };
 
-const Village = ({ powered }: { powered: boolean | undefined }) => (
-  <VillageIcon style={{ height: '28px', width: '28px', fill: powered ? 'rgb(240, 217, 70)' : 'rgb(110, 58, 2' }}/>
-);
-
 type TileContainerProps = { land: boolean | undefined; index?: number | undefined }
 
 const TileContainer = styled.div<TileContainerProps>`
-  height: 100px;
-  width: 100px;
+  height: 100%;
+  width: 100%;
   display: flex;
   position: relative;
   background-color: ${props => props.land ? '#8cff66' : ''};

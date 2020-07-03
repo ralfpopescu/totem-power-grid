@@ -16,6 +16,13 @@ display: grid;
 grid-template-columns: 1fr 1fr;
 grid-template-rows: 3fr 1fr;
 justify-content: center;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 `;
 
 const TotemPowerGridTitle = styled.div`
@@ -97,9 +104,24 @@ font-size: 12px;
 text-align: right;
 `;
 
+const HideOnMobile = styled.div`
+display: flex;
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  display: none;
+}
+`;
+
+const ShowOnMobile = styled.div`
+display: none;
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  display: flex;
+}
+`;
+
 
 const Intro = () => (
     <AppContainer>
+      <HideOnMobile>
       <SideBar>
         <TotemPowerGridTitle>
           <TitleIntroSpan delay={0} style={{ marginRight: '20px'}}>TOTEM </TitleIntroSpan> 
@@ -111,9 +133,13 @@ const Intro = () => (
           <Shaman style={{ width: '200px', height: '200px'}} />
         </ShamanContainer>
       </SideBar>
+      </HideOnMobile>
       <LevelSelectContainer>
         <LevelSelect />
       </LevelSelectContainer>
+      <ShowOnMobile>
+        <Menu />
+      </ShowOnMobile>
       <Notice>
         This site uses cookies to track your progress.
       </Notice>

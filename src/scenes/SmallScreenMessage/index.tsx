@@ -16,7 +16,7 @@ align-items: center;
 justify-content: center;
 padding: 20px;
 
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 100px) {
   display: none;
 }
 `;
