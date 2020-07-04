@@ -14,9 +14,13 @@ flex-direction: column;
 `;
 
 const ContentContainer = styled.div`
-margin-top: 20px;
-padding: 40px;
 font-size: 20px;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  font-size: 12px;
+  margin-top: 0px;
+  padding 0px;
+}
 `;
 
 const SubMenu = styled.div`
@@ -36,13 +40,17 @@ height: 20px;
 cursor: pointer;
 transform: scale(${props => props.active ? 1.2 : 1});
 text-decoration: ${props => props.active ? 'underline' : 'none'};
+margin-right: 40px;
 
 &:hover {
   opacity: 0.7;
 }
-`;
 
-const gutter = '40px';
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  font-size: 10px;
+  margin-right: 16px;
+}
+`;
 
 const Interactions = () => {
   const history = useHistory();
@@ -56,12 +64,12 @@ const Interactions = () => {
   return (
 <Container>
   <SubMenu>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/interactions/overview')} style={{ marginRight: gutter }} active={!!overviewRouteMatch}>Overview</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/interactions/fireandwater')} style={{ marginRight: gutter }} active={!!fireAndWaterRouteMatch}>Fire + Water</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/interactions/fireandearth')} style={{ marginRight: gutter }} active={!!fireAndEarthRouteMatch}>Fire + Earth</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/interactions/waterandearth')} style={{ marginRight: gutter }} active={!!waterAndEarthRouteMatch}>Water + Earth</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/interactions/electric')} style={{ marginRight: gutter }} active={!!electricRouteMatch}>Electricity</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/interactions/light')} active={!!lightRouteMatch}>Light</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/interactions/overview')} active={!!overviewRouteMatch}>Overview</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/interactions/fireandwater')} active={!!fireAndWaterRouteMatch}>Fire + Water</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/interactions/fireandearth')} active={!!fireAndEarthRouteMatch}>Fire + Earth</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/interactions/waterandearth')} active={!!waterAndEarthRouteMatch}>Water + Earth</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/interactions/electric')} active={!!electricRouteMatch}>Electricity</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/interactions/light')} style={{ marginRight: 0}}active={!!lightRouteMatch}>Light</MenuItem>
   </SubMenu>
   <ContentContainer>
     <Route path="/faoweiah/rules/interactions/overview">

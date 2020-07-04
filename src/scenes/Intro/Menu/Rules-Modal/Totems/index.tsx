@@ -21,6 +21,7 @@ font-size: 20px;
 @media only screen and (max-width: ${props => props.theme.media.mobile}px) {
   font-size: 12px;
   margin-top: 0px;
+  padding 0px;
 }
 `;
 

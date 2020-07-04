@@ -2,6 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import ExampleBoard from '../../../ExampleBoard';
 import type { TotemType, Direction, FieldType } from '../../../../../../../redux/reducers';
+import Page from '../../../Page';
+
+const { Text, Container } = Page;
+
 
 const stateFirst = {
   tiles: {
@@ -74,18 +78,6 @@ const stateSecond = {
     {index: 21, direction: 'WEST' as Direction},
   ],
 };
-
-const Container = styled.div`
-display: grid;
-grid-template-columns: 1fr 1fr;
-`;
-
-const Text = styled.div`
-display: flex;
-flex-direction: column;
-flex-grow: 1;
-padding: 36px;
-`;
 
 const LightTotemPage = () => (
   <Container>
