@@ -23,7 +23,7 @@ const stateSecond = {
     '1': { totem: null, fields: [] },
     '2': { totem: null, fields: [] },
     '3': { totem: null, fields: ['ELECTRIC_CURRENT' as FieldType] },
-    '4': { totem: { type: 'FIRE' as TotemType, id: '1', direction: 'WEST' as Direction }, fields: []},
+    '4': { totem: { type: 'ELECTRIC' as TotemType, id: '1', direction: 'WEST' as Direction }, fields: []},
     '5': { totem: null, fields: [] },
     '6': { totem: null, fields: [] },
     '7': { totem: null, fields: [] },
@@ -35,14 +35,23 @@ const stateSecond = {
 const Container = styled.div`
 display: grid;
 grid-template-columns: 1fr 1fr;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  display: flex;
+  flex-direction: column;
+}
 `;
 
 const Text = styled.div`
-font-size: 20px;
 display: flex;
 flex-direction: column;
 flex-grow: 1;
 padding: 36px;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  display: flex;
+  flex-direction: column;
+}
 `;
 
 const ElectricTotemPage = () => (

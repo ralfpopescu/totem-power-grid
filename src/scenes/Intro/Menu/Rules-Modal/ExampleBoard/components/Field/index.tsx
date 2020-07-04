@@ -16,14 +16,19 @@ type FieldProps = { fields: Array<FieldType> }
 const attachAppliedByForType = (fieldTypes: Array<FieldType>) => fieldTypes.map(ft => ({ type: ft, appliedBy: '1' }));
 
 const Icon = (IconComponent: AnyStyledComponent, fields: Array<FieldType>) => styled(IconComponent)`
-height: 40px;
-width: 40px;
+height: 36px;
+width: 36px;
 position: relative;
 animation: pop 0.2s ease-in-out 1;
 fill: ${props => getThemeFromFields(props.theme, attachAppliedByForType(fields)).secondary};
 
 @keyframes pop{
   50%  {transform: scale(1.3);}
+}
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  height: 20px;
+  width: 20px;
 }
 `;
 
@@ -55,6 +60,11 @@ const IconContainer = styled.div`
 height: 40px;
 width: 40px;
 position: relative;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  height: 20px;
+  width: 20px;
+}
 
 `;
 

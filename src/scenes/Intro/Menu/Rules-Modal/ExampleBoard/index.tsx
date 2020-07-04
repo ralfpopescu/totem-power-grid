@@ -25,6 +25,11 @@ const BoardContainer = styled.div<BoardContainerProps>`
 display: grid;
 grid-template-rows: repeat(${props => props.dimension}, ${props => props.boardScale}px);
 grid-template-columns: repeat(${props => props.dimension}, ${props => props.boardScale}px);
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  grid-template-rows: repeat(${props => props.dimension}, ${props => props.boardScale / 1.5}px);
+  grid-template-columns: repeat(${props => props.dimension}, ${props => props.boardScale / 1.5}px);
+}
 `;
 
 type ExampleState = { lightBeams: Array<LightBeam>; tiles: Tiles }

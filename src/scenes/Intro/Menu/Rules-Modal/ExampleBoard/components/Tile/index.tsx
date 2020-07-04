@@ -6,7 +6,7 @@ import type { State, TotemType, FieldType, Direction, LightBeam } from '../../..
 import type { ExampleTile } from '../../index';
 import Totem from '../Totem';
 import Field from '../Field';
-import Arrow from './icons/arrow';
+import { ReactComponent as ArrowIcon } from './icons/arrow.svg';
 import { getThemeFromFields } from '../../../../../../../logic/totemColor';
 
 
@@ -115,14 +115,22 @@ cursor: pointer;
   }
 `;
 
+const Arrow = styled(ArrowIcon)`
+width: 16px;
+height: 16px;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  width: 8px;
+height: 8px;
+}
+`;
+
 type TileProps = { 
   index: number; 
   tile: ExampleTile; 
   lightBeam: LightBeam | undefined | null;
   boardScale: number;
 }
-
-const arrowStyle = { width: '20px', height: '20px '};
 
 const activeStyle = (totemDirection: Direction, arrowDirection: Direction) => 
 totemDirection === arrowDirection ? { fill: 'white' } : {};
@@ -135,19 +143,19 @@ const Tile = ({ index, lightBeam, tile, boardScale }: TileProps) => (
       {tile && tile?.fields.length > 0 && <Field fields={tile?.fields} />}
     </MainItemContainer>
     <RightZone>
-      {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(180deg)', ...activeStyle(tile.totem?.direction, 'EAST')}} 
+      {tile.totem?.direction && <Arrow style={{ transform: 'rotate(180deg)', ...activeStyle(tile.totem?.direction, 'EAST')}} 
       onClick={() => changeTotemDirection({ totemIndex: index, direction: 'EAST' as Direction})} />}
     </RightZone >
     <LeftZone>
-    {tile.totem?.direction && <Arrow style={{ ...arrowStyle, ...activeStyle(tile.totem?.direction, 'WEST')}} 
+    {tile.totem?.direction && <Arrow style={{ ...activeStyle(tile.totem?.direction, 'WEST')}} 
     onClick={() => changeTotemDirection({ totemIndex: index, direction: 'WEST' as Direction})} />}
       </LeftZone>
     <TopZone>
-    {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(90deg)', ...activeStyle(tile.totem?.direction, 'NORTH')}}
+    {tile.totem?.direction && <Arrow style={{ transform: 'rotate(90deg)', ...activeStyle(tile.totem?.direction, 'NORTH')}}
     onClick={() => changeTotemDirection({ totemIndex: index, direction: 'NORTH' as Direction})}/>}
     </TopZone>
     <BottomZone>
-    {tile.totem?.direction && <Arrow style={{ ...arrowStyle, transform: 'rotate(270deg)', ...activeStyle(tile.totem?.direction, 'SOUTH')}}
+    {tile.totem?.direction && <Arrow style={{ transform: 'rotate(270deg)', ...activeStyle(tile.totem?.direction, 'SOUTH')}}
     onClick={() => changeTotemDirection({ totemIndex: index, direction: 'SOUTH' as Direction})}/>}
     </BottomZone>
   </TileContainer>

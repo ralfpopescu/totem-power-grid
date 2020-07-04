@@ -9,19 +9,6 @@ import Interactions from './Interactions';
 
 type ModalProps = { isOpen: boolean; close: () => void }
 
-const modalStyle = { content: { 
-top: '50px',
-left: '50px',
-right: '50px',
-bottom: '50px',
-display: 'flex',
-backgroundColor: '#33bbff', 
-borderRadius: '40px',
-border: 'none',
-flexDirection: 'column' as any,
-},
-overlay: { backgroundColor: 'rgb(6, 5, 61, 0.5)' }};
-
 const ModalContainer = styled.div`
 display: grid;
 grid-template-rows: 80px 1fr;
@@ -52,28 +39,21 @@ text-decoration: ${props => props.active ? 'underline' : 'none'};
 &:hover {
   opacity: 0.7;
 }
-`;
 
-const CloseButton = styled.button`
-margin-top: 50px;
-outline: none;
-font-family: 'Chelsea Market';
-padding: 16px;
-width: 200px;
-border: none;
-color: ${props => props.theme.ocean.primary};
-border-radius: 12px;
-cursor: pointer;
-place-self: center;
-margin-bottom: 32px;
-
-&:hover {
-  transform: scale(1.05);
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  font-size: 16px;
+  margin-top: 20px;
 }
 `;
 
 const ContentContainer = styled.div`
 width: 1000px;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  width: ${props => props.theme.media.mobile/2}px;
+  max-width: ${props => props.theme.media.mobile/2}px;
+  font-size: 12px;
+}
 `;
 
 const RulesModal = ({ isOpen, close }: ModalProps) => {

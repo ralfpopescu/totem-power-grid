@@ -42,6 +42,11 @@ animation: fall-in 0.2s ease-in-out 1;
   }
 }
 
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  width: ${props => props.boardScale / 5}px;
+  height: ${props => props.boardScale / 5}px;
+}
+
 `;
 
 type TotemProps = { totemType: TotemType; boardScale: number }

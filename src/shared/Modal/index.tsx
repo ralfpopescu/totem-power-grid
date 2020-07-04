@@ -30,6 +30,11 @@ display: flex;
 flex-direction: column;
 border-radius: 40px;
 border: none;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  width: ${props => props.theme.media.mobile/2}px;
+  max-width: ${props => props.theme.media.mobile/2}px;
+}
 `;
 
 const CloseButton = styled.button`

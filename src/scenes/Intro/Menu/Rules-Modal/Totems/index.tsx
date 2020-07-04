@@ -17,6 +17,11 @@ const ContentContainer = styled.div`
 margin-top: 20px;
 padding: 40px;
 font-size: 20px;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  font-size: 12px;
+  margin-top: 0px;
+}
 `;
 
 const SubMenu = styled.div`
@@ -36,9 +41,16 @@ height: 20px;
 cursor: pointer;
 transform: scale(${props => props.active ? 1.2 : 1});
 text-decoration: ${props => props.active ? 'underline' : 'none'};
+margin-right: 56px;
 
 &:hover {
   opacity: 0.7;
+}
+
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  font-size: 12px;
+  margin-right: 20px;
 }
 `;
 
@@ -55,12 +67,12 @@ const Totems = () => {
   return (
 <Container>
   <SubMenu>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/overview')} style={{ marginRight: '56px' }} active={!!overviewRouteMatch}>Overview</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/fire')} style={{ marginRight: '56px' }} active={!!fireRouteMatch}>Fire</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/water')} style={{ marginRight: '56px' }} active={!!waterRouteMatch}>Water</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/earth')} style={{ marginRight: '56px' }} active={!!earthRouteMatch}>Earth</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/electric')} style={{ marginRight: '56px' }} active={!!electricRouteMatch}>Electric</MenuItem>
-    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/light')} style={{ marginRight: '56px' }} active={!!lightRouteMatch}>Light</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/overview')} active={!!overviewRouteMatch}>Overview</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/fire')} active={!!fireRouteMatch}>Fire</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/water')} active={!!waterRouteMatch}>Water</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/earth')} active={!!earthRouteMatch}>Earth</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/electric')} active={!!electricRouteMatch}>Electric</MenuItem>
+    <MenuItem onClick={() => history.push('/faoweiah/rules/totems/light')} style={{ marginRight: '0' }} active={!!lightRouteMatch}>Light</MenuItem>
   </SubMenu>
   <ContentContainer>
     <Route path="/faoweiah/rules/totems/overview">
