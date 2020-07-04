@@ -16,11 +16,19 @@ display: flex;
 flex-direction: column;
 padding: 32px;
 overflow: scroll;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  font-size: 16px;
+}
 `;
 
 const Title = styled.div`
 font-size: 40px;
 padding: 20px;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  font-size: 28px;
+}
 `;
 
 const DescriptionItem = styled.div`
@@ -35,59 +43,6 @@ transform: scale(1.2);
 white-space:pre;
 `;
 
-const modalStyle = { content: { 
-top: '0',
-left: '0',
-right: '0',
-bottom: '0',
-display: 'flex',
-border: 'none',
-backgroundColor: 'rgb(0, 0, 0, 0)',
-flexDirection: 'column' as any,
-alignItems: 'center',
-justifyContent: 'center',
-},
-overlay: { backgroundColor: 'rgb(6, 5, 61, 0.5)' }};
-
-const ModalContainer = styled.div`
-padding: 40px;
-background-color: #33bbff;
-height: 500px;
-display: flex;
-flex-direction: column;
-border-radius: 40px;
-border: none;
-`;
-
-const CloseButton = styled.button`
-margin-top: 50px;
-outline: none;
-font-family: 'Chelsea Market';
-padding: 16px;
-width: 200px;
-border: none;
-color: ${props => props.theme.ocean.primary};
-border-radius: 12px;
-cursor: pointer;
-place-self: center;
-margin-bottom: 32px;
-
-&:hover {
-  transform: scale(1.05);
-}
-`;
-
-const CoverDiv = styled.div`
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-`;
 
 const StoryModal = ({ isOpen, close }: StoryModalProps) => (
   <Modal isOpen={isOpen} close={close} >
