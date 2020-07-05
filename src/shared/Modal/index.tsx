@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
 
-type ModalProps = { isOpen: boolean; close: () => void; height?: number; width?: number; children: any }
-
+type ModalProps = { isOpen: boolean; close: () => void; height?: number; width?: number; children: any; 
+  buttonText?: string; buttonOnClick?: () => void; }
 
 const modalStyle = { content: { 
 top: '0',
@@ -67,14 +67,14 @@ align-items: center;
 justify-content: center;
 `;
 
-const Modal = ({ isOpen, close, height, width, children }: ModalProps) => (
+const Modal = ({ isOpen, close, height, width, children, buttonText, buttonOnClick }: ModalProps) => (
   <ReactModal isOpen={isOpen} onRequestClose={close} style={modalStyle}>
     <CoverDiv onClick={close}>
       <ModalContainer onClick={e => e.stopPropagation()} height={height} width={width}>
         <div style={{ flexGrow: 1, display: 'flex' }}>
           {children}
         </div>
-        <CloseButton onClick={close}>Close</CloseButton>
+<CloseButton onClick={buttonOnClick || close}>{buttonText || 'Close'}</CloseButton>
       </ModalContainer>
     </CoverDiv>
   </ReactModal>

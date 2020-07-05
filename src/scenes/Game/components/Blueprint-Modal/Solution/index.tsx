@@ -12,6 +12,11 @@ const SolutionContainer = styled.div<SolutionContainerProps>`
 display: grid;
 grid-template-rows: repeat(${props => props.dimension}, 80px);
 grid-template-columns: repeat(${props => props.dimension}, 80px);
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  grid-template-rows: repeat(${props => props.dimension}, 40px);
+grid-template-columns: repeat(${props => props.dimension}, 40px);
+}
 `;
 
 type SolutionProps = { dimension: number; solution: SolutionType }

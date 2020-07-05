@@ -1,25 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import Modal from 'react-modal';
 import { useHistory } from 'react-router-dom';
 import type { Solution as SolutionType } from '../../../../logic/getSolutionFromState';
+import Modal from '../../../../shared/Modal';
 
 
 type ActivateModalProps = { isOpen: boolean; close: () => void; isSolved: boolean }
-
-const modalStyle = { content: { 
-justifyContent: 'center',
-alignItems: 'center',
-display: 'flex',
-top: '200px',
-bottom: '200px',
-right: '200px',
-left: '200px',
-backgroundColor: '#33bbff', 
-borderRadius: '40px',
-border: 'none',
-},
-overlay: { backgroundColor: 'rgb(6, 5, 61, 0.5)' }};
 
 const CloseButton = styled.button`
 margin-top: 50px;
@@ -43,27 +29,39 @@ display: flex;
 flex-direction: column;
 `;
 
+const MessageTitle = styled.div`
+font-size: 40px;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+font-size: 32px;
+}`;
+
+const MessageDescription = styled.div`
+font-size: 20px;
+margin-top: 40px;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+font-size: 20px;
+}`;
+
 
 type MessageProps = { title: string; description: string; linkText: string; onClick: () => void }
 
-const Message = ({ title, description, linkText, onClick }: MessageProps) => (
+const Message = ({ title, description }: MessageProps) => (
   <ContentContainer>
-    <div style={{ fontSize: '40px' }}>
+    <MessageTitle>
       {title}
-    </div>
-    <div style={{ fontSize: '20px', marginTop: '40px' }}>
+    </MessageTitle>
+    <MessageDescription>
       {description}
-    </div>
-    <CloseButton style={{ fontSize: '20px' }} onClick={onClick}>
-      {linkText}
-    </CloseButton>
+    </MessageDescription>
   </ContentContainer>
 );
 
 const StoryModal = ({ isOpen, close, isSolved }: ActivateModalProps) => {
   const history = useHistory();
   return (
-  <Modal isOpen={isOpen} onRequestClose={close} style={modalStyle}>
+  <Modal isOpen={isOpen} close={close} buttonOnClick={isSolved ? () => history.push('/faoweiah') : undefined } buttonText={isSolved ? 'Back to Fa\'Owei-ah' : undefined}>
     {isSolved ? <Message title="Success!" description="The power is on! The villages thank you profusely for not blowing them up."
     linkText="Back to Fa'Owei-ah" onClick={() => history.push('/faoweiah')} /> :
     <Message title="Oh no! The village blew up." description="Luckily, the Time Shaman has agreed to rewind the universe to the moment right before you pushed the button, but just this once!! (He says that every time.)"
