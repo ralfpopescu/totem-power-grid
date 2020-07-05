@@ -55,7 +55,7 @@ const initializeStateFromLevel = (level: Level) => ({
 });
 
 export type Action = 
-{ type: 'ADD_TOTEM'; payload: { index: number; totemType: TotemType }} |
+{ type: 'ADD_TOTEM'; payload: { index: number; totemType: TotemType; startingDirection?: Direction }} |
 { type: 'REMOVE_TOTEM'; payload: { index: number }} |
 { type: 'CHANGE_TOTEM_SELECTION'; payload: { totemType: TotemType }} |
 { type: 'CHANGE_TOTEM_DIRECTION'; payload: { totemIndex: number; direction: Direction }} |
@@ -82,7 +82,7 @@ const getInitialDirectionFromTotemType = (totemType: TotemType): Direction => {
   return null;
 };
 
-const addTotemToBoard = (state: State, totemType: TotemType, index: number): State => {
+const addTotemToBoard = (state: State, totemType: TotemType, index: number, startingDirection: Direction | undefined): State => {
   const { tiles, dimension } = state;
   const tile = tiles[index] || { totem: null, fields: [] };
   const newTiles: Tiles = { ...state.tiles };
@@ -110,7 +110,7 @@ const addTotemToBoard = (state: State, totemType: TotemType, index: number): Sta
     newTiles[index] = { ...newTiles[index], 
       totem: { 
       type: totemType, 
-      direction: getInitialDirectionFromTotemType(totemType), id }, 
+      direction: startingDirection || getInitialDirectionFromTotemType(totemType), id }, 
     };
     console.log('totem applications total time', end - start);
     start = new Date().getTime();
@@ -176,7 +176,7 @@ const changeTotemDirection = (state: State, totemIndex: number, direction: Direc
 const reducer = (state: State = initialState, action: Action): State => {
   switch(action.type) {
     case 'ADD_TOTEM':
-      return addTotemToBoard(state, action.payload.totemType, action.payload.index);
+      return addTotemToBoard(state, action.payload.totemType, action.payload.index, action.payload.startingDirection);
     case 'REMOVE_TOTEM':
       return removeTotem(state, action.payload.index);
     case 'CHANGE_TOTEM_SELECTION':

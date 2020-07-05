@@ -1,12 +1,14 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from "react-redux";
+import useMedia from 'use-media';
 import { addTotem, changeTotemDirection, setHoveredTotemId } from "../../../../../../redux/actions";
 import type { AddTotem, ChangeTotemDirection, SetHoveredTotemId } from "../../../../../../redux/actions";
 import type { State, TotemType, Direction, LightBeam, Tile as TileState } from '../../../../../../redux/reducers';
 import Totem from '../Totem';
 import Field from '../Field';
 import Arrow from './icons/arrow';
+import DirectionPickerModal from './DirectionPickerModal';
 import { getThemeFromFields } from '../../../../../../logic/totemColor';
 
 
@@ -153,10 +155,20 @@ const Tile = ({
   totemSelection, 
   boardScale, 
   hoveredTotemId,
-  setHoveredTotemId }: TileProps) => (
+  setHoveredTotemId }: TileProps) => {
+    const [directionPickerModalOpen, setDirectionPickerModalOpen] = useState<boolean>(false);
+    const isMobile = useMedia('(max-width: 700px)');
+
+    return (
 <TileContainer index={index}>
   {index}
-   <MainItemContainer onClick={() => addTotem({ totemType: totemSelection, index })} 
+   <MainItemContainer onClick={() => {
+     if((totemSelection === 'ELECTRIC' || totemSelection === 'LIGHT') && isMobile) {
+      setDirectionPickerModalOpen(true);
+     } else {
+     addTotem({ totemType: totemSelection, index });
+     }
+    }} 
      lit={!!lightBeam} tile={tile} boardScale={boardScale}
      onMouseEnter={() => {
        if(tile.totem?.id != null) {
@@ -186,8 +198,15 @@ const Tile = ({
     {tile.totem?.direction && <Arrow style={{ ...arrowStyle(boardScale), transform: 'rotate(270deg)', ...activeStyle(tile.totem?.direction, 'SOUTH')}}
     onClick={() => changeTotemDirection({ totemIndex: index, direction: 'SOUTH' as Direction})}/>}
     </BottomZone>
+    <DirectionPickerModal 
+      isOpen={directionPickerModalOpen} 
+      close={() => setDirectionPickerModalOpen(false)} 
+      totemType={totemSelection} 
+      index={index} 
+      boardScale={boardScale} 
+      />
   </TileContainer>
-);
+);};
 
 const mapStateToProps = (state: State) => ({ 
   totemSelection: state.totemSelection, 

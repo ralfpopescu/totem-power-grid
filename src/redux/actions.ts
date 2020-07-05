@@ -3,12 +3,12 @@ import type { TotemType } from '../logic/totemTypes';
 import type { Direction } from './reducers';
 import type { Level } from '../levels';
 
-export type AddTotemInput = { totemType: TotemType; index: number }
+export type AddTotemInput = { totemType: TotemType; index: number; startingDirection?: Direction }
 export type AddTotem = (input: AddTotemInput ) => void
 
-export const addTotem = ({ totemType, index }: AddTotemInput) => ({
+export const addTotem = ({ totemType, index, startingDirection }: AddTotemInput) => ({
   type: actionTypes.ADD_TOTEM,
-  payload: { totemType, index },
+  payload: { totemType, index, startingDirection },
 });
 
 export type RemoveTotemInput = { index: number }
