@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { connect } from "react-redux";
 import { useCookies } from 'react-cookie';
-import { ReactComponent as VillageIcon } from './assets/tipi.svg';
+import useMedia from 'use-media';
 import type { Level } from '../../../../levels';
 import type { LevelSelectTitle } from "..";
 import { setLevel } from '../../../../redux/actions';
@@ -17,6 +17,7 @@ type TileProps = {
   level?: Level | undefined; 
   setLevelSelectTitle: (level: LevelSelectTitle | null) => void; 
   setLevel: SetLevel;
+  levelSelectTitle: LevelSelectTitle | null | undefined;
   index?: number;
 }
 
@@ -101,7 +102,7 @@ const TileContainer = styled.div<TileContainerProps>`
 
 `;
 
-type LandProps = { adjacencies: Array<Adjancency> }
+type LandProps = { adjacencies: Array<Adjancency>; selected: boolean  }
 
 const Land = styled.div<LandProps>`
   position: absolute;
@@ -116,14 +117,13 @@ const Land = styled.div<LandProps>`
   border-radius: ${props => getBorderRadiusFromAdjacencies(props.adjacencies)};
   overflow: hidden;
   cursor: pointer;
+  ${props => props.selected ? `border: 1px solid white;`: ''}
 
-
-  &:hover {
-    background-color: #c0ff85;
-  }
 `;
 
-const FullLand = styled.div`
+type FullLandProps = { selected: boolean  }
+
+const FullLand = styled.div<FullLandProps>`
 background-color: #8cff66;
 position: absolute;
   top: 0;
@@ -134,22 +134,23 @@ display: flex;
 cursor: pointer;
   align-items: center;
   justify-content: center;
+  ${props => props.selected ? `border: 1px solid white;`: ''}
 
-  &:hover {
-    background-color: #c0ff85;
-  }
 `; 
 
-const Tile = ({ adjacencies, land, level, setLevelSelectTitle, index }: TileProps) => {
+const Tile = ({ adjacencies, land, level, setLevelSelectTitle, levelSelectTitle, index }: TileProps) => {
   const history = useHistory();
   const [cookies, setCookie] = useCookies(['levelsComplete']);
   const levelNumber = level?.number;
+
+  const isMobile = useMedia('(max-width: 700px)');
+  const selected = !!levelSelectTitle && levelSelectTitle.number === levelNumber;
 
   return (
 <TileContainer 
 land={land}
 index={index}
-onMouseEnter={() => setLevelSelectTitle(level ? { 
+onMouseEnter={() => setLevelSelectTitle(level && !isMobile ? { 
   difficulty: level?.difficulty, 
   name: level?.name, 
   number: level.number, 
@@ -158,19 +159,31 @@ onMouseEnter={() => setLevelSelectTitle(level ? {
   : null,
   )} 
 onMouseLeave={() => setLevelSelectTitle(null)} 
-onClick={() => {
-  if(levelNumber) {
-    console.log('levelNumber', levelNumber);
+onClick={e => {
+  e.stopPropagation();
+  if(levelNumber && !isMobile) {
     history.push(`/game/${levelNumber}`);
+  } else if(levelSelectTitle && levelSelectTitle.number === levelNumber && isMobile) {
+      history.push(`/game/${levelNumber}`);
+    } else {
+      console.log(level?.name, level?.number);
+    setLevelSelectTitle(level ? { 
+      difficulty: level?.difficulty, 
+      name: level?.name, 
+      number: level.number, 
+      complete: cookies.levelsComplete?.includes(level?.number),
+    } 
+      : null,
+    );
   }
 }}>
   {adjacencies.length > 0 && (
-  <Land adjacencies={adjacencies} > 
+  <Land adjacencies={adjacencies} selected={selected}> 
     {adjacencies.map(adj => <BeachGradient adjacency={adj} />)}
     {!cookies.levelsComplete?.includes(level?.number) && <UnpoweredOverlay />}
     </Land>
     )}
-  {adjacencies.length === 0 && land && <FullLand>{!cookies.levelsComplete?.includes(level?.number) && <UnpoweredOverlay />}</FullLand>}
+  {adjacencies.length === 0 && land && <FullLand selected={selected}>{!cookies.levelsComplete?.includes(level?.number) && <UnpoweredOverlay />}</FullLand>}
 </TileContainer>
 );};
 

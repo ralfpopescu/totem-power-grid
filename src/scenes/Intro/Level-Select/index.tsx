@@ -134,42 +134,42 @@ const LevelSelect = () => {
     </SubLevelSelectContainer>
     <LevelSelectGridContainer>
       <LevelSelectContainer>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.easy.l0} adjacencies={['NORTH', 'WEST']}   index={1}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.medium.l0} adjacencies={['NORTH']}  index={2}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.medium.l1} adjacencies={['NORTH', 'EAST']}  index={3} />
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.easy.l1} adjacencies={['WEST']}  index={4}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.medium.l2} adjacencies={[]} land  index={5}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l0} adjacencies={['EAST']}  index={6}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.veryHard.l0} adjacencies={['NORTH', 'WEST', 'SOUTH', 'EAST']}  index={7}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.veryHard.l1} adjacencies={['SOUTH', 'WEST']}  index={8}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.veryHard.l2} adjacencies={[]}  land index={9}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.medium.l3} adjacencies={[]}  land index={10}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.easy.l2} adjacencies={['NORTH', 'EAST']}  index={11}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l1} adjacencies={['SOUTH', 'WEST']}  index={12}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.easy.l3} adjacencies={[]}  land index={13}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.medium.l4} adjacencies={['SOUTH', 'EAST']}  index={14}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.easy.l4} adjacencies={['EAST', 'WEST']}  index={15}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.veryHard.l3} adjacencies={['NORTH', 'SOUTH', 'WEST']}  index={16}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l3} adjacencies={['SOUTH', 'EAST']} index={17}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l4}adjacencies={['NORTH', 'SOUTH', 'WEST']} index={18}/>
-        <Tile setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l2}adjacencies={['NORTH', 'SOUTH', 'EAST']} index={19}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.easy.l0} adjacencies={['NORTH', 'WEST']}   index={1}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.medium.l0} adjacencies={['NORTH']}  index={2}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.medium.l1} adjacencies={['NORTH', 'EAST']}  index={3} />
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.easy.l1} adjacencies={['WEST']}  index={4}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.medium.l2} adjacencies={[]} land  index={5}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l0} adjacencies={['EAST']}  index={6}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.veryHard.l0} adjacencies={['NORTH', 'WEST', 'SOUTH', 'EAST']}  index={7}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.veryHard.l1} adjacencies={['SOUTH', 'WEST']}  index={8}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.veryHard.l2} adjacencies={[]}  land index={9}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.medium.l3} adjacencies={[]}  land index={10}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.easy.l2} adjacencies={['NORTH', 'EAST']}  index={11}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l1} adjacencies={['SOUTH', 'WEST']}  index={12}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.easy.l3} adjacencies={[]}  land index={13}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.medium.l4} adjacencies={['SOUTH', 'EAST']}  index={14}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.easy.l4} adjacencies={['EAST', 'WEST']}  index={15}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.veryHard.l3} adjacencies={['NORTH', 'SOUTH', 'WEST']}  index={16}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l3} adjacencies={['SOUTH', 'EAST']} index={17}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} adjacencies={[]}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l4}adjacencies={['NORTH', 'SOUTH', 'WEST']} index={18}/>
+        <Tile levelSelectTitle={levelSelectTitle} setLevelSelectTitle={setLevelSelectTitle} level={Levels.hard.l2}adjacencies={['NORTH', 'SOUTH', 'EAST']} index={19}/>
       </LevelSelectContainer>
     </LevelSelectGridContainer>
   </Container>
