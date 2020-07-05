@@ -19,6 +19,7 @@ const angle = 360 / typesArray.length;
 const circleSize = 200;
 const itemSize = 36;
 const degreeOff = 360 / (36 / 2);
+const mobileScale = 1.5;
 
 type CircleContainerProps = { rotation: number }
 
@@ -27,6 +28,11 @@ position: relative;
   width:  ${circleSize}px;
   height: ${circleSize}px;
   display: flex;
+
+  @media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+    width:  ${circleSize / mobileScale}px;
+    height: ${circleSize / mobileScale}px;
+  }
 `;
 
 const TotemSelectionNameContainer = styled.div`
@@ -38,6 +44,10 @@ position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+    font-size: 16px;
+  }
 `;
 
 const CircleContainer = styled.div<CircleContainerProps>`
@@ -54,6 +64,11 @@ const CircleContainer = styled.div<CircleContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+    width:  ${circleSize / mobileScale}px;
+    height: ${circleSize / mobileScale}px;
+  }
 `;
 
 type CircleItemProps = { number: number;  totemType: TotemType; totemSelection: TotemType }
@@ -101,6 +116,12 @@ const CircleItem = styled.div<CircleItemProps>`
   transition: all 0.5s ease-in-out;
   justify-content: center;
   transform: rotate(${props => props.number * angle - 20}deg) translate(${circleSize/2}px) rotate(-${props => getRotationOfItem(props.number)}deg) rotate(${props => props.number * angle}deg) ${({ totemSelection, totemType }) => totemSelection === totemType ? "scale(1.5)": "" };
+
+  @media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+    width:  ${36 / mobileScale}px;
+    height: ${36 / mobileScale}px;
+    transform: rotate(${props => props.number * angle - 20}deg) translate(${circleSize / 2 / mobileScale / 1.2}px) rotate(-${props => getRotationOfItem(props.number)}deg) rotate(${props => props.number * angle}deg) ${({ totemSelection, totemType }) => totemSelection === totemType ? "scale(1.5)": "" };
+  }
 `;
 
 

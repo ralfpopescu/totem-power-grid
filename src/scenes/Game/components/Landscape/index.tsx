@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import useMedia from 'use-media';
 
 const LandscapeContainer = styled.div`
 position: absolute;
@@ -10,6 +11,7 @@ left: 0;
 align-items: bottom;
 display: flex;
 flex-direction: row;
+overflow: hidden;
 `;
 
 type TriangleProps = { height: number; leftWidth: number; rightWidth: number; layer: number }
@@ -72,39 +74,47 @@ width: 100%;
 align-self: flex-end;
 background-color: ${props => props.theme.ocean.primary};
 
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  height: 50px;
+}
+
 `;
 
 
-const Landscape = () => (
+const Landscape = () => {
+  const isMobile = useMedia('(max-width: 700px)');
+  const scale = isMobile ? 4 : 1;
+  
+  return (
 <LandscapeContainer>
   <Layer>
     <Ocean />
   </Layer>
   <Layer>
     <MountainRow2>
-      <Triangle height={100} leftWidth={80} rightWidth={200} layer={2}/>
-      <Triangle height={100} leftWidth={80} rightWidth={100} layer={2}/>
-      <Triangle height={200} leftWidth={200} rightWidth={300} layer={2}/>
-      <Triangle height={100} leftWidth={250} rightWidth={150} layer={2}/>
+      <Triangle height={100 / scale} leftWidth={80 / scale} rightWidth={200 / scale} layer={2}/>
+      <Triangle height={100 / scale} leftWidth={80 / scale} rightWidth={100 / scale} layer={2}/>
+      <Triangle height={200 / scale} leftWidth={200 / scale} rightWidth={300 / scale} layer={2}/>
+      <Triangle height={100 / scale} leftWidth={250 / scale} rightWidth={150 / scale} layer={2}/>
     </MountainRow2>
   </Layer>
 <Layer>
     <MountainRow2>
-      <Triangle height={250} leftWidth={500} rightWidth={200} layer={1}/>
-      <Triangle height={200} leftWidth={200} rightWidth={300} layer={1}/>
-      <Triangle height={100} leftWidth={250} rightWidth={150} layer={1}/>
+      <Triangle height={250 / scale} leftWidth={500 / scale} rightWidth={200 / scale} layer={1}/>
+      <Triangle height={200 / scale} leftWidth={200 / scale} rightWidth={300 / scale} layer={1}/>
+      <Triangle height={100 / scale} leftWidth={250 / scale} rightWidth={150 / scale} layer={1}/>
     </MountainRow2>
   </Layer>
   <Layer>
     <MountainRow1>
-      <Triangle height={200} leftWidth={300} rightWidth={400} layer={0}/>
-      <Triangle height={100} leftWidth={400} rightWidth={300} layer={0}/>
-      <Triangle height={100} leftWidth={250} rightWidth={150} layer={0}/>
+      <Triangle height={200 / scale} leftWidth={300 / scale} rightWidth={400 / scale} layer={0}/>
+      <Triangle height={100 / scale} leftWidth={400 / scale} rightWidth={300 / scale} layer={0}/>
+      <Triangle height={100 / scale} leftWidth={250 / scale} rightWidth={150 / scale} layer={0}/>
     </MountainRow1>
   </Layer>
   
 </LandscapeContainer>
-);
+);};
 
 export default Landscape;
 
