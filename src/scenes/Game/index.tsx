@@ -45,6 +45,7 @@ bottom: 0;
 right: 0;
 left: 0;
 animation: sky-fade-in 0.5s ease-in-out;
+overflow: hidden;
 
 @keyframes sky-fade-in {
   0% {
@@ -106,8 +107,8 @@ justify-content: center;
   padding-bottom: 10px;
 
   display: grid;
-  grid-template-rows: 2fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
 }
 `;
 
@@ -195,7 +196,7 @@ place-self: flex-start;
   height: 60px;
   width: 60px;
   grid-column-start: 1;
-  grid-row-start: 2;
+  grid-row-start: 1;
 }
 
 `;
@@ -314,19 +315,18 @@ const Game = ({ state, setLevel }: AppProps) => {
       </BoardGridItem>
       <SideBar>
         <Mobile.Hide>
-        <ShamanContainer>
-  {/* <div>{phrases[state.totemSelection][Math.floor(Math.random() * phrases[state.totemSelection].length)]}</div> */}
-        <Shaman style={{ width: '200px'}} fill="red"/>
-        </ShamanContainer>
+          <ShamanContainer>
+            <Shaman style={{ width: '200px'}} fill="red"/>
+          </ShamanContainer>
         </Mobile.Hide>
         <BackContainer onClick={() => history.push('/faoweiah')}>
           <Island style={{ width: '150px', height: '150px'}}/>
           <Back style={{ width: '50px', height: '50px', fill: 'white'}}/>
         </BackContainer>
         <MobileTotemSelectionContainer>
-        <Mobile.Show style={{ placeSelf: 'center', alignSelf: 'center', justifySelf: 'center' }}>
-          < TotemSelector />
-        </Mobile.Show>
+          <Mobile.Show style={{ placeSelf: 'center', alignSelf: 'center', justifySelf: 'center' }}>
+            < TotemSelector />
+          </Mobile.Show>
         </MobileTotemSelectionContainer>
       </SideBar>
       <BluePrintModal isOpen={bluePrintModalOpen} close={() => setBluePrintModalOpen(false)}/>
