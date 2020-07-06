@@ -297,7 +297,7 @@ const Game = ({ state, setLevel }: AppProps) => {
         <GridItem row={2} column={2} align="flex-start">
           <Board />
         </GridItem>
-        <GridItem row={2} column={3} style={{ flexGrow: 1}}>
+        <GridItem row={2} column={3} style={{ flexGrow: 1, paddingTop: '40px' }}>
         <TotemSelector />
         </GridItem>
       </BoardGridItem>
