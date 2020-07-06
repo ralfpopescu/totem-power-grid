@@ -100,15 +100,14 @@ align-items: center;
 justify-content: center;
 
 @media only screen and (max-width: ${props => props.theme.media.mobile}px) {
-  flex-direction: row;
   width: 100%;
-  justify-self: flex-start;
-  align-self: flex-start;
-  align-items: flex-start;
-  justify-content: flex-start;
   padding: 0px;
   padding-left: 10px;
   padding-bottom: 10px;
+
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 `;
 
@@ -184,14 +183,19 @@ width: 200px;
 display: flex;
 flex-direction: column;
 cursor: pointer;
+justify-self: flex-start;
+align-self: flex-start;
+place-self: flex-start;
 
 &:hover {
   transform: scale(1.1);
 }
 
 @media only screen and (max-width: ${props => props.theme.media.mobile}px) {
-  height: 100px;
-  width: 100px;
+  height: 60px;
+  width: 60px;
+  grid-column-start: 1;
+  grid-row-start: 2;
 }
 
 `;
@@ -219,6 +223,11 @@ width: 200px;
 const MobileFlexRow = styled.div`
 display: flex;
   flex-direction: row;
+`;
+
+const MobileTotemSelectionContainer = styled.div`
+grid-column-start: 2;
+grid-row-start: 1;
 `;
 
 type AppProps = { state: State; setLevel: SetLevel }
@@ -297,9 +306,11 @@ const Game = ({ state, setLevel }: AppProps) => {
         <GridItem row={2} column={2} align="flex-start">
           <Board />
         </GridItem>
-        <GridItem row={2} column={3} style={{ flexGrow: 1, paddingTop: '40px' }}>
-        <TotemSelector />
-        </GridItem>
+        <Mobile.Hide>
+          <GridItem row={2} column={3} style={{ flexGrow: 1 }}>
+          <TotemSelector />
+          </GridItem>
+        </Mobile.Hide>
       </BoardGridItem>
       <SideBar>
         <Mobile.Hide>
@@ -312,6 +323,11 @@ const Game = ({ state, setLevel }: AppProps) => {
           <Island style={{ width: '150px', height: '150px'}}/>
           <Back style={{ width: '50px', height: '50px', fill: 'white'}}/>
         </BackContainer>
+        <MobileTotemSelectionContainer>
+        <Mobile.Show style={{ placeSelf: 'center', alignSelf: 'center', justifySelf: 'center' }}>
+          < TotemSelector />
+        </Mobile.Show>
+        </MobileTotemSelectionContainer>
       </SideBar>
       <BluePrintModal isOpen={bluePrintModalOpen} close={() => setBluePrintModalOpen(false)}/>
       <ActivateModal isOpen={activateModalOpen} close={() => setActivateModalOpen(false)} isSolved={isSolved}/>
