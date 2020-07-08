@@ -27,6 +27,12 @@ const ContentContainer = styled.div`
 width: 1000px;
 display: flex;
 flex-direction: column;
+padding: 12px;
+justify-content: center;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  width: auto;
+  }
 `;
 
 const MessageTitle = styled.div`
