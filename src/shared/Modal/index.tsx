@@ -85,7 +85,7 @@ const Modal = ({ isOpen, close, height, width, children, buttonText, buttonOnCli
     <CoverDiv onClick={close}>
       <ModalContainer onClick={e => e.stopPropagation()} height={height} width={width}>
         <MobileButtonContainer>
-          <MobileCloseButton onClick={close}>
+          <MobileCloseButton onClick={buttonOnClick || close}>
             <Close />
           </MobileCloseButton>
         </MobileButtonContainer>
