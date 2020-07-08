@@ -276,8 +276,8 @@ const Game = ({ state, setLevel }: AppProps) => {
         {!isMobile ? (
           <>
         <GridItem row={1} column={1}>
-          <ActiveButtonContainer>
-            <ActivateButton onClick={handleActivate} />
+          <ActiveButtonContainer onClick={handleActivate}>
+            <ActivateButton />
             ACTIVATE
           </ActiveButtonContainer>
         </GridItem>
