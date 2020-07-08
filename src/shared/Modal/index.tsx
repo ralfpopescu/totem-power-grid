@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
+import Mobile from '../Mobile';
+import { ReactComponent as Close } from '../../assets/close.svg';
 
 type ModalProps = { isOpen: boolean; close: () => void; height?: number; width?: number; children: any; 
   buttonText?: string; buttonOnClick?: () => void; }
@@ -30,6 +32,7 @@ display: flex;
 flex-direction: column;
 border-radius: 40px;
 border: none;
+align-items: center;
 
 @media only screen and (max-width: ${props => props.theme.media.mobile}px) {
   width: ${props => props.theme.media.mobile/2}px;
@@ -38,20 +41,30 @@ border: none;
 `;
 
 const CloseButton = styled.button`
-outline: none;
-font-family: 'Chelsea Market';
-padding: 16px;
+padding: 12px;
 width: 200px;
-border: none;
-color: ${props => props.theme.ocean.primary};
 border-radius: 12px;
-cursor: pointer;
-align-self: center;
-margin-bottom: 32px;
-justify-self: bottom;
+font-family: 'Chelsea Market';
+border: none;
+background-color: white;
+color: ${props => props.theme.ocean.primary}
+`;
 
-&:hover {
-  transform: scale(1.05);
+const MobileCloseButton = styled.div`
+width: 20px;
+height: 20px;
+cursor: pointer;
+fill: white;
+`;
+
+const MobileButtonContainer = styled.div`
+display: none;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  display: flex;
+flex-direction: column;
+align-items: flex-start;
+width: 100%;
 }
 `;
 
@@ -71,10 +84,17 @@ const Modal = ({ isOpen, close, height, width, children, buttonText, buttonOnCli
   <ReactModal isOpen={isOpen} onRequestClose={close} style={modalStyle}>
     <CoverDiv onClick={close}>
       <ModalContainer onClick={e => e.stopPropagation()} height={height} width={width}>
+        <MobileButtonContainer>
+          <MobileCloseButton onClick={close}>
+            <Close />
+          </MobileCloseButton>
+        </MobileButtonContainer>
         <div style={{ flexGrow: 1, display: 'flex' }}>
           {children}
         </div>
-<CloseButton onClick={buttonOnClick || close}>{buttonText || 'Close'}</CloseButton>
+        <Mobile.Hide>
+          <CloseButton onClick={buttonOnClick || close}>{buttonText || 'Close'}</CloseButton>
+        </Mobile.Hide>
       </ModalContainer>
     </CoverDiv>
   </ReactModal>

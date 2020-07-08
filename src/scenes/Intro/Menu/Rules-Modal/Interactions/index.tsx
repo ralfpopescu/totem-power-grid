@@ -28,8 +28,12 @@ display: flex;
 flex-direction: row;
 align-items: center;
 justify-content: center;
-margin-bottom: 50px;
+margin-bottom: 120px;
 margin-top: 20px;
+
+@media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  margin-bottom: 0px;
+}
 `;
 
 type MenuItemProps = { active: boolean }

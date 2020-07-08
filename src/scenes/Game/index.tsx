@@ -308,8 +308,8 @@ const Game = ({ state, setLevel }: AppProps) => {
           <Board />
         </GridItem>
         <Mobile.Hide>
-          <GridItem row={2} column={3} style={{ flexGrow: 1 }}>
-          <TotemSelector />
+          <GridItem row={2} column={3}>
+            <TotemSelector />
           </GridItem>
         </Mobile.Hide>
       </BoardGridItem>
