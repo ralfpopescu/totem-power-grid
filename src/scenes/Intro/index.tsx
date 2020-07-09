@@ -56,6 +56,7 @@ const SideBar = styled.div`
 grid-column-start: 1;
 grid-row-start: 1;
 height: 100%;
+width: 100%;
 display: flex;
 flex-direction: column;
 padding: 10px;
