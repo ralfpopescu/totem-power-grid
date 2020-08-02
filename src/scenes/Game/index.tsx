@@ -174,27 +174,28 @@ const LevelName = styled.div`
 }
 `;
 
-
 const BackContainer = styled.div`
-position: relative;
+position: absolute;
 align-items: center;
 justify-content: center;
-height: 200px;
-width: 200px;
+padding: 100px;
+bottom: 0;
+left: 0;
+height: 150px;
+width: 150px;
 display: flex;
 flex-direction: column;
 cursor: pointer;
-justify-self: flex-start;
-align-self: flex-start;
-place-self: flex-start;
 
 &:hover {
   transform: scale(1.1);
 }
 
 @media only screen and (max-width: ${props => props.theme.media.mobile}px) {
+  position: relative;
   height: 60px;
   width: 60px;
+  padding: 0;
   grid-column-start: 1;
   grid-row-start: 1;
 }
@@ -323,10 +324,12 @@ const Game = ({ state, setLevel }: AppProps) => {
         </Mobile.Hide>
       </BoardGridItem>
       <SideBar>
-        <BackContainer onClick={() => history.push('/faoweiah')}>
+        <Mobile.Show>
+      <BackContainer onClick={() => history.push('/faoweiah')}>
           <Island style={{ width: '150px', height: '150px'}}/>
           <Back style={{ width: '50px', height: '50px', fill: 'white'}}/>
         </BackContainer>
+        </Mobile.Show>
         <MobileTotemSelectionContainer>
           <Mobile.Show style={{ placeSelf: 'center', alignSelf: 'center', justifySelf: 'center' }}>
             < TotemSelector />
@@ -336,6 +339,12 @@ const Game = ({ state, setLevel }: AppProps) => {
       <BluePrintModal isOpen={bluePrintModalOpen} close={() => setBluePrintModalOpen(false)}/>
       <ActivateModal isOpen={activateModalOpen} close={() => setActivateModalOpen(false)} isSolved={isSolved}/>
     </AppContainer>
+      <Mobile.Hide>
+        <BackContainer onClick={() => history.push('/faoweiah')}>
+          <Island style={{ width: '150px', height: '150px'}}/>
+          <Back style={{ width: '50px', height: '50px', fill: 'white'}}/>
+        </BackContainer>
+      </Mobile.Hide>
     </AbsoluteContainer>
   );
 };
