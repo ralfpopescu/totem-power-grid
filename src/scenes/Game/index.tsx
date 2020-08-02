@@ -203,7 +203,11 @@ place-self: flex-start;
 
 const ShamanContainer = styled.div`
 animation: shaman-entry 0.5s ease-in-out;
-width: 200px;
+width: 100%;
+height: 100px; 
+
+grid-column-start: 3;
+grid-row-start: 2;
 
 @keyframes shaman-entry {
   0% {
@@ -312,13 +316,13 @@ const Game = ({ state, setLevel }: AppProps) => {
             <TotemSelector />
           </GridItem>
         </Mobile.Hide>
-      </BoardGridItem>
-      <SideBar>
         <Mobile.Hide>
           <ShamanContainer>
             <Shaman style={{ width: '200px'}} fill="red"/>
           </ShamanContainer>
         </Mobile.Hide>
+      </BoardGridItem>
+      <SideBar>
         <BackContainer onClick={() => history.push('/faoweiah')}>
           <Island style={{ width: '150px', height: '150px'}}/>
           <Back style={{ width: '50px', height: '50px', fill: 'white'}}/>
