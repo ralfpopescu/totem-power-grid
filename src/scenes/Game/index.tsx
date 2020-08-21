@@ -178,11 +178,11 @@ const BackContainer = styled.div`
 position: absolute;
 align-items: center;
 justify-content: center;
-padding: 100px;
+padding: 40px;
 bottom: 0;
 left: 0;
-height: 150px;
-width: 150px;
+height: 120px;
+width: 120px;
 display: flex;
 flex-direction: column;
 cursor: pointer;
