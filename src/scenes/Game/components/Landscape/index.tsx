@@ -13,6 +13,7 @@ display: flex;
 flex-direction: row;
 overflow: hidden;
 transform: rotateY(180deg);
+justify-content: center;
 `;
 
 type TriangleProps = { height: number; leftWidth: number; rightWidth: number; layer: number }

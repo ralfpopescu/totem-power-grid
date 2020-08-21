@@ -161,7 +161,7 @@ onMouseEnter={() => setLevelSelectTitle(level && !isMobile ? {
 onMouseLeave={() => setLevelSelectTitle(null)} 
 onClick={e => {
   e.stopPropagation();
-  if(levelNumber && !isMobile) {
+  if(levelNumber != null && !isMobile) {
     history.push(`/game/${levelNumber}`);
   } else if(levelSelectTitle && levelSelectTitle.number === levelNumber && isMobile) {
       history.push(`/game/${levelNumber}`);
